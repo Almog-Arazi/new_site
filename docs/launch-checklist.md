@@ -115,3 +115,56 @@ Then, manually:
       the two known Safari RTL trouble spots
 - [ ] SSL active, `www` and apex both resolve
 - [ ] `/admin` returns `noindex` and is disallowed in robots.txt
+
+---
+
+## 8. Accessibility (IS 5568 / WCAG 2.1 AA)
+
+Built in, verified with axe-core 4.13 across every route: **zero WCAG 2.0/2.1
+A + AA violations**, including with the accessibility menu active.
+
+What is already done:
+
+- Semantic landmarks, one `<h1>` per page, skip link, visible focus everywhere
+- Contrast: the CTA orange was darkened to `#C25309` (4.63:1 with white) so
+  buttons pass AA at any text size — `#E8620C` from the sketch is 3.40:1 and
+  only passes as "large text", which our 17px button type does not qualify as
+- Type scale is in `rem`, so the visitor's own browser font-size setting and
+  the accessibility menu's text-resize both actually work
+- 44px minimum touch targets, `prefers-reduced-motion` respected
+- Accessibility menu (`ranbuch/accessibility`, MIT, loaded at idle, no external
+  requests) with Hebrew labels, persistent across pages
+- `/accessibility` — the accessibility statement, editable from the CMS
+
+Still required before launch:
+
+- [ ] **Name a רכז נגישות (accessibility coordinator)** and put their name,
+      phone and email in `/accessibility`. The regulations require a named
+      contact; the page currently points at the general contact details.
+- [ ] Add the date of the last accessibility review to `/accessibility`
+- [ ] Decide whether to enable the menu's text-to-speech / speech-to-text.
+      They are off because Hebrew voice coverage is inconsistent and a button
+      that silently does nothing is worse than no button. Test on the client's
+      own devices before enabling in `AccessibilityMenu.astro`.
+- [ ] Screen-reader pass with NVDA or VoiceOver in Hebrew
+- [ ] If the client wants a formal accessibility audit certificate, that is a
+      licensed accessibility surveyor (מורשה נגישות שירות), not something a
+      developer can issue
+
+Re-running the audit later:
+
+```bash
+npm i -D axe-core
+cp node_modules/axe-core/axe.min.js public/_axe.min.js   # temporary
+npm run dev
+```
+
+Then in the browser console on any page:
+
+```js
+const s = document.createElement('script'); s.src = '/_axe.min.js';
+s.onload = async () => console.table((await axe.run()).violations);
+document.head.appendChild(s);
+```
+
+Delete `public/_axe.min.js` afterwards — it must never ship.

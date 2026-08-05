@@ -1,56 +1,132 @@
 {
   "header": [
-    { "label": "ראשי", "href": "/" },
+    {
+      "label": "ראשי",
+      "href": "/"
+    },
     {
       "label": "שירותים",
       "href": "/services",
       "children": [
-        { "label": "בדיקות מתקני הרמה", "href": "/lifting-equipment-inspection" },
-        { "label": "בדיקות אביזרי הרמה", "href": "/lifting-accessories" },
-        { "label": "בדיקות קווי חיים", "href": "/lifeline-inspection" }
+        {
+          "label": "בדיקות מתקני הרמה",
+          "href": "/lifting-equipment-inspection"
+        },
+        {
+          "label": "בדיקות אביזרי הרמה",
+          "href": "/lifting-accessories"
+        },
+        {
+          "label": "בדיקות קווי חיים",
+          "href": "/lifeline-inspection"
+        }
       ]
     },
     {
       "label": "ציוד שאנו בודקים",
       "href": "/equipment",
       "children": [
-        { "label": "בדיקות מלגזות", "href": "/forklift-inspection" },
-        { "label": "בדיקות עגורנים", "href": "/crane-inspection" },
-        { "label": "בדיקות במות הרמה", "href": "/lift-platform-inspection" },
-        { "label": "ליפטים ומתקנים נוספים", "href": "/additional-lifting-equipment" }
+        {
+          "label": "בדיקות מלגזות",
+          "href": "/forklift-inspection"
+        },
+        {
+          "label": "בדיקות עגורנים",
+          "href": "/crane-inspection"
+        },
+        {
+          "label": "בדיקות במות הרמה",
+          "href": "/lift-platform-inspection"
+        },
+        {
+          "label": "ליפטים ומתקנים נוספים",
+          "href": "/additional-lifting-equipment"
+        }
       ]
     },
-    { "label": "שאלות נפוצות", "href": "/faq" },
-    { "label": "מאמרים", "href": "/blog" },
-    { "label": "אודות", "href": "/about" },
-    { "label": "צור קשר", "href": "/contact" }
+    {
+      "label": "שאלות נפוצות",
+      "href": "/faq"
+    },
+    {
+      "label": "מאמרים",
+      "href": "/blog"
+    },
+    {
+      "label": "אודות",
+      "href": "/about"
+    },
+    {
+      "label": "צור קשר",
+      "href": "/contact"
+    }
   ],
   "footer": [
     {
       "title": "שירותים",
       "links": [
-        { "label": "בדיקות מתקני הרמה", "href": "/lifting-equipment-inspection" },
-        { "label": "בדיקות אביזרי הרמה", "href": "/lifting-accessories" },
-        { "label": "בדיקות קווי חיים", "href": "/lifeline-inspection" }
+        {
+          "label": "בדיקות מתקני הרמה",
+          "href": "/lifting-equipment-inspection"
+        },
+        {
+          "label": "בדיקות אביזרי הרמה",
+          "href": "/lifting-accessories"
+        },
+        {
+          "label": "בדיקות קווי חיים",
+          "href": "/lifeline-inspection"
+        }
       ]
     },
     {
       "title": "ציוד שאנו בודקים",
       "links": [
-        { "label": "בדיקות מלגזות", "href": "/forklift-inspection" },
-        { "label": "בדיקות עגורנים", "href": "/crane-inspection" },
-        { "label": "בדיקות במות הרמה", "href": "/lift-platform-inspection" },
-        { "label": "ליפטים ומתקנים נוספים", "href": "/additional-lifting-equipment" }
+        {
+          "label": "בדיקות מלגזות",
+          "href": "/forklift-inspection"
+        },
+        {
+          "label": "בדיקות עגורנים",
+          "href": "/crane-inspection"
+        },
+        {
+          "label": "בדיקות במות הרמה",
+          "href": "/lift-platform-inspection"
+        },
+        {
+          "label": "ליפטים ומתקנים נוספים",
+          "href": "/additional-lifting-equipment"
+        }
       ]
     },
     {
       "title": "מידע",
       "links": [
-        { "label": "שאלות נפוצות", "href": "/faq" },
-        { "label": "מאמרים מקצועיים", "href": "/blog" },
-        { "label": "אודות החברה", "href": "/about" },
-        { "label": "צור קשר", "href": "/contact" },
-        { "label": "מדיניות פרטיות", "href": "/privacy" }
+        {
+          "label": "שאלות נפוצות",
+          "href": "/faq"
+        },
+        {
+          "label": "מאמרים מקצועיים",
+          "href": "/blog"
+        },
+        {
+          "label": "אודות החברה",
+          "href": "/about"
+        },
+        {
+          "label": "צור קשר",
+          "href": "/contact"
+        },
+        {
+          "label": "הצהרת נגישות",
+          "href": "/accessibility"
+        },
+        {
+          "label": "מדיניות פרטיות",
+          "href": "/privacy"
+        }
       ]
     }
   ]

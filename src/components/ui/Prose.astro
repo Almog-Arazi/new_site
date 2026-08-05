@@ -50,13 +50,13 @@ const { html, narrow = false, class: className } = Astro.props;
     font-weight: var(--fw-bold);
   }
 
-  .prose :global(a) {
+  .prose :global(a:not([class])) {
     color: var(--c-link);
     text-decoration: underline;
     text-underline-offset: 0.22em;
   }
 
-  .prose :global(a:hover) {
+  .prose :global(a:not([class]):hover) {
     color: var(--c-action-ink);
   }
 </style>

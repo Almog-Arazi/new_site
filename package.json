@@ -15,12 +15,14 @@
     "@astrojs/sitemap": "^3.6.0",
     "@fontsource-variable/assistant": "^5.2.5",
     "@fontsource-variable/heebo": "^5.2.5",
+    "accessibility": "^6.1.0",
     "astro": "^5.14.1",
     "markdown-it": "^14.1.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@types/markdown-it": "^14.1.2",
+    "axe-core": "^4.13.0",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.9.2"

@@ -15,6 +15,7 @@ import Header from '../components/chrome/Header.astro';
 import Footer from '../components/chrome/Footer.astro';
 import MobileCtaBar from '../components/chrome/MobileCtaBar.astro';
 import DesktopCtaCard from '../components/chrome/DesktopCtaCard.astro';
+import AccessibilityMenu from '../components/chrome/AccessibilityMenu.astro';
 import { localBusiness, organization, website } from '../lib/schema';
 
 interface Props {
@@ -128,6 +129,7 @@ const {
     <Footer />
     {showRail && <DesktopCtaCard />}
     <MobileCtaBar />
+    <AccessibilityMenu />
 
     <script>
       import '../scripts/analytics';

@@ -1,0 +1,184 @@
+---
+/* ============================================================
+   Accessibility menu — the visible half of IS 5568 compliance.
+
+   The real compliance lives in the markup: semantic landmarks, one h1 per
+   page, visible focus, 44px targets, AA contrast, keyboard operation,
+   prefers-reduced-motion. axe-core reports zero WCAG 2.0/2.1 A+AA
+   violations across every route, and that is what an auditor tests.
+
+   This menu is the user-facing affordance Israeli visitors and regulators
+   expect on top of that — font sizing, contrast modes, link underlining,
+   a reading guide, big cursor, animation suppression — plus the required
+   link to the accessibility statement. It is NOT a substitute for the
+   markup work, and no overlay is.
+
+   ranbuch/accessibility: MIT, no dependencies, 18.6KB gzip. Loaded at idle
+   so it never competes with LCP — the widget renders roughly a second after
+   the page is usable, which is the correct trade for a 4G factory floor.
+   ============================================================ */
+---
+
+<script>
+  import type { Accessibility as AccessibilityType } from 'accessibility';
+
+  const STATEMENT_URL = '/accessibility';
+
+  const labels = {
+    menuTitle: 'תפריט נגישות',
+    resetTitle: 'איפוס',
+    closeTitle: 'סגירה',
+    increaseText: 'הגדלת טקסט',
+    decreaseText: 'הקטנת טקסט',
+    increaseTextSpacing: 'הגדלת ריווח בין אותיות',
+    decreaseTextSpacing: 'הקטנת ריווח בין אותיות',
+    increaseLineHeight: 'הגדלת ריווח בין שורות',
+    decreaseLineHeight: 'הקטנת ריווח בין שורות',
+    invertColors: 'היפוך צבעים',
+    grayHues: 'גווני אפור',
+    underlineLinks: 'הדגשת קישורים',
+    bigCursor: 'סמן עכבר גדול',
+    readingGuide: 'סרגל קריאה',
+    textToSpeech: 'הקראת טקסט',
+    speechToText: 'דיבור להקלדה',
+    disableAnimations: 'עצירת אנימציות',
+    hotkeyPrefix: 'מקש קיצור: ',
+  };
+
+  function start() {
+    import('accessibility')
+      .then(({ Accessibility }) => {
+        new (Accessibility as typeof AccessibilityType)({
+          labels,
+          /* Left at its default the widget fetches Material Icons from
+             fonts.googleapis.com — an external request on every page view
+             that also hands Google every visitor's IP, and renders the
+             literal word "accessibility" if the fetch is blocked.
+             `useEmojis` is the only switch that skips that fetch, and the
+             trigger then takes our own locally-masked SVG below. */
+          icon: {
+            useEmojis: true,
+            imgElem: { type: 'span', attrs: { class: 'ardi-a11y-icon' } },
+          },
+          textToSpeechLang: 'he-IL',
+          speechToTextLang: 'he-IL',
+          /* Choices survive navigation — an adjustment that resets on every
+             page is worse than no adjustment. */
+          session: { persistent: true },
+          statement: { url: STATEMENT_URL },
+          hotkeys: { enabled: true, helpTitles: true, keys: {} as never },
+          modules: {
+            increaseText: true,
+            decreaseText: true,
+            increaseTextSpacing: true,
+            decreaseTextSpacing: true,
+            increaseLineHeight: true,
+            decreaseLineHeight: true,
+            invertColors: true,
+            grayHues: true,
+            underlineLinks: true,
+            bigCursor: true,
+            readingGuide: true,
+            disableAnimations: true,
+            /* Speech features depend on browser voices; Hebrew coverage is
+               patchy and a button that silently does nothing is worse than
+               no button. Re-enable once verified on the client's devices. */
+            textToSpeech: false,
+            speechToText: false,
+          },
+        });
+        patchWidgetSemantics();
+      })
+      .catch(() => {
+        /* A failed widget must never take the page with it — the site is
+           already accessible without it. */
+      });
+  }
+
+  /**
+   * The widget ships two accessibility defects of its own, which axe flags:
+   *   1. its trigger is an <i tabindex="0"> with no role and no accessible
+   *      name — a keyboard user lands on it and hears nothing;
+   *   2. its menu sits directly on <body> outside any landmark.
+   * Both are one attribute each, so patch them rather than fork the library.
+   */
+  function patchWidgetSemantics() {
+    const icon = document.querySelector<HTMLElement>('._access-icon');
+    const menu = document.querySelector<HTMLElement>('._access-menu');
+
+    if (icon) {
+      icon.setAttribute('role', 'button');
+      icon.setAttribute('aria-label', labels.menuTitle);
+      icon.setAttribute('aria-haspopup', 'true');
+      /* The library toggles on click only; keyboard users need the same. */
+      icon.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          icon.click();
+        }
+      });
+    }
+
+    if (menu) {
+      menu.setAttribute('role', 'region');
+      menu.setAttribute('aria-label', labels.menuTitle);
+    }
+  }
+
+  /* `'requestIdleCallback' in window` would narrow the else branch to never,
+     since lib.dom declares it unconditionally — check the value instead. */
+  if (typeof requestIdleCallback === 'function') {
+    requestIdleCallback(start, { timeout: 3000 });
+  } else {
+    window.addEventListener('load', () => window.setTimeout(start, 1200));
+  }
+</script>
+
+<style is:global>
+  /* Brand the widget's own trigger and menu through the CSS custom
+     properties it exposes, so it does not look like a bolted-on overlay.
+
+     Position: the inline-start side is taken by nothing, but the physical
+     right holds the desktop CTA rail and the physical bottom holds the
+     mobile call bar — so the trigger sits on the physical left, lifted
+     clear of the mobile bar and the iOS home indicator. */
+  :root {
+    --_access-icon-position: fixed;
+    --_access-icon-left: 12px;
+    --_access-icon-right: auto;
+    --_access-icon-bottom: calc(104px + env(safe-area-inset-bottom));
+    --_access-icon-top: auto;
+    --_access-icon-width: 48px;
+    --_access-icon-height: 48px;
+    --_access-icon-z-index: 45;
+    --_access-icon-bg: var(--c-bg-dark);
+    --_access-icon-color: var(--c-white);
+    --_access-icon-border-radius: var(--r-pill);
+    --_access-menu-item-button-active-background-color: var(--c-link);
+    --_access-menu-item-button-active-color: var(--c-white);
+    --_access-menu-item-button-hover-background-color: var(--c-bg-tint);
+    --_access-menu-item-button-hover-color: var(--c-heading);
+    --_access-menu-item-button-border-radius: var(--r-2);
+  }
+
+  /* Above the mobile CTA bar's breakpoint there is no bar to clear. */
+  @media (width >= 901px) {
+    :root {
+      --_access-icon-bottom: 24px;
+    }
+  }
+
+  /* The trigger glyph — a masked local SVG, so nothing is fetched off-origin
+     and the mark inherits the button's colour. */
+  .ardi-a11y-icon {
+    display: block;
+    inline-size: 26px;
+    block-size: 26px;
+    margin: 11px auto;
+    background-color: currentcolor;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='5' r='1.9' fill='%23000' stroke='none'/%3E%3Cpath d='M4.6 9.3c2.4.8 4.8 1.2 7.4 1.2s5-.4 7.4-1.2'/%3E%3Cpath d='M12 10.5v4.3'/%3E%3Cpath d='m12 14.8-2.3 6'/%3E%3Cpath d='m12 14.8 2.3 6'/%3E%3C/svg%3E");
+  }
+</style>

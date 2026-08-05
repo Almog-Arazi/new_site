@@ -21,6 +21,7 @@ export const COLLECTION_ROUTES = [
   '/faq',
   '/about',
   '/privacy',
+  '/accessibility',
   '/lifting-inspection-center',
   '/lifting-inspection-south',
   '/lifting-inspection-sharon',

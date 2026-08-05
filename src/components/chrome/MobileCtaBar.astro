@@ -10,7 +10,7 @@ const phone = displayPhone(site.phoneE164);
 const tel = telHrefFor(site.phoneE164);
 ---
 
-<div class="cta-bar" role="group" aria-label="יצירת קשר מהירה">
+<nav class="cta-bar" aria-label="יצירת קשר מהירה">
   <a href={tel} class="cta-bar__call" data-track="phone_click">
     <Icon name="phone" size={22} />
     <span>התקשרו עכשיו</span>
@@ -28,7 +28,7 @@ const tel = telHrefFor(site.phoneE164);
     <span>וואטסאפ</span>
     <span class="vh">{site.whatsappMessage}</span>
   </a>
-</div>
+</nav>
 
 <style>
   .cta-bar {
