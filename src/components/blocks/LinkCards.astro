@@ -7,31 +7,63 @@ import Icon from '../ui/Icon.astro';
 import type { Section as Block } from '../../content.config';
 
 type Props = Extract<Block, { type: 'linkCards' }>;
-const { eyebrow, heading, intro, cards, tone } = Astro.props;
+const { eyebrow, heading, intro, cards, columns, tone } = Astro.props;
+const hasMedia = cards.some((card) => Boolean(card.placeholder));
 ---
 
 <Section tone={tone}>
   <SectionHeader eyebrow={eyebrow} heading={heading} intro={intro} />
-  <div class="grid grid--3">
-    {cards.map((card) => (
-      <Card href={card.href} padded={false}>
-        {card.placeholder && (
-          <PhotoFrame variant={card.placeholder} alt={card.alt ?? card.title} ratio="wide" class="lc__media" />
-        )}
-        <div class="lc__body">
-          <h3>{card.title}</h3>
-          {card.text && <p class="t-body">{card.text}</p>}
-          <span class="lc__more">
-            לפרטים
-            <Icon name="arrow" size={18} />
-          </span>
-        </div>
-      </Card>
-    ))}
+
+  <div class="lc" style={`--cols:${columns}`}>
+    {
+      cards.map((card) => (
+        <Card href={card.href} padded={!hasMedia} class="lc__card">
+          {card.placeholder && (
+            /* `alt` falls back to the card title, so the frame is never
+               announced as an unlabelled image. */
+            <PhotoFrame
+              variant={card.placeholder}
+              alt={card.alt ?? card.title}
+              ratio="wide"
+              class="lc__media"
+            />
+          )}
+          <div class:list={['lc__body', !hasMedia && 'lc__body--flush']}>
+            <h3>{card.title}</h3>
+            {card.text && <p class="t-body">{card.text}</p>}
+            <span class="lc__more">
+              <span>לפרטים</span>
+              {/* Reading flow under dir="rtl" runs right-to-left and the sprite
+                  arrow already points that way — flipping it would point back. */}
+              <Icon name="arrow" size={18} />
+            </span>
+          </div>
+        </Card>
+      ))
+    }
   </div>
 </Section>
 
 <style>
+  .lc {
+    display: grid;
+    gap: var(--grid-gap);
+  }
+
+  @media (width >= 640px) {
+    .lc {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (width >= 960px) {
+    .lc {
+      grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    }
+  }
+
+  /* The frame sits flush inside the card, so it drops its own asymmetric
+     corners and inset hairline — the card supplies both. */
   .lc__media {
     border-radius: 0;
     box-shadow: none;
@@ -40,7 +72,16 @@ const { eyebrow, heading, intro, cards, tone } = Astro.props;
   .lc__body {
     display: grid;
     gap: var(--s-2);
+    align-content: start;
     padding: var(--card-pad);
+  }
+
+  .lc__body--flush {
+    padding: 0;
+  }
+
+  .lc__body h3 {
+    margin: 0;
   }
 
   .lc__more {
@@ -52,5 +93,15 @@ const { eyebrow, heading, intro, cards, tone } = Astro.props;
     font-weight: var(--fw-bold);
     font-size: var(--fs-sm);
     color: var(--c-action-ink);
+    transition: gap var(--dur) var(--ease);
+  }
+
+  .lc__card:hover .lc__more {
+    gap: var(--s-4);
+  }
+
+  /* ── inside a dark slab ────────────────────────────────────── */
+  :global(.section--dark) .lc__more {
+    color: var(--c-accent-dark);
   }
 </style>

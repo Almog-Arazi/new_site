@@ -5,17 +5,34 @@ import type { Section as Block } from '../../content.config';
 
 type Props = Extract<Block, { type: 'statRow' }>;
 const { heading, intro, stats, tone } = Astro.props;
+
+/* The big-number callouts: 14 חודשים, 6 חודשים, 15+ שנה. A single stat is
+   the page-defining fact and gets the full width; two or more share a row. */
+const solo = stats.length === 1;
+
+/* Only a numeric value gets bidi isolation. "15+" without it puts the plus
+   on the wrong end of the line — but a Hebrew value like "כל הצי" must NOT
+   be forced into an LTR run, so the test is on the value, not on the block. */
+const isNumeric = (value: string) => /^[\d\s+.,%/-]+$/.test(value);
 ---
 
 <Section tone={tone}>
   <SectionHeader heading={heading} intro={intro} />
-  <dl class="stats">
-    {stats.map((stat) => (
-      <div class="stats__item">
-        <dt class="stats__value">{stat.value}</dt>
-        <dd class="stats__label">{stat.label}{stat.note && <span class="t-sm"> · {stat.note}</span>}</dd>
-      </div>
-    ))}
+
+  <dl class:list={['stats', solo && 'stats--solo']} style={`--n:${stats.length}`}>
+    {
+      stats.map((stat) => (
+        <div class="stats__item">
+          <dt class="stats__value">
+            {isNumeric(stat.value) ? <bdi class="ltr num">{stat.value}</bdi> : stat.value}
+          </dt>
+          <dd class="stats__label">
+            <span class="stats__lead">{stat.label}</span>
+            {stat.note && <span class="stats__note">{stat.note}</span>}
+          </dd>
+        </div>
+      ))
+    }
   </dl>
 </Section>
 
@@ -23,14 +40,37 @@ const { heading, intro, stats, tone } = Astro.props;
   .stats {
     display: grid;
     gap: var(--grid-gap);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
     margin: 0;
   }
 
+  @media (width >= 700px) {
+    .stats {
+      grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+    }
+
+    .stats--solo {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
   .stats__item {
+    position: relative;
+    display: grid;
+    gap: var(--s-3);
+    align-content: start;
     padding: var(--card-pad);
     background: var(--c-bg-tint);
-    border-radius: var(--r-4);
+    border-radius: var(--r-5);
+  }
+
+  /* One short amber keyline above the number — the same small mark used on
+     navy, borrowed here so the row is not just a tinted box. */
+  .stats__item::before {
+    content: '';
+    inline-size: var(--s-8);
+    block-size: 4px;
+    border-radius: var(--r-pill);
+    background: var(--c-action);
   }
 
   .stats__value {
@@ -38,11 +78,48 @@ const { heading, intro, stats, tone } = Astro.props;
     font-size: var(--fs-hero);
     font-weight: var(--fw-black);
     line-height: 1;
+    letter-spacing: var(--ls-hero);
     color: var(--c-heading);
+    overflow-wrap: break-word;
   }
 
   .stats__label {
-    margin: var(--s-2) 0 0;
+    display: grid;
+    gap: var(--s-1);
+    margin: 0;
+    max-inline-size: var(--measure);
+  }
+
+  .stats__lead {
+    font-family: var(--ff-head);
+    font-size: var(--fs-lead);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-h3);
+    color: var(--c-heading);
+  }
+
+  .stats__note {
     font-size: var(--fs-sm);
+    line-height: var(--lh-body);
+    color: var(--c-text);
+  }
+
+  /* ── inside a dark slab ────────────────────────────────────── */
+  :global(.section--dark) .stats__item {
+    background: var(--c-on-dark-surface-soft);
+    border: 1px solid var(--c-border-dark);
+  }
+
+  :global(.section--dark) .stats__item::before {
+    background: var(--c-accent-dark);
+  }
+
+  :global(.section--dark) .stats__value,
+  :global(.section--dark) .stats__lead {
+    color: var(--c-white);
+  }
+
+  :global(.section--dark) .stats__note {
+    color: var(--c-on-dark-muted);
   }
 </style>

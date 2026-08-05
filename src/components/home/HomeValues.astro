@@ -1,0 +1,44 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Card from '../ui/Card.astro';
+
+interface Props {
+  heading?: string;
+  intro?: string;
+  values?: { title: string; text: string }[];
+}
+
+const {
+  heading = 'בדיקות מקצועיות עם אחריות ושירות אישי',
+  intro = 'כאשר מדובר בציוד הרמה המשמש עובדים מדי יום, חשוב לעבוד עם גורם מקצועי שמבין את התחום ויודע לתת מענה מהיר ומדויק. ארזי מיטב המהנדסים משלבת ניסיון הנדסי, עבודה מסודרת ושירות אישי מול כל לקוח.',
+  values = [
+    {
+      title: 'ניסיון תעשייתי',
+      text: 'היכרות עם סביבת העבודה של מפעלים, מחסנים לוגיסטיים וחברות תעשייתיות.',
+    },
+    { title: 'זמינות גבוהה', text: 'מענה אנושי מהיר ותיאום בדיקות בצורה יעילה מול המשרד.' },
+    { title: 'שירות לאורך זמן', text: 'מעקב אחר מועדי הבדיקות ותזכורת מראש לפני הבדיקה הבאה.' },
+  ],
+} = Astro.props;
+---
+
+<Section>
+  <SectionHeader heading={heading} intro={intro} />
+  <div class="grid grid--3">
+    {
+      values.map((value, i) => (
+        <Card accent={i === values.length - 1 ? 'orange' : 'blue'}>
+          <h3 class="values__title">{value.title}</h3>
+          <p class="t-body">{value.text}</p>
+        </Card>
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  .values__title {
+    margin-block-end: var(--s-2);
+  }
+</style>

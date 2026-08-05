@@ -1,0 +1,80 @@
+---
+/* A single labelled text input.
+   Labels sit ABOVE the control — floating labels collapse into the field
+   and read as placeholder text, which is unreadable in RTL Hebrew and
+   disappears the moment the user types.
+
+   Presentation for .field* lives once in LeadForm.astro (its only
+   consumer) so Field / Select / Textarea do not triplicate it. */
+
+interface Props {
+  id: string;
+  name: string;
+  label: string;
+  type?: 'text' | 'tel' | 'email';
+  required?: boolean;
+  hint?: string;
+  autocomplete?: string;
+  inputmode?: 'text' | 'tel' | 'email' | 'numeric' | 'url' | 'search' | 'decimal' | 'none';
+  dir?: 'ltr' | 'rtl';
+  placeholder?: string;
+  maxlength?: number;
+}
+
+const {
+  id,
+  name,
+  label,
+  type = 'text',
+  required = false,
+  hint,
+  autocomplete,
+  inputmode,
+  dir,
+  placeholder,
+  maxlength,
+} = Astro.props;
+
+const hintId = hint ? `${id}-hint` : undefined;
+const errorId = `${id}-error`;
+const describedBy = [hintId, errorId].filter(Boolean).join(' ');
+---
+
+<div class="field">
+  <label class="field__label" for={id}>
+    <span>{label}</span>
+    {
+      required ? (
+        <>
+          <span class="field__req" aria-hidden="true">
+            *
+          </span>
+          <span class="vh">(שדה חובה)</span>
+        </>
+      ) : (
+        <span class="field__opt">(לא חובה)</span>
+      )
+    }
+  </label>
+
+  {hint && <p class="field__hint" id={hintId}>{hint}</p>}
+
+  <input
+    class="field__control"
+    id={id}
+    name={name}
+    type={type}
+    required={required}
+    autocomplete={autocomplete}
+    inputmode={inputmode}
+    dir={dir}
+    placeholder={placeholder}
+    maxlength={maxlength}
+    aria-describedby={describedBy}
+  />
+
+  <p class="field__error" id={errorId} data-error-for={name} hidden>
+    <span class="field__error-mark" aria-hidden="true">!</span>
+    <span data-error-text></span>
+  </p>
+</div>

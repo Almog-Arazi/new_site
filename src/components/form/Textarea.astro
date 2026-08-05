@@ -1,0 +1,64 @@
+---
+/* Labelled <textarea>. Same label-above rule as Field.astro. */
+
+interface Props {
+  id: string;
+  name: string;
+  label: string;
+  rows?: number;
+  required?: boolean;
+  hint?: string;
+  placeholder?: string;
+  maxlength?: number;
+}
+
+const {
+  id,
+  name,
+  label,
+  rows = 3,
+  required = false,
+  hint,
+  placeholder,
+  maxlength = 1200,
+} = Astro.props;
+
+const hintId = hint ? `${id}-hint` : undefined;
+const errorId = `${id}-error`;
+const describedBy = [hintId, errorId].filter(Boolean).join(' ');
+---
+
+<div class="field">
+  <label class="field__label" for={id}>
+    <span>{label}</span>
+    {
+      required ? (
+        <>
+          <span class="field__req" aria-hidden="true">
+            *
+          </span>
+          <span class="vh">(שדה חובה)</span>
+        </>
+      ) : (
+        <span class="field__opt">(לא חובה)</span>
+      )
+    }
+  </label>
+
+  {hint && <p class="field__hint" id={hintId}>{hint}</p>}
+
+  <textarea
+    class="field__control field__control--area"
+    id={id}
+    name={name}
+    rows={rows}
+    required={required}
+    placeholder={placeholder}
+    maxlength={maxlength}
+    aria-describedby={describedBy}></textarea>
+
+  <p class="field__error" id={errorId} data-error-for={name} hidden>
+    <span class="field__error-mark" aria-hidden="true">!</span>
+    <span data-error-text></span>
+  </p>
+</div>

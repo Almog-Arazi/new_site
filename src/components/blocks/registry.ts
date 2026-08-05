@@ -1,3 +1,4 @@
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import type { Section } from '../../content.config';
 
 import RichText from './RichText.astro';
@@ -18,7 +19,7 @@ import CtaBand from './CtaBand.astro';
  * and a member of the `sectionSchema` union in src/content.config.ts.
  * The three change together or not at all.
  */
-export const BLOCKS: Record<Section['type'], unknown> = {
+export const BLOCKS: Record<Section['type'], AstroComponentFactory> = {
   richText: RichText,
   checkList: CheckList,
   featureGrid: FeatureGrid,

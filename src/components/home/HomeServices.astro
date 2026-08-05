@@ -1,0 +1,110 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Card from '../ui/Card.astro';
+import PhotoFrame from '../media/PhotoFrame.astro';
+import Icon from '../ui/Icon.astro';
+import type { PlaceholderVariant } from '../placeholders/index';
+
+interface ServiceCard {
+  title: string;
+  text: string;
+  href: string;
+  placeholder: PlaceholderVariant;
+  alt: string;
+  note?: string;
+}
+
+interface Props {
+  heading?: string;
+  intro?: string;
+  services?: ServiceCard[];
+}
+
+const DEFAULT_SERVICES: ServiceCard[] = [
+  {
+    title: 'בדיקות מתקני הרמה',
+    text: 'בדיקות למתקני הרמה במפעלים, חברות ומרכזים לוגיסטיים בהתאם לדרישות החוק — מלגזות, עגורנים, במות הרמה ומתקני הרמה נוספים.',
+    href: '/lifting-equipment-inspection',
+    placeholder: 'crane',
+    alt: 'עגורן גשר באולם ייצור לפני בדיקת בודק מוסמך',
+    note: 'צילום: עגורן גשר או מלגזה באולם ייצור',
+  },
+  {
+    title: 'בדיקות אביזרי הרמה',
+    text: 'בדיקות לאביזרים המשמשים להרמת מטענים: רצועות הרמה, שרשראות, שאקלים, אונקלים, קורות הרמה ואביזרי חיבור.',
+    href: '/lifting-accessories',
+    placeholder: 'accessory',
+    alt: 'רצועות הרמה, שרשראות ושאקלים מונחים לבדיקה',
+    note: 'צילום מקרוב: רצועות, שרשראות ושאקלים',
+  },
+  {
+    title: 'בדיקות קווי חיים',
+    text: 'בדיקות למערכות קווי חיים אופקיים ואנכיים, נקודות עיגון ומערכות הגנה לעבודה בגובה.',
+    href: '/lifeline-inspection',
+    placeholder: 'lifeline',
+    alt: 'מערכת קו חיים על גג מבנה תעשייתי',
+    note: 'צילום: מערכת קו חיים על גג מבנה',
+  },
+];
+
+const {
+  heading = 'שירותי בדיקות ציוד הרמה',
+  intro,
+  services = DEFAULT_SERVICES,
+} = Astro.props;
+---
+
+<Section tone="soft">
+  <SectionHeader heading={heading} intro={intro} />
+  <div class="grid grid--3">
+    {
+      services.map((service) => (
+        <Card href={service.href} padded={false}>
+          <PhotoFrame
+            variant={service.placeholder}
+            alt={service.alt}
+            note={service.note}
+            ratio="wide"
+            class="svc__media"
+          />
+          <div class="svc__body">
+            <h3>{service.title}</h3>
+            <p class="t-body">{service.text}</p>
+            <span class="svc__more">
+              לעמוד השירות
+              <Icon name="arrow" size={18} />
+            </span>
+          </div>
+        </Card>
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  /* A class handed to a child component lands on that component's root,
+     which never carries this file's scope id — hence :global here only. */
+  :global(.svc__media) {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .svc__body {
+    display: grid;
+    gap: var(--s-2);
+    align-content: start;
+    padding: var(--card-pad);
+  }
+
+  .svc__more {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    margin-block-start: var(--s-2);
+    font-family: var(--ff-head);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-sm);
+    color: var(--c-action-ink);
+  }
+</style>

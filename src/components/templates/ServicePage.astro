@@ -1,0 +1,81 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Section from '../ui/Section.astro';
+import Prose from '../ui/Prose.astro';
+import Blocks from './Blocks.astro';
+import FaqSection from '../blocks/FaqSection.astro';
+import RelatedLinks from '../blocks/RelatedLinks.astro';
+import { service } from '../../lib/schema';
+import { autoFaqItems, relatedLinks, type TemplateProps } from './shared';
+
+/* ============================================================
+   SERVICE — /lifting-equipment-inspection, /lifting-accessories,
+   /lifeline-inspection.
+
+   Schema: Service (provider points at the business entity by @id).
+   A FAQPage is emitted too, but only ever by FaqSection, and only for
+   questions this page actually shows.
+   ============================================================ */
+
+type Props = TemplateProps;
+const { page, path, hasBody = false } = Astro.props;
+const data = page.data;
+
+const schemas = [
+  service({
+    name: data.schema?.serviceName ?? data.h1,
+    description: data.seo.description,
+    path,
+    serviceType: data.schema?.serviceType,
+    areaServed: data.schema?.areaServed,
+  }),
+];
+
+/* Empty whenever the page already authors its own faq block — that block
+   renders the accordion and emits the schema itself, and two FAQPage nodes
+   on one URL is a structured-data error. */
+const faqItems = await autoFaqItems(data.slug, data.sections);
+const related = await relatedLinks(data.related);
+---
+
+<PageLayout
+  title={data.seo.title}
+  description={data.seo.description}
+  path={path}
+  noindex={data.seo.noindex}
+  eyebrow={data.eyebrow}
+  h1={data.h1}
+  lead={data.lead}
+  breadcrumb={data.breadcrumb}
+  breadcrumbLabel={data.breadcrumbLabel}
+  hero={data.hero}
+  schemas={schemas}
+  cta={data.cta}
+>
+  <Blocks sections={data.sections} />
+
+  {
+    hasBody && (
+      <Section width="narrow">
+        <Prose>
+          <slot />
+        </Prose>
+      </Section>
+    )
+  }
+
+  {
+    faqItems.length > 0 && (
+      <FaqSection
+        type="faq"
+        groups={[]}
+        items={faqItems}
+        heading="שאלות נפוצות על השירות"
+        moreHref="/faq"
+        tone="soft"
+      />
+    )
+  }
+
+  <RelatedLinks heading="שירותים וציוד קשורים" links={related} tone="light" />
+</PageLayout>

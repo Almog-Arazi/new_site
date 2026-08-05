@@ -1,14 +1,33 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/ui/Section.astro';
-import { contactPage } from '../lib/schema';
-import site from '../site.config';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import Breadcrumb from '../components/chrome/Breadcrumb.astro';
+import LeadForm from '../components/form/LeadForm.astro';
+import PhotoFrame from '../components/media/PhotoFrame.astro';
+import Icon from '../components/ui/Icon.astro';
+import site, { mailHref, waHref } from '../site.config';
+import { displayPhone, telHrefFor, hebrewList } from '../lib/format';
+import { contactPage, breadcrumb as breadcrumbSchema } from '../lib/schema';
 
-/* PHASE 0 STUB — ownership passes to Stream A. */
+/* The page is itself the call to action, so it carries no CtaBand and no
+   floating rail — everything above the fold is already a way to convert. */
+
 const path = '/contact';
 const title = `צור קשר | תיאום בדיקת ציוד הרמה | ${site.shortName}`;
 const description =
   'תיאום בדיקת מתקני הרמה, אביזרי הרמה וקווי חיים — טלפון, וואטסאפ וטופס קצר. מענה אנושי ומהיר, שירות בכל הארץ.';
+
+const phone = displayPhone(site.phoneE164);
+const tel = telHrefFor(site.phoneE164);
+const trail = [{ label: 'ראשי', href: '/' }];
+
+const prep = [
+  'סוג הציוד וכמה יחידות יש באתר',
+  'מתי בוצעה הבדיקה האחרונה, אם ידוע',
+  'מיקום האתר ושעות הפעילות',
+  'אם יש דחיפות — נשמח לדעת מראש',
+];
 ---
 
 <BaseLayout
@@ -16,10 +35,250 @@ const description =
   description={description}
   path={path}
   withBusiness
-  schemas={[contactPage({ name: 'צרו קשר לתיאום בדיקה', description, path })]}
+  showRail={false}
+  schemas={[
+    contactPage({ name: 'צרו קשר לתיאום בדיקה', description, path }),
+    breadcrumbSchema([...trail, { label: 'צור קשר', href: path }]),
+  ]}
 >
+  <Section tone="tint" class="contact-hero">
+    <div class="contact-hero__grid">
+      <div class="contact-hero__intro">
+        <Breadcrumb trail={trail} current="צור קשר" />
+        <h1>צרו קשר לתיאום בדיקה</h1>
+        <p class="t-lead">
+          הדרך המהירה ביותר היא טלפון — נבין מה הציוד שלכם ונחזור אליכם עם זמינות ומחיר.
+          אפשר גם וואטסאפ או טופס קצר; אנו חוזרים לכל פנייה בשעות העבודה.
+        </p>
+
+        <ul role="list" class="methods">
+          <li>
+            <a href={tel} class="method" data-track="phone_click">
+              <span class="method__icon method__icon--call" aria-hidden="true">
+                <Icon name="phone" size={22} />
+              </span>
+              <span class="method__body">
+                <bdi class="ltr num method__title">{phone}</bdi>
+                <span class="method__note">{site.hours} · מענה אנושי</span>
+              </span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              href={waHref}
+              class="method"
+              data-track="whatsapp_click"
+              target="_blank"
+              rel="noopener"
+            >
+              <span class="method__icon method__icon--wa" aria-hidden="true">
+                <Icon name="whatsapp" size={22} />
+              </span>
+              <span class="method__body">
+                <span class="method__title">וואטסאפ</span>
+                <span class="method__note">הודעה מוכנה מראש: ״{site.whatsappMessage}״</span>
+              </span>
+            </a>
+          </li>
+
+          <li>
+            <a href={mailHref} class="method">
+              <span class="method__icon method__icon--mail" aria-hidden="true">
+                <Icon name="mail" size={22} />
+              </span>
+              <span class="method__body">
+                <bdi class="ltr method__title method__title--mail">{site.email}</bdi>
+                <span class="method__note">לשליחת מסמכים ותסקירים קודמים</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="areas">
+          <h2 class="areas__title">
+            <Icon name="pin" size={18} />
+            <span>אזורי פעילות</span>
+          </h2>
+          <p class="areas__text">
+            {site.areaServedLabel} — {hebrewList(site.areasServed)}. בדיקות במפעלים, מחסנים,
+            מרכזים לוגיסטיים ואתרי עבודה.
+          </p>
+        </div>
+      </div>
+
+      <LeadForm />
+    </div>
+  </Section>
+
   <Section>
-    <h1>צרו קשר לתיאום בדיקה</h1>
-    <p class="t-lead">עמוד צור קשר בבנייה.</p>
+    <div class="prep">
+      <div class="prep__text">
+        <SectionHeader
+          eyebrow="לפני שמתקשרים"
+          heading="מה כדאי להכין לפני השיחה"
+          intro="ארבעה פרטים שמקצרים את השיחה למינימום ומאפשרים לנו לתת זמינות ומחיר כבר בטלפון."
+        />
+        <ul role="list" class="checks">
+          {prep.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+
+      <PhotoFrame
+        variant="document"
+        alt="פריסת השירות הארצית ופרטי ההתקשרות של ארזי מיטב המהנדסים"
+        note="צילום: מפה של הפריסה הארצית או משרד עם טלפון"
+        ratio="card"
+      />
+    </div>
   </Section>
 </BaseLayout>
+
+<style>
+  .contact-hero__grid {
+    display: grid;
+    gap: var(--grid-gap);
+    align-items: start;
+  }
+
+  .contact-hero__intro {
+    display: grid;
+    gap: var(--s-4);
+    align-content: start;
+  }
+
+  /* ── contact methods ───────────────────────────────────────── */
+
+  .methods {
+    display: grid;
+    gap: var(--s-3);
+    margin: 0;
+    padding: 0;
+    margin-block-start: var(--s-2);
+  }
+
+  .method {
+    display: flex;
+    align-items: center;
+    gap: var(--s-4);
+    min-block-size: var(--tap-lg);
+    padding: var(--s-4);
+    background: var(--c-surface);
+    color: var(--c-heading);
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: var(--r-3);
+    transition:
+      box-shadow var(--dur) var(--ease),
+      border-color var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
+  }
+
+  .method:hover {
+    box-shadow: var(--e-2);
+    transform: translateY(var(--lift));
+  }
+
+  .method:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+  }
+
+  .method__icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--tap);
+    block-size: var(--tap);
+    color: var(--c-white);
+    border-radius: var(--r-2);
+  }
+
+  .method__icon--call {
+    background: var(--c-action);
+  }
+
+  .method__icon--wa {
+    background: var(--c-link);
+  }
+
+  .method__icon--mail {
+    background: var(--c-bg-dark);
+  }
+
+  .method__body {
+    display: grid;
+    gap: var(--s-1);
+    min-inline-size: 0;
+  }
+
+  .method__title {
+    font-family: var(--ff-head);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-black);
+    color: var(--c-heading);
+  }
+
+  .method__title--mail {
+    font-size: var(--fs-body);
+    font-weight: var(--fw-bold);
+    word-break: break-word;
+  }
+
+  .method__note {
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+    color: var(--c-text);
+  }
+
+  /* ── areas of service ──────────────────────────────────────── */
+
+  .areas {
+    display: grid;
+    gap: var(--s-2);
+    padding: var(--s-5);
+    background: var(--c-surface);
+    border-radius: var(--r-3);
+  }
+
+  .areas__title {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    font-family: var(--ff-head);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-bold);
+    color: var(--c-heading);
+  }
+
+  .areas__text {
+    font-size: var(--fs-sm);
+    line-height: var(--lh-body);
+    color: var(--c-text);
+  }
+
+  /* ── prep section ──────────────────────────────────────────── */
+
+  .prep {
+    display: grid;
+    gap: var(--grid-gap);
+    align-items: center;
+  }
+
+  .prep__text .checks {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+  }
+
+  @media (width >= 900px) {
+    .contact-hero__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s-8);
+    }
+
+    .prep {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: var(--s-9);
+    }
+  }
+</style>

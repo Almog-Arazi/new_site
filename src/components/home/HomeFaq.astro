@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import FaqSection from '../blocks/FaqSection.astro';
+
+/* Thin wrapper over the shared FAQ block so the homepage never hand-writes
+   FAQ markup or FAQPage schema — FaqSection emits both from one array.
+   Groups are read from the collection rather than hard-coded, so the six
+   items stay correct however Stream D splits the topics across files. */
+
+interface Props {
+  heading?: string;
+  intro?: string;
+  limit?: number;
+  moreHref?: string;
+}
+
+const {
+  heading = 'שאלות נפוצות',
+  intro = 'התשובות שמנהלי אחזקה וממוני בטיחות שואלים לפני שמזמינים בדיקה.',
+  limit = 6,
+  moreHref = '/faq',
+} = Astro.props;
+
+const groups = (await getCollection('faq'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => entry.data.group);
+---
+
+{
+  groups.length > 0 && (
+    <FaqSection
+      type="faq"
+      heading={heading}
+      intro={intro}
+      groups={groups}
+      limit={limit}
+      moreHref={moreHref}
+      tone="light"
+    />
+  )
+}

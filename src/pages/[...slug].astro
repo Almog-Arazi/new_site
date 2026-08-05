@@ -1,21 +1,36 @@
 ---
 import { getCollection, render } from 'astro:content';
-import PageLayout from '../layouts/PageLayout.astro';
-import Prose from '../components/ui/Prose.astro';
-import Section from '../components/ui/Section.astro';
-import {
-  aboutPage,
-  collectionPage,
-  faqPage as faqPageSchema,
-  service,
-  webPage,
-} from '../lib/schema';
-import { getFaqByPage } from '../lib/faq';
 import { pathForSlug } from '../lib/routes';
 
-/* Generates 15 of the 18 routes. A new page — including a future regional
+import ServicePage from '../components/templates/ServicePage.astro';
+import EquipmentPage from '../components/templates/EquipmentPage.astro';
+import HubPage from '../components/templates/HubPage.astro';
+import FaqPage from '../components/templates/FaqPage.astro';
+import AboutPage from '../components/templates/AboutPage.astro';
+import LegalPage from '../components/templates/LegalPage.astro';
+import RegionPage from '../components/templates/RegionPage.astro';
+
+/* ============================================================
+   Generates 15 of the 18 routes. A new page — including a future regional
    page — is created by adding one entry to the `pages` collection from the
-   CMS. No developer, no new route file. */
+   CMS. No developer, no new route file.
+
+   This file does exactly two things: resolve the entry, and hand it to the
+   template its `template` field names. Every composition decision and every
+   JSON-LD entity lives in the template, so a page type can change shape
+   without touching routing.
+   ============================================================ */
+
+const TEMPLATES = {
+  service: ServicePage,
+  equipment: EquipmentPage,
+  hub: HubPage,
+  faq: FaqPage,
+  about: AboutPage,
+  legal: LegalPage,
+  region: RegionPage,
+} as const;
+
 export async function getStaticPaths() {
   const pages = await getCollection('pages', ({ data }) => !data.draft);
   return pages.map((page) => ({ params: { slug: page.data.slug }, props: { page } }));
@@ -24,61 +39,16 @@ export async function getStaticPaths() {
 const { page } = Astro.props;
 const data = page.data;
 const path = pathForSlug(data.slug);
+
+/* `template` is a closed enum in the frozen schema, so this cannot miss —
+   but a page that somehow arrives without one still renders as a service
+   page rather than throwing during a client's CMS save. */
+const Template = TEMPLATES[data.template] ?? ServicePage;
+
 const { Content } = await render(page);
-
-const schemas: unknown[] = [];
-const kind = data.schema?.kind ?? 'WebPage';
-
-if (kind === 'Service') {
-  schemas.push(
-    service({
-      name: data.schema?.serviceName ?? data.h1,
-      description: data.seo.description,
-      path,
-      serviceType: data.schema?.serviceType,
-      areaServed: data.schema?.areaServed,
-    })
-  );
-} else if (kind === 'CollectionPage') {
-  schemas.push(collectionPage({ name: data.h1, description: data.seo.description, path }));
-} else if (kind === 'AboutPage') {
-  schemas.push(aboutPage({ name: data.h1, description: data.seo.description, path }));
-} else if (kind === 'WebPage') {
-  schemas.push(webPage({ name: data.h1, description: data.seo.description, path }));
-}
-
-/* A page whose own `sections` already contain a faq block gets its FAQPage
-   schema from FaqSection. This covers dedicated FAQ pages that pull items
-   by `showOn` instead. */
-const hasFaqBlock = data.sections.some((section) => section.type === 'faq');
-if (!hasFaqBlock) {
-  const items = await getFaqByPage(data.slug);
-  if (items.length > 0) schemas.push(faqPageSchema(items, path));
-}
+const hasBody = Boolean(page.body?.trim());
 ---
 
-<PageLayout
-  title={data.seo.title}
-  description={data.seo.description}
-  path={path}
-  noindex={data.seo.noindex}
-  eyebrow={data.eyebrow}
-  h1={data.h1}
-  lead={data.lead}
-  breadcrumb={data.breadcrumb}
-  breadcrumbLabel={data.breadcrumbLabel}
-  hero={data.hero}
-  sections={data.sections}
-  schemas={schemas}
-  cta={data.cta}
->
-  {
-    page.body?.trim() && (
-      <Section width="narrow">
-        <Prose>
-          <Content />
-        </Prose>
-      </Section>
-    )
-  }
-</PageLayout>
+<Template page={page} path={path} hasBody={hasBody}>
+  <Content />
+</Template>

@@ -1,0 +1,100 @@
+---
+import Card from '../ui/Card.astro';
+import PhotoFrame from '../media/PhotoFrame.astro';
+import Icon from '../ui/Icon.astro';
+import ArticleMeta from './ArticleMeta.astro';
+import { articlePath } from '../../lib/routes';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+  /** `featured` is the wide lead card at the top of /blog. */
+  variant?: 'default' | 'featured';
+  /** Headings are h3 inside a section, h2 when the card is the section itself. */
+  level?: 2 | 3;
+}
+
+const { article, variant = 'default', level = 3 } = Astro.props;
+const d = article.data;
+const Heading = `h${level}` as 'h2' | 'h3';
+const featured = variant === 'featured';
+---
+
+<Card href={articlePath(d.slug)} padded={false} class={featured ? 'acard acard--featured' : 'acard'}>
+  <PhotoFrame
+    variant={d.hero.placeholder}
+    alt={d.hero.alt}
+    note={d.hero.note}
+    ratio={featured ? 'card' : 'wide'}
+    class="acard__media"
+  />
+  <div class="acard__body">
+    <ArticleMeta category={d.category} date={d.publishDate} readingMinutes={d.readingMinutes} />
+    <Heading class="acard__title">{d.title}</Heading>
+    <p class="t-body acard__text">{d.description}</p>
+    <span class="acard__more">
+      קראו את המאמר
+      <Icon name="arrow" size={18} />
+    </span>
+  </div>
+</Card>
+
+<style>
+  /* Classes handed to a child component land on that component's root, which
+     never carries this file's scope id — hence :global on those selectors
+     only. The names are namespaced, so nothing else can collide. */
+  :global(.acard__media) {
+    border-radius: 0;
+    box-shadow: none;
+    block-size: 100%;
+  }
+
+  .acard__body {
+    display: grid;
+    gap: var(--s-3);
+    align-content: start;
+    padding: var(--card-pad);
+  }
+
+  .acard__title {
+    font-size: var(--fs-h3);
+    line-height: var(--lh-h3);
+  }
+
+  .acard__more {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    margin-block-start: var(--s-1);
+    font-family: var(--ff-head);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-sm);
+    color: var(--c-action-ink);
+  }
+
+  /* The lead card goes two-up on wide screens and collapses to the same
+     stacked shape as its siblings below it. */
+  @media (width >= 860px) {
+    :global(.acard--featured) {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: stretch;
+    }
+
+    :global(.acard--featured) .acard__body {
+      align-content: center;
+      padding: var(--panel-pad);
+    }
+
+    :global(.acard--featured) .acard__title {
+      font-size: var(--fs-h2);
+      line-height: var(--lh-h2);
+      font-weight: var(--fw-black);
+    }
+
+    :global(.acard--featured) .acard__text {
+      font-size: var(--fs-lead);
+      line-height: var(--lh-lead);
+    }
+  }
+</style>

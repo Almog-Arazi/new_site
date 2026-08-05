@@ -1,0 +1,55 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Section from '../ui/Section.astro';
+import Prose from '../ui/Prose.astro';
+import Blocks from './Blocks.astro';
+import RelatedLinks from '../blocks/RelatedLinks.astro';
+import { collectionPage } from '../../lib/schema';
+import { relatedLinks, type TemplateProps } from './shared';
+
+/* ============================================================
+   HUB — /services, /equipment.
+
+   Schema: CollectionPage. The BreadcrumbList comes from PageLayout, which
+   emits it for every page in the collection, so it is not repeated here.
+   ============================================================ */
+
+type Props = TemplateProps;
+const { page, path, hasBody = false } = Astro.props;
+const data = page.data;
+
+const schemas = [
+  collectionPage({ name: data.h1, description: data.seo.description, path }),
+];
+
+const related = await relatedLinks(data.related);
+---
+
+<PageLayout
+  title={data.seo.title}
+  description={data.seo.description}
+  path={path}
+  noindex={data.seo.noindex}
+  eyebrow={data.eyebrow}
+  h1={data.h1}
+  lead={data.lead}
+  breadcrumb={data.breadcrumb}
+  breadcrumbLabel={data.breadcrumbLabel}
+  hero={data.hero}
+  schemas={schemas}
+  cta={data.cta}
+>
+  <Blocks sections={data.sections} />
+
+  {
+    hasBody && (
+      <Section width="narrow">
+        <Prose>
+          <slot />
+        </Prose>
+      </Section>
+    )
+  }
+
+  <RelatedLinks links={related} tone="soft" />
+</PageLayout>

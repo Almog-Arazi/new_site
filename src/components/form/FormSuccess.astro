@@ -1,0 +1,95 @@
+---
+import site from '../../site.config';
+import { displayPhone, telHrefFor } from '../../lib/format';
+import Icon from '../ui/Icon.astro';
+
+/* Inline success panel. form.ts hides the form, unhides this and moves
+   focus here, so a screen-reader user is told what happened without a
+   page change. role="status" covers the sighted-but-not-focused case. */
+
+const phone = displayPhone(site.phoneE164);
+const tel = telHrefFor(site.phoneE164);
+---
+
+<div class="form-success" data-form-success hidden tabindex="-1" role="status">
+  <span class="form-success__mark" aria-hidden="true">
+    <Icon name="check" size={24} />
+  </span>
+  <h3 class="form-success__title">תודה, קיבלנו את הפנייה</h3>
+  <p class="form-success__text">
+    נחזור אליכם עם זמינות ומחיר בשעות העבודה ({site.hours}). אם זה דחוף — אפשר פשוט להתקשר.
+  </p>
+  <a href={tel} class="form-success__call" data-track="phone_click">
+    <Icon name="phone" size={20} />
+    <bdi class="ltr num">{phone}</bdi>
+  </a>
+</div>
+
+<style>
+  .form-success {
+    display: grid;
+    justify-items: start;
+    gap: var(--s-3);
+    padding: var(--card-pad);
+    background: var(--c-on-dark-surface);
+    border: 1px solid var(--c-border-dark);
+    border-radius: var(--r-4);
+    color: var(--c-on-dark);
+  }
+
+  .form-success[hidden] {
+    display: none;
+  }
+
+  .form-success:focus-visible {
+    outline: none;
+    box-shadow: var(--ring-on-dark);
+  }
+
+  .form-success__mark {
+    display: grid;
+    place-items: center;
+    inline-size: var(--s-9);
+    block-size: var(--s-9);
+    color: var(--c-bg-dark);
+    background: var(--c-accent-dark);
+    border-radius: var(--r-pill);
+  }
+
+  .form-success__title {
+    font-family: var(--ff-head);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-black);
+    color: var(--c-white);
+  }
+
+  .form-success__text {
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    color: var(--c-on-dark);
+  }
+
+  .form-success__call {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-block-size: var(--tap);
+    padding-inline: var(--s-5);
+    font-family: var(--ff-head);
+    font-size: var(--fs-btn);
+    font-weight: var(--fw-bold);
+    color: var(--c-on-action);
+    background: var(--c-action);
+    border-radius: var(--r-pill);
+    text-decoration: none;
+  }
+
+  .form-success__call:hover {
+    background: var(--c-action-hover);
+  }
+
+  .form-success__call:focus-visible {
+    outline: none;
+    box-shadow: var(--ring-on-dark);
+  }
+</style>

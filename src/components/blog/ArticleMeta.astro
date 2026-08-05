@@ -1,0 +1,51 @@
+---
+import { hebrewDate, isoDate } from '../../lib/format';
+
+interface Props {
+  category?: string;
+  date?: Date;
+  readingMinutes?: number;
+  /** `עודכן` instead of the bare date. */
+  updated?: boolean;
+  class?: string;
+}
+
+const { category, date, readingMinutes, updated = false, class: className } = Astro.props;
+
+const parts = [
+  category,
+  date ? 'date' : undefined,
+  readingMinutes ? `${readingMinutes} דקות קריאה` : undefined,
+].filter(Boolean);
+---
+
+<p class:list={['ameta', className]}>
+  {
+    parts.map((part, i) => (
+      <>
+        {i > 0 && <span aria-hidden="true">·</span>}
+        {part === 'date' && date ? (
+          <time datetime={isoDate(date)}>
+            {updated ? `עודכן ${hebrewDate(date)}` : hebrewDate(date)}
+          </time>
+        ) : (
+          <span>{part}</span>
+        )}
+      </>
+    ))
+  }
+</p>
+
+<style>
+  /* Monospace label row — the same voice as .t-eyebrow, one step quieter. */
+  .ameta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-2);
+    font-family: var(--ff-mono);
+    font-size: var(--fs-xs);
+    line-height: var(--lh-h3);
+    color: var(--c-text);
+  }
+</style>

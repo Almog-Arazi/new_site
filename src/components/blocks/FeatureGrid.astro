@@ -5,31 +5,136 @@ import Card from '../ui/Card.astro';
 import Icon from '../ui/Icon.astro';
 import type { Section as Block } from '../../content.config';
 
-type Props = Extract<Block, { type: 'featureGrid' }>;
-const { eyebrow, heading, intro, items, tone } = Astro.props;
+type Props = Extract<Block, { type: 'featureGrid' }> & {
+  /** Set by the equipment template — see the note below. */
+  dense?: boolean;
+};
+
+const { eyebrow, heading, intro, items, columns, tone, dense = false } = Astro.props;
 const isDark = tone === 'dark';
+
+/* ── the sub-type roll-call ───────────────────────────────────
+   An equipment page lists every sub-type it inspects — nine kinds of
+   forklift, six kinds of crane — each with a line of copy. Rendered as
+   nine full feature cards with nine identical icon tiles that is a wall,
+   not an index. On equipment pages a list this long therefore drops to a
+   tighter card with the icon set beside the title, so the sub-types scan
+   as a list of names with detail attached rather than as nine equal
+   claims. Four cards or fewer are a real feature grid and keep the tiles.
+   ────────────────────────────────────────────────────────────── */
+const compact = dense && items.length >= 6;
 ---
 
 <Section tone={tone}>
   <SectionHeader eyebrow={eyebrow} heading={heading} intro={intro} />
-  <div class="grid grid--3">
-    {items.map((item, i) => (
-      <Card tone={isDark ? 'dark' : 'surface'} accent={i === items.length - 1 ? 'orange' : 'blue'}>
-        {item.icon && <Icon name={item.icon} size={28} class="feature__icon" />}
-        <h3>{item.title}</h3>
-        <p class="t-body">{item.text}</p>
-      </Card>
-    ))}
+
+  <div class:list={['fg', compact && 'fg--dense']} style={`--cols:${columns}`}>
+    {
+      items.map((item) => (
+        /* Hairline + tint, no accent rule per card: a row of identical 4px
+           bars is the uniform-card-grid look the design language rules out.
+           The icon carries the colour instead. */
+        <Card tone={isDark ? 'dark' : 'surface'}>
+          <div class="fg__card">
+            {item.icon && (
+              <span class="fg__icon" aria-hidden="true">
+                <Icon name={item.icon} size={compact ? 20 : 24} />
+              </span>
+            )}
+            <h3 class="fg__title">{item.title}</h3>
+            <p class="fg__text">{item.text}</p>
+          </div>
+        </Card>
+      ))
+    }
   </div>
 </Section>
 
 <style>
-  .feature__icon {
-    color: var(--c-link);
-    margin-block-end: var(--s-3);
+  .fg {
+    display: grid;
+    gap: var(--grid-gap);
   }
 
-  h3 {
-    margin-block-end: var(--s-2);
+  @media (width >= 640px) {
+    .fg {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (width >= 960px) {
+    .fg {
+      grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    }
+  }
+
+  .fg__card {
+    display: grid;
+    gap: var(--s-3);
+    align-content: start;
+  }
+
+  .fg__icon {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--s-9);
+    block-size: var(--s-9);
+    margin-block-end: var(--s-1);
+    border-radius: var(--r-3);
+    background: var(--c-bg-tint);
+    color: var(--c-link);
+  }
+
+  .fg__title,
+  .fg__text {
+    margin: 0;
+  }
+
+  .fg__text {
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    max-inline-size: var(--measure);
+  }
+
+  /* ── dense: the equipment sub-type index ───────────────────── */
+  .fg--dense {
+    gap: var(--s-4);
+  }
+
+  .fg--dense :global(.card--padded) {
+    padding: var(--s-5);
+  }
+
+  .fg--dense .fg__card {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--s-1) var(--s-3);
+    align-items: center;
+  }
+
+  .fg--dense .fg__icon {
+    grid-row: 1;
+    inline-size: var(--s-7);
+    block-size: var(--s-7);
+    margin-block-end: 0;
+    border-radius: var(--r-2);
+  }
+
+  .fg--dense .fg__title {
+    grid-row: 1;
+  }
+
+  .fg--dense .fg__text {
+    grid-column: 1 / -1;
+    font-size: var(--fs-sm);
+  }
+
+  /* ── inside a dark slab ────────────────────────────────────── */
+  :global(.section--dark) .fg__icon {
+    background: var(--c-on-dark-surface);
+    color: var(--c-accent-dark);
+  }
+
+  :global(.section--dark) .fg__text {
+    color: var(--c-on-dark);
   }
 </style>

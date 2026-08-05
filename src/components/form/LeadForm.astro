@@ -1,0 +1,335 @@
+---
+import { getCollection } from 'astro:content';
+import site from '../../site.config';
+import Field from './Field.astro';
+import Select from './Select.astro';
+import Textarea from './Textarea.astro';
+import Honeypot from './Honeypot.astro';
+import FormSuccess from './FormSuccess.astro';
+import Button from '../ui/Button.astro';
+
+/* The short lead form — five fields, navy panel.
+ *
+ * Netlify Forms detection happens at deploy time by parsing the built HTML,
+ * so this form must exist as static markup: no client-side rendering, no
+ * conditional mount. The hidden `form-name` input is what makes the AJAX
+ * POST in form.ts land in the same inbox as a native submit.
+ *
+ * Without JavaScript the form posts natively to /toda and still works.
+ */
+
+interface Props {
+  heading?: string;
+  intro?: string;
+  /** 2 inside a page that has no other h2 nearby, 3 when nested. */
+  headingLevel?: 2 | 3;
+  /** false when the caller already supplies its own heading. */
+  showHead?: boolean;
+  /**
+   * false drops the navy panel chrome (padding / background / radius) so the
+   * form can sit inside a dark card that already provides it — the homepage
+   * hero card, for instance. The field palette stays on-dark either way.
+   */
+  panel?: boolean;
+  id?: string;
+}
+
+const {
+  heading = 'טופס תיאום בדיקה',
+  intro = 'חמישה שדות בלבד — נחזור אליכם עם זמינות ומחיר.',
+  headingLevel = 2,
+  showHead = true,
+  panel = true,
+  id = 'lead-form',
+} = Astro.props;
+
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
+
+const equipment = (await getCollection('equipment')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const equipmentOptions = [
+  ...equipment.map((entry) => ({ value: entry.data.id, label: entry.data.label })),
+  { value: 'other', label: 'כמה סוגים / ציוד אחר' },
+];
+---
+
+<div class:list={['lead-form', !panel && 'lead-form--bare']} id={id}>
+  {
+    showHead && (
+      <div class="lead-form__head">
+        <Heading class="lead-form__title">{heading}</Heading>
+        {intro && <p class="lead-form__intro">{intro}</p>}
+      </div>
+    )
+  }
+
+  <form
+    class="lead-form__form"
+    name={site.formName}
+    method="POST"
+    action="/toda"
+    data-netlify="true"
+    netlify-honeypot="company-website"
+    data-lead-form
+  >
+    {/* Netlify pairs the AJAX POST with the right form by this field. */}
+    <input type="hidden" name="form-name" value={site.formName} />
+    <Honeypot />
+
+    <Field
+      id="lead-name"
+      name="name"
+      label="שם מלא"
+      autocomplete="name"
+      required
+      maxlength={80}
+    />
+
+    <Field
+      id="lead-company"
+      name="company"
+      label="שם החברה"
+      autocomplete="organization"
+      maxlength={80}
+    />
+
+    <Field
+      id="lead-phone"
+      name="phone"
+      label="טלפון"
+      type="tel"
+      inputmode="tel"
+      dir="ltr"
+      autocomplete="tel"
+      hint="נחזור אליכם למספר הזה."
+      required
+      maxlength={20}
+    />
+
+    <Select
+      id="lead-equipment"
+      name="equipment"
+      label="סוג הציוד לבדיקה"
+      placeholder="בחרו סוג ציוד"
+      options={equipmentOptions}
+      required
+    />
+
+    <Textarea
+      id="lead-message"
+      name="message"
+      label="הודעה"
+      rows={3}
+      placeholder="כמה יחידות, מיקום האתר, מתי בוצעה הבדיקה האחרונה…"
+    />
+
+    <p class="lead-form__status" role="status" data-form-status></p>
+
+    <Button type="submit" variant="primary" size="lg" full>שליחת בקשה</Button>
+
+    <p class="lead-form__consent">
+      בשליחת הפרטים אני מאשר קבלת מענה בטלפון ובוואטסאפ ·
+      <a href="/privacy">מדיניות פרטיות</a>
+    </p>
+
+    <noscript>
+      <p class="lead-form__consent">
+        הטופס נשלח גם ללא JavaScript — לאחר השליחה תועברו לעמוד תודה.
+      </p>
+    </noscript>
+  </form>
+
+  <FormSuccess />
+</div>
+
+<script>
+  import '../../scripts/form';
+</script>
+
+<style>
+  .lead-form {
+    display: grid;
+    gap: var(--s-5);
+    padding: var(--panel-pad);
+    background: var(--c-bg-dark);
+    border-radius: var(--r-4);
+    color: var(--c-on-dark);
+  }
+
+  /* Dropped into a card that already carries the navy panel. */
+  .lead-form--bare {
+    padding: 0;
+    background: none;
+    border-radius: 0;
+  }
+
+  .lead-form__head {
+    display: grid;
+    gap: var(--s-2);
+  }
+
+  .lead-form__title {
+    font-family: var(--ff-head);
+    font-size: var(--fs-h2);
+    line-height: var(--lh-h2);
+    font-weight: var(--fw-black);
+    color: var(--c-white);
+  }
+
+  .lead-form__intro {
+    font-size: var(--fs-sm);
+    line-height: var(--lh-body);
+    color: var(--c-on-dark-muted);
+  }
+
+  .lead-form__form {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  .lead-form__form[hidden] {
+    display: none;
+  }
+
+  .lead-form__status:empty {
+    display: none;
+  }
+
+  .lead-form__status {
+    font-size: var(--fs-sm);
+    color: var(--c-accent-dark);
+  }
+
+  .lead-form__consent {
+    font-size: var(--fs-xs);
+    line-height: 1.6;
+    color: var(--c-on-dark-muted);
+  }
+
+  .lead-form__consent a {
+    color: var(--c-on-dark);
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+  }
+
+  .lead-form__consent a:hover {
+    color: var(--c-accent-dark);
+  }
+
+  /* ── field presentation ───────────────────────────────────────
+     Held here rather than in each of Field / Select / Textarea so the
+     three do not triplicate it. Scoped under .lead-form, so nothing
+     leaks to the rest of the site.
+     ──────────────────────────────────────────────────────────── */
+
+  .lead-form :global(.field) {
+    display: grid;
+    gap: var(--s-2);
+  }
+
+  .lead-form :global(.field__label) {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-bold);
+    color: var(--c-white);
+  }
+
+  .lead-form :global(.field__req) {
+    color: var(--c-accent-dark);
+  }
+
+  .lead-form :global(.field__opt) {
+    font-family: var(--ff-body);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-light);
+    color: var(--c-on-dark-muted);
+  }
+
+  /* Hints use the on-dark ramp, never --c-text-muted (3.12:1). */
+  .lead-form :global(.field__hint) {
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+    color: var(--c-on-dark-muted);
+  }
+
+  .lead-form :global(.field__control) {
+    inline-size: 100%;
+    min-block-size: var(--tap);
+    padding-inline: var(--s-4);
+    padding-block: var(--s-3);
+    font-family: var(--ff-body);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-reg);
+    line-height: 1.4;
+    color: var(--c-text-strong);
+    background: var(--c-surface);
+    border: 1.5px solid transparent;
+    border-radius: var(--r-2);
+    transition:
+      border-color var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
+  }
+
+  .lead-form :global(.field__control--area) {
+    min-block-size: 0;
+    line-height: var(--lh-body);
+    resize: vertical;
+  }
+
+  .lead-form :global(.field__control::placeholder) {
+    color: var(--c-text-muted);
+  }
+
+  .lead-form :global(.field__control:hover) {
+    border-color: var(--c-bg-tint-strong);
+  }
+
+  .lead-form :global(.field__control:focus-visible) {
+    outline: none;
+    border-color: var(--c-link);
+    box-shadow: var(--ring-on-dark);
+  }
+
+  /* Invalid state is never colour-only: the control gains a red border,
+     the label gains an error line with a "!" mark, and aria-invalid plus
+     aria-describedby carry it to assistive tech. */
+  .lead-form :global(.field__control[aria-invalid='true']) {
+    border-color: var(--c-danger);
+  }
+
+  .lead-form :global(.field__error) {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--s-2);
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+    /* Amber, not --c-danger: #b3261e on navy fails AA. The "!" mark and
+       the message text carry the meaning either way. */
+    color: var(--c-accent-dark);
+  }
+
+  .lead-form :global(.field__error[hidden]) {
+    display: none;
+  }
+
+  .lead-form :global(.field__error-mark) {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--s-5);
+    block-size: var(--s-5);
+    margin-block-start: 2px;
+    font-family: var(--ff-head);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-black);
+    color: var(--c-bg-dark);
+    background: var(--c-accent-dark);
+    border-radius: var(--r-pill);
+  }
+</style>

@@ -2,67 +2,175 @@
 import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import Icon from '../ui/Icon.astro';
+import TelLink from '../ui/TelLink.astro';
 import JsonLd from '../seo/JsonLd.astro';
-import { getFaqFor } from '../../lib/faq';
+import { getFaqFor, getFaqGroups, type FaqGroup, type FaqItem } from '../../lib/faq';
 import { faqPage } from '../../lib/schema';
 import { normalise } from '../../lib/nav';
 import type { Section as Block } from '../../content.config';
 
-type Props = Extract<Block, { type: 'faq' }> & { emitSchema?: boolean };
+/* ============================================================
+   THE single source of FAQ truth.
+
+   One array of items reaches this component, and from that one array it
+   renders the accordion AND emits the FAQPage JSON-LD. There is nothing to
+   keep in sync because there is only one list: a question that is not on
+   the screen cannot reach the schema, and a question in the schema is
+   always readable on the page.
+
+   Never hand-write FAQ schema anywhere else.
+   ============================================================ */
+
+type Props = Omit<Extract<Block, { type: 'faq' }>, 'tone' | 'groups'> & {
+  tone?: Extract<Block, { type: 'faq' }>['tone'];
+  groups?: string[];
+  /** Pre-resolved items from a template that already looked them up. Wins over `groups`. */
+  items?: FaqItem[];
+  /** `grouped` renders an <h2> per topic with its questions as <h3>. */
+  variant?: 'flat' | 'grouped';
+  /** Topic rail beside the groups — sticky on desktop, a flat list on mobile. */
+  sidebar?: boolean;
+  emitSchema?: boolean;
+};
 
 const {
   heading = 'שאלות נפוצות',
   intro,
-  groups,
+  groups = [],
   limit,
   moreHref,
-  tone,
+  tone = 'light',
+  items: given,
+  variant = 'flat',
+  sidebar = false,
   emitSchema = true,
 } = Astro.props;
 
-/* ONE array feeds BOTH the visible accordion and the FAQPage schema.
-   They cannot drift out of sync, because there is nothing to sync. */
-const items = await getFaqFor(groups, limit);
+const grouped = variant === 'grouped';
+
+/* Grouped mode resolves groups because it needs the topic titles, but the
+   schema is still built from the flattened result — so both modes emit
+   exactly, and only, what they render. */
+let topics: FaqGroup[] = [];
+let items: FaqItem[] = [];
+
+if (grouped) {
+  topics = (await getFaqGroups(groups)).filter((group) => group.items.length > 0);
+  items = topics.flatMap((group) => group.items);
+} else if (given) {
+  items = limit ? given.slice(0, limit) : given;
+} else {
+  items = await getFaqFor(groups, limit);
+}
+
 const path = normalise(Astro.url.pathname);
+const showRail = grouped && sidebar && topics.length > 1;
 ---
 
-<Section tone={tone} id="faq">
-  <SectionHeader heading={heading} intro={intro} />
+{
+  items.length > 0 && (
+    <Section tone={tone} id="faq">
+      <SectionHeader heading={heading} intro={intro} />
 
-  <div class="faq">
-    {
-      items.map((item, i) => (
-        <details class="faq__item" name="faq" open={i === 0}>
-          <summary class="faq__q">
-            <h3>{item.q}</h3>
-            <Icon name="chevron" size={20} class="faq__caret" />
-          </summary>
-          <div class="faq__a">
-            <p set:html={item.aHtml} />
+      {grouped ? (
+        <div class:list={['faqx', showRail && 'faqx--rail']}>
+          {showRail && (
+            <nav class="topics" aria-label="נושאי השאלות הנפוצות">
+              <p class="topics__title">נושאים</p>
+              <ul role="list" class="topics__list">
+                {topics.map((group) => (
+                  <li>
+                    <a href={`#faq-${group.group}`}>
+                      <span>{group.title}</span>
+                      <span class="topics__count" aria-hidden="true">
+                        {group.items.length}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <div class="topics__help">
+                <p class="t-sm">לא מצאתם תשובה?</p>
+                <TelLink variant="plain" />
+              </div>
+            </nav>
+          )}
+
+          <div class="faqx__groups">
+            {topics.map((group) => (
+              <section class="faqgroup" id={`faq-${group.group}`}>
+                <h2 class="faqgroup__title">{group.title}</h2>
+                <div class="faq">
+                  {group.items.map((item) => (
+                    <details class="faq__item">
+                      <summary class="faq__q">
+                        <h3>{item.q}</h3>
+                        <span class="faq__caret" aria-hidden="true">
+                          <Icon name="chevron" size={20} />
+                        </span>
+                      </summary>
+                      <div class="faq__a">
+                        <p set:html={item.aHtml} />
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            ))}
           </div>
-        </details>
-      ))
-    }
-  </div>
+        </div>
+      ) : (
+        <div class="faq">
+          {items.map((item, i) => (
+            <details class="faq__item" open={i === 0}>
+              <summary class="faq__q">
+                <h3>{item.q}</h3>
+                <span class="faq__caret" aria-hidden="true">
+                  <Icon name="chevron" size={20} />
+                </span>
+              </summary>
+              <div class="faq__a">
+                <p set:html={item.aHtml} />
+              </div>
+            </details>
+          ))}
+        </div>
+      )}
 
-  {
-    moreHref && (
-      <p class="faq__more">
-        <a href={moreHref}>לכל השאלות הנפוצות</a>
-      </p>
-    )
-  }
-</Section>
+      {moreHref && (
+        <p class="faq__more">
+          <a href={moreHref}>
+            <span>לכל השאלות הנפוצות</span>
+            <Icon name="arrow" size={18} />
+          </a>
+        </p>
+      )}
+    </Section>
+  )
+}
 
 {emitSchema && items.length > 0 && <JsonLd data={faqPage(items, path)} />}
 
 <style>
-  /* Hairline-separated rows inside one panel — not a stack of shadowed boxes. */
+  /* ── the accordion ────────────────────────────────────────────
+     Hairline-separated rows inside one panel, not a stack of shadowed
+     boxes.
+
+     `<details>` deliberately carries NO `name` attribute. A named group is
+     mutually exclusive, which is wrong here on three counts: a visitor
+     comparing "כל כמה זמן נדרשת בדיקה" against "מה קורה אם התסקיר פג" needs
+     both answers open at once; on a fourteen-question page every click
+     silently collapsing a distant row reads as a bug; and on the grouped
+     FAQ page an exclusive group would close the row a topic anchor had just
+     scrolled to, yanking the target out from under the scroll position.
+     Independent toggles cost nothing — the schema is emitted from the data,
+     not from the open state.
+     ──────────────────────────────────────────────────────────── */
   .faq {
     border: var(--hairline);
     border-radius: var(--r-4);
-    overflow: hidden;
     background: var(--c-surface);
+    overflow: hidden;
   }
 
   .faq__item + .faq__item {
@@ -81,29 +189,50 @@ const path = normalise(Astro.url.pathname);
     min-block-size: var(--tap-lg);
     padding: var(--s-5) var(--card-pad);
     cursor: pointer;
-    /* Safari positions the native marker physically; we hide it and draw
-       our own chevron on the inline-end side. */
+    /* Safari draws the native marker on the physical left. Hide it and draw
+       our own caret on the inline-end side. */
     list-style: none;
+    transition: background-color var(--dur) var(--ease);
   }
 
   .faq__q::-webkit-details-marker {
     display: none;
   }
 
+  .faq__q:hover {
+    background: var(--c-bg-soft);
+  }
+
+  .faq__item[open] .faq__q:hover {
+    background: transparent;
+  }
+
   .faq__q h3 {
-    font-size: var(--fs-h3);
     margin: 0;
+    font-size: var(--fs-h3);
+    color: var(--c-heading);
   }
 
   .faq__caret {
+    display: inline-grid;
+    place-items: center;
     flex: none;
+    inline-size: var(--s-8);
+    block-size: var(--s-8);
+    border-radius: var(--r-pill);
+    background: var(--c-bg-tint);
     color: var(--c-link);
     transform: rotate(-90deg);
-    transition: transform var(--dur-slow) var(--ease);
+    transition:
+      transform var(--dur-slow) var(--ease),
+      background-color var(--dur) var(--ease),
+      color var(--dur) var(--ease);
   }
 
   .faq__item[open] .faq__caret {
     transform: rotate(90deg);
+    background: var(--c-link);
+    color: var(--c-white);
   }
 
   .faq__q:focus-visible {
@@ -118,6 +247,14 @@ const path = normalise(Astro.url.pathname);
 
   .faq__a p {
     max-inline-size: var(--measure);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+  }
+
+  .faq__a :global(a) {
+    color: var(--c-link);
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
   }
 
   .faq__more {
@@ -127,6 +264,172 @@ const path = normalise(Astro.url.pathname);
   }
 
   .faq__more a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-block-size: var(--tap);
     color: var(--c-action-ink);
+    text-decoration: none;
+  }
+
+  .faq__more a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+  }
+
+  /* ── grouped layout + topic rail ───────────────────────────── */
+  .faqx__groups {
+    display: grid;
+    gap: var(--s-10);
+  }
+
+  .faqgroup {
+    /* Clears the sticky header when a topic link jumps here. */
+    scroll-margin-block-start: var(--s-11);
+  }
+
+  .faqgroup__title {
+    margin-block-end: var(--s-5);
+    font-size: var(--fs-h2);
+  }
+
+  .topics {
+    margin-block-end: var(--s-8);
+  }
+
+  .topics__title {
+    margin-block-end: var(--s-3);
+    font-family: var(--ff-mono);
+    font-size: var(--fs-xs);
+    color: var(--c-action-ink);
+  }
+
+  /* Mobile: a plain wrapping list of jump links. No sidebar, no stickiness. */
+  .topics__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .topics__list a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-3);
+    min-block-size: var(--tap);
+    padding-inline: var(--s-5);
+    padding-block: var(--s-2);
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-med);
+    color: var(--c-heading);
+    text-decoration: none;
+    background: var(--c-surface);
+    border: 1.5px solid var(--c-border-strong);
+    border-radius: var(--r-pill);
+    transition:
+      border-color var(--dur) var(--ease),
+      background-color var(--dur) var(--ease),
+      color var(--dur) var(--ease);
+  }
+
+  .topics__list a:hover {
+    border-color: var(--c-link);
+    background: var(--c-bg-tint);
+    color: var(--c-link);
+  }
+
+  .topics__list a:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+  }
+
+  .topics__count {
+    font-family: var(--ff-mono);
+    font-size: var(--fs-xs);
+    color: var(--c-text);
+  }
+
+  .topics__help {
+    display: none;
+  }
+
+  @media (width >= 1000px) {
+    .faqx--rail {
+      display: grid;
+      grid-template-columns: 15rem minmax(0, 1fr);
+      gap: var(--s-10);
+      align-items: start;
+    }
+
+    .topics {
+      position: sticky;
+      inset-block-start: var(--s-11);
+      margin-block-end: 0;
+      padding: var(--s-5);
+      background: var(--c-surface);
+      border: var(--hairline);
+      border-radius: var(--r-4);
+    }
+
+    .topics__list {
+      display: grid;
+      gap: var(--s-1);
+    }
+
+    .topics__list a {
+      justify-content: space-between;
+      padding-inline: var(--s-4);
+      background: transparent;
+      border-color: transparent;
+      border-radius: var(--r-2);
+    }
+
+    .topics__help {
+      display: grid;
+      gap: var(--s-1);
+      margin-block-start: var(--s-5);
+      padding-block-start: var(--s-5);
+      border-block-start: var(--hairline);
+    }
+
+    .topics__help :global(.tel) {
+      font-size: var(--fs-sm);
+      color: var(--c-action-ink);
+    }
+  }
+
+  /* ── inside a dark slab ────────────────────────────────────── */
+  :global(.section--dark) .faq {
+    background: var(--c-on-dark-surface-soft);
+    border-color: var(--c-border-dark);
+  }
+
+  :global(.section--dark) .faq__item + .faq__item {
+    border-block-start: 1px solid var(--c-border-dark);
+  }
+
+  :global(.section--dark) .faq__item[open] {
+    background: var(--c-on-dark-surface);
+  }
+
+  :global(.section--dark) .faq__q:hover {
+    background: var(--c-on-dark-surface-hover);
+  }
+
+  :global(.section--dark) .faq__caret {
+    background: var(--c-on-dark-surface);
+    color: var(--c-accent-dark);
+  }
+
+  :global(.section--dark) .faq__item[open] .faq__caret {
+    background: var(--c-accent-dark);
+    color: var(--c-bg-dark);
+  }
+
+  :global(.section--dark) .faq__more a {
+    color: var(--c-accent-dark);
   }
 </style>

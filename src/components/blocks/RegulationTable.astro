@@ -5,58 +5,124 @@ import type { Section as Block } from '../../content.config';
 
 type Props = Extract<Block, { type: 'regulationTable' }>;
 const { heading, intro, columns, rows, note, tone } = Astro.props;
+
+const label = heading ?? 'טבלת תדירויות בדיקה';
 ---
 
 <Section tone={tone}>
   <SectionHeader heading={heading} intro={intro} />
-  <div class="table-wrap">
+
+  {/* A frequency table is wider than a phone. It scrolls inside its OWN
+      container so the page body never scrolls horizontally; `tabindex="0"`
+      plus a role and a label make that scroll reachable from the keyboard
+      and announced by a screen reader, which a bare overflow div is not. */}
+  <div class="tbl" role="region" aria-label={label} tabindex="0">
     <table>
+      <caption class="vh">{label}</caption>
       <thead>
-        <tr>{columns.map((col) => <th scope="col">{col}</th>)}</tr>
+        <tr>
+          {columns.map((col) => <th scope="col">{col}</th>)}
+        </tr>
       </thead>
       <tbody>
-        {rows.map((row) => (
-          <tr>{row.map((cell, i) => (i === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>))}</tr>
-        ))}
+        {
+          rows.map((row) => (
+            <tr>
+              {row.map((cell, i) => (i === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>))}
+            </tr>
+          ))
+        }
       </tbody>
     </table>
   </div>
-  {note && <p class="t-sm table-note">{note}</p>}
+
+  {note && <p class="tbl__note t-sm">{note}</p>}
 </Section>
 
 <style>
-  /* Wide content scrolls inside its own container — the page body never does. */
-  .table-wrap {
+  .tbl {
     overflow-x: auto;
+    /* Keeps the momentum-scroll shadow inside the rounded shell. */
     border: var(--hairline);
     border-radius: var(--r-3);
+    background: var(--c-surface);
+    overscroll-behavior-x: contain;
+  }
+
+  .tbl:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
   }
 
   table {
     inline-size: 100%;
+    /* Below this the columns wrap into unreadable slivers, so the container
+       scrolls instead. */
+    min-inline-size: 34rem;
     border-collapse: collapse;
     font-size: var(--fs-sm);
   }
 
   th,
   td {
-    padding: var(--s-4);
+    padding: var(--s-4) var(--s-5);
     text-align: start;
+    vertical-align: top;
+    line-height: var(--lh-body);
     border-block-end: var(--hairline);
   }
 
   thead th {
     background: var(--c-bg-tint);
     font-family: var(--ff-head);
+    font-weight: var(--fw-bold);
     color: var(--c-heading);
+    white-space: nowrap;
+  }
+
+  /* The row header is the equipment name — it carries the row, so it reads
+     as a heading rather than as another cell. */
+  tbody th {
+    font-family: var(--ff-head);
+    font-weight: var(--fw-bold);
+    color: var(--c-heading);
+  }
+
+  tbody tr:nth-child(even) :is(th, td) {
+    background: var(--c-bg-soft);
   }
 
   tbody tr:last-child :is(th, td) {
     border-block-end: 0;
   }
 
-  .table-note {
-    margin-block-start: var(--s-3);
+  .tbl__note {
+    margin-block-start: var(--s-4);
+    max-inline-size: var(--measure);
     color: var(--c-text);
+  }
+
+  /* ── inside a dark slab ────────────────────────────────────── */
+  :global(.section--dark) .tbl {
+    background: var(--c-on-dark-surface-soft);
+    border-color: var(--c-border-dark);
+  }
+
+  :global(.section--dark) :is(th, td) {
+    border-block-end: 1px solid var(--c-border-dark);
+  }
+
+  :global(.section--dark) thead th,
+  :global(.section--dark) tbody th {
+    background: var(--c-on-dark-surface);
+    color: var(--c-white);
+  }
+
+  :global(.section--dark) tbody tr:nth-child(even) :is(th, td) {
+    background: var(--c-on-dark-surface-soft);
+  }
+
+  :global(.section--dark) .tbl__note {
+    color: var(--c-on-dark-muted);
   }
 </style>

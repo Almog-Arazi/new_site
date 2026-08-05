@@ -1,0 +1,88 @@
+---
+import { getCollection } from 'astro:content';
+import Section from '../ui/Section.astro';
+import Card from '../ui/Card.astro';
+import PhotoFrame from '../media/PhotoFrame.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  heading?: string;
+  moreHref?: string;
+  moreLabel?: string;
+}
+
+const {
+  heading = 'ציוד ומתקני הרמה שאנו בודקים',
+  moreHref = '/equipment',
+  moreLabel = 'לכל סוגי הציוד',
+} = Astro.props;
+
+/* Same six records that feed the chip picker, the footer and the form's
+   equipment field — one dataset, four consumers. */
+const items = (await getCollection('equipment')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Section>
+  <header class="split heq__head">
+    <h2>{heading}</h2>
+    <a href={moreHref} class="heq__all">
+      {moreLabel}
+      <Icon name="arrow" size={18} />
+    </a>
+  </header>
+
+  <div class="grid grid--3">
+    {
+      items.map((item) => (
+        <Card href={item.data.href} padded={false}>
+          <PhotoFrame
+            variant={item.data.placeholder}
+            alt={item.data.alt}
+            note={item.data.note}
+            ratio="wide"
+            class="heq__media"
+          />
+          <div class="heq__body">
+            <h3>{item.data.label}</h3>
+            <p class="t-body">{item.data.short}</p>
+          </div>
+        </Card>
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  .heq__head {
+    margin-block-end: var(--s-8);
+    align-items: baseline;
+  }
+
+  .heq__all {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-block-size: var(--tap);
+    font-family: var(--ff-head);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-sm);
+    color: var(--c-link);
+  }
+
+  .heq__all:hover {
+    color: var(--c-action-ink);
+  }
+
+  /* A class handed to a child component lands on that component's root,
+     which never carries this file's scope id — hence :global here only. */
+  :global(.heq__media) {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .heq__body {
+    display: grid;
+    gap: var(--s-2);
+    padding: var(--card-pad);
+  }
+</style>

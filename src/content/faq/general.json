@@ -7,22 +7,54 @@
       "id": "frequency-lifting",
       "q": "כל כמה זמן צריך לבצע בדיקה למתקני הרמה?",
       "a": "מכונות ומתקני הרמה חייבים לעבור בדיקה תקופתית על ידי בודק מוסמך בהתאם לדרישות החוק. ברוב המקרים הבדיקה מתבצעת אחת ל־14 חודשים, בהתאם לסוג הציוד ולדרישות הרלוונטיות. במקרים מסוימים נדרשת בדיקה נוספת, לדוגמה לאחר שינוי משמעותי, תיקון או אירוע חריג.",
-      "showOn": ["services", "lifting-equipment-inspection"],
+      "showOn": [
+        "services",
+        "lifting-equipment-inspection",
+        "equipment",
+        "crane-inspection",
+        "lift-platform-inspection",
+        "additional-lifting-equipment",
+        "lifting-inspection-center",
+        "lifting-inspection-south",
+        "lifting-inspection-sharon",
+        "faq"
+      ],
       "order": 10
+    },
+    {
+      "id": "legal-basis",
+      "q": "מה המקור החוקי לחובת בדיקת מתקני הרמה?",
+      "a": "הדרישה לבדיקת מתקני הרמה נובעת מפקודת הבטיחות בעבודה ומהתקנות הרלוונטיות לציוד הרמה. התקנות מגדירות את חובת הבדיקה באמצעות בודק מוסמך ואת הצורך בביצוע בדיקות תקופתיות לציוד המשמש להרמה.",
+      "showOn": ["lifting-equipment-inspection", "services", "faq"],
+      "order": 20
+    },
+    {
+      "id": "frequency-forklift",
+      "q": "כל כמה זמן צריך לבדוק מלגזה?",
+      "a": "מלגזות הן מתקני הרמה ולכן נדרשות לבדיקה תקופתית על ידי בודק מוסמך — ברוב המקרים אחת ל־14 חודשים, בהתאם לסוג הכלי ולדרישות הרלוונטיות.",
+      "showOn": ["forklift-inspection", "equipment", "faq"],
+      "order": 30
     },
     {
       "id": "frequency-accessories",
       "q": "כל כמה זמן צריך לבדוק אביזרי הרמה?",
       "a": "אביזרי הרמה כגון רצועות, שרשראות, שאקלים, אונקלים, קורות הרמה ואביזרי חיבור חייבים לעבור בדיקה יסודית אחת ל־6 חודשים על ידי בודק מוסמך. בנוסף, יש לבצע בדיקה חזותית לפני שימוש ולוודא שאין סימני נזק או בלאי.",
-      "showOn": ["lifting-accessories"],
-      "order": 20
+      "showOn": ["lifting-accessories", "equipment", "services", "faq"],
+      "order": 40
     },
     {
-      "id": "who-inspects",
-      "q": "מי רשאי לבצע בדיקות למתקני הרמה?",
-      "a": "רק בודק מוסמך בעל הסמכה מתאימה מטעם משרד העבודה רשאי לבצע בדיקות למתקני הרמה ולהפיק תסקיר בדיקה. תסקיר הבדיקה מהווה מסמך מקצועי המאשר את תוצאות הבדיקה בהתאם לדרישות החוק.",
-      "showOn": ["lifting-equipment-inspection"],
-      "order": 30
+      "id": "expired-report",
+      "q": "מה קורה אם תוקף התסקיר פג?",
+      "a": "חשוב להקפיד לבצע את הבדיקות במועד ולוודא שלציוד קיים תסקיר תקף בהתאם לדרישות. שימוש בציוד ללא בדיקה נדרשת עלול ליצור חשיפה בטיחותית, משפטית וביטוחית. בארזי מיטב המהנדסים אנו מנהלים מעקב אחר מועדי בדיקה ומסייעים ללקוחותינו להיערך מראש.",
+      "showOn": [
+        "lifting-equipment-inspection",
+        "forklift-inspection",
+        "lifting-inspection-center",
+        "lifting-inspection-south",
+        "lifting-inspection-sharon",
+        "faq"
+      ],
+      "order": 50
     }
   ]
 }

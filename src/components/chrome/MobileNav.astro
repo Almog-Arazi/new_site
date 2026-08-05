@@ -1,0 +1,284 @@
+---
+import Icon from '../ui/Icon.astro';
+import Logo from '../media/Logo.astro';
+import site, { waHref } from '../../site.config';
+import { displayPhone, telHrefFor } from '../../lib/format';
+import { headerNav, isActive, normalise } from '../../lib/nav';
+
+/* The drawer markup. All behaviour — aria-expanded, focus trap, inert on
+   the rest of the page, Esc, scroll lock, focus return — lives in nav.ts.
+   It is a direct child of <header> so nav.ts can inert every sibling. */
+
+interface Props {
+  pathname: string;
+}
+
+const { pathname } = Astro.props;
+const here = normalise(pathname);
+const phone = displayPhone(site.phoneE164);
+const tel = telHrefFor(site.phoneE164);
+---
+
+<div
+  class="drawer"
+  id="mobile-nav"
+  hidden
+  tabindex="-1"
+  role="dialog"
+  aria-modal="true"
+  aria-label="תפריט האתר"
+  data-nav-panel
+>
+  <div class="drawer__bar">
+    <Logo variant="mask" width={140} />
+    <button type="button" class="drawer__close" data-nav-close>
+      <Icon name="close" size={24} />
+      <span class="vh">סגירת התפריט</span>
+    </button>
+  </div>
+
+  <nav class="drawer__nav" aria-label="ניווט ראשי">
+    <ul role="list" class="drawer__list">
+      {
+        headerNav.map((link) => (
+          <li class="drawer__item">
+            <a
+              href={link.href}
+              class:list={['drawer__link', isActive(link, pathname) && 'is-active']}
+              aria-current={normalise(link.href) === here ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+
+            {link.children && (
+              <ul role="list" class="drawer__sub">
+                {link.children.map((child) => (
+                  <li>
+                    <a
+                      href={child.href}
+                      class:list={[
+                        'drawer__sublink',
+                        normalise(child.href) === here && 'is-active',
+                      ]}
+                      aria-current={normalise(child.href) === here ? 'page' : undefined}
+                    >
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <div class="drawer__cta">
+    <a href={tel} class="drawer__call" data-track="phone_click">
+      <Icon name="phone" size={22} />
+      <span>התקשרו עכשיו</span>
+      <bdi class="ltr num drawer__num">{phone}</bdi>
+    </a>
+    <a
+      href={waHref}
+      class="drawer__wa"
+      data-track="whatsapp_click"
+      target="_blank"
+      rel="noopener"
+    >
+      <Icon name="whatsapp" size={22} />
+      <span>שליחת הודעת וואטסאפ</span>
+    </a>
+    <p class="drawer__hours">
+      <Icon name="clock" size={16} />
+      <span>{site.hours} · {site.areaServedLabel}</span>
+    </p>
+  </div>
+</div>
+
+<style>
+  /* Scroll lock while the drawer is open. nav.ts owns the class. */
+  :global(html.is-nav-open),
+  :global(html.is-nav-open body) {
+    overflow: hidden;
+  }
+
+  .drawer {
+    position: fixed;
+    inset-block: 0;
+    inset-inline: 0;
+    z-index: var(--z-drawer);
+    display: flex;
+    flex-direction: column;
+    background: var(--c-bg);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    animation: drawer-in var(--dur-slow) var(--ease-soft-out) both;
+  }
+
+  .drawer[hidden] {
+    display: none;
+  }
+
+  @keyframes drawer-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  .drawer__bar {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--z-base);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-4);
+    padding-block: var(--s-3);
+    padding-inline: var(--gutter);
+    background: var(--c-bg);
+    border-block-end: var(--hairline);
+    color: var(--c-heading);
+  }
+
+  .drawer__close {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--tap);
+    block-size: var(--tap);
+    color: var(--c-heading);
+    background: var(--c-bg-soft);
+    border-radius: var(--r-pill);
+    transition: background-color var(--dur) var(--ease);
+  }
+
+  .drawer__close:hover {
+    background: var(--c-bg-tint);
+  }
+
+  .drawer__nav {
+    flex: 1;
+    padding-block: var(--s-4);
+    padding-inline: var(--gutter);
+  }
+
+  .drawer__list,
+  .drawer__sub {
+    display: grid;
+    gap: var(--s-1);
+    margin: 0;
+    padding: 0;
+  }
+
+  .drawer__item + .drawer__item {
+    border-block-start: var(--hairline);
+  }
+
+  .drawer__link {
+    display: flex;
+    align-items: center;
+    min-block-size: var(--tap-lg);
+    font-family: var(--ff-head);
+    font-size: var(--fs-btn);
+    font-weight: var(--fw-bold);
+    color: var(--c-heading);
+    text-decoration: none;
+  }
+
+  .drawer__link.is-active {
+    color: var(--c-link);
+  }
+
+  .drawer__sub {
+    padding-inline-start: var(--s-4);
+    padding-block-end: var(--s-3);
+    border-inline-start: 2px solid var(--c-bg-tint-strong);
+    margin-inline-start: var(--s-1);
+  }
+
+  .drawer__sublink {
+    display: flex;
+    align-items: center;
+    min-block-size: var(--tap);
+    font-family: var(--ff-body);
+    font-size: var(--fs-body);
+    color: var(--c-text);
+    text-decoration: none;
+  }
+
+  .drawer__sublink.is-active,
+  .drawer__sublink:hover {
+    color: var(--c-link);
+  }
+
+  .drawer__cta {
+    position: sticky;
+    inset-block-end: 0;
+    display: grid;
+    gap: var(--s-3);
+    padding-block: var(--s-5);
+    padding-block-end: calc(var(--s-5) + env(safe-area-inset-bottom));
+    padding-inline: var(--gutter);
+    background: var(--c-bg-dark);
+    color: var(--c-on-dark);
+    border-start-start-radius: var(--r-5);
+    border-start-end-radius: var(--r-5);
+  }
+
+  .drawer__call,
+  .drawer__wa {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s-2);
+    min-block-size: var(--tap-lg);
+    font-family: var(--ff-head);
+    font-size: var(--fs-btn);
+    font-weight: var(--fw-bold);
+    text-decoration: none;
+    border-radius: var(--r-pill);
+  }
+
+  .drawer__call {
+    background: var(--c-action);
+    color: var(--c-on-action);
+  }
+
+  .drawer__num {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-med);
+    opacity: 0.9;
+  }
+
+  .drawer__wa {
+    background: var(--c-on-dark-surface);
+    color: var(--c-white);
+    border: 1.5px solid var(--c-border-dark);
+  }
+
+  .drawer__hours {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s-2);
+    font-size: var(--fs-xs);
+    color: var(--c-on-dark-muted);
+  }
+
+  .drawer :is(a, button):focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+  }
+
+  .drawer__cta :is(a):focus-visible {
+    box-shadow: var(--ring-on-dark);
+  }
+
+  @media (width >= 1080px) {
+    .drawer {
+      display: none;
+    }
+  }
+</style>

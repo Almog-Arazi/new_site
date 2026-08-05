@@ -1,7 +1,14 @@
 ---
 import { getCollection, render } from 'astro:content';
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
-import { articlePath } from '../../lib/routes';
+import FaqSection from '../../components/blocks/FaqSection.astro';
+import ArticleCta from '../../components/blog/ArticleCta.astro';
+import RelatedArticles from '../../components/blog/RelatedArticles.astro';
+import { articlePath, pathForSlug } from '../../lib/routes';
+import type { CollectionEntry } from 'astro:content';
+
+/* Sketch P13. ArticleLayout (frozen) owns the head, hero, Article schema and
+   the closing CTA band; this page supplies the body and everything under it. */
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles', ({ data }) => !data.draft);
@@ -11,9 +18,31 @@ export async function getStaticPaths() {
   }));
 }
 
-const { article } = Astro.props;
+const { article } = Astro.props as { article: CollectionEntry<'articles'> };
 const d = article.data;
 const { Content } = await render(article);
+
+const allArticles = (await getCollection('articles', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+const others = allArticles.filter((a) => a.data.slug !== d.slug);
+
+/* Explicit picks first, then newest, so the block is never empty while the
+   other six articles are still being written. */
+const explicit = d.relatedArticles
+  .map((slug) => others.find((a) => a.data.slug === slug))
+  .filter((a): a is CollectionEntry<'articles'> => Boolean(a));
+const related = [...explicit, ...others.filter((a) => !explicit.includes(a))].slice(0, 3);
+
+/* Only link to pages that actually exist — a relatedPages entry for a page
+   Stream D has not written yet must not ship as a dead link. */
+const pages = await getCollection('pages', ({ data }) => !data.draft);
+const relatedPage = d.relatedPages
+  .map((slug) => pages.find((p) => p.data.slug === slug))
+  .find(Boolean);
+const ctaTarget = relatedPage
+  ? { href: pathForSlug(relatedPage.data.slug), title: relatedPage.data.h1 }
+  : { href: '/services', title: 'שירותי בדיקות ציוד הרמה' };
 ---
 
 <ArticleLayout
@@ -30,4 +59,40 @@ const { Content } = await render(article);
   hero={d.hero}
 >
   <Content />
+
+  <ArticleCta
+    heading={ctaTarget.title}
+    text="מה נבדק בפועל, איזה ציוד אנחנו בודקים ואיך מתנהל תהליך הבדיקה מהפנייה ועד התסקיר."
+    href={ctaTarget.href}
+  />
+
+  {
+    d.faqGroups.length > 0 && (
+      <div class="article-faq">
+        <FaqSection
+          type="faq"
+          heading="שאלות נפוצות בנושא"
+          groups={d.faqGroups}
+          limit={4}
+          moreHref="/faq"
+          tone="light"
+        />
+      </div>
+    )
+  }
+
+  <RelatedArticles articles={related} />
 </ArticleLayout>
+
+<style>
+  /* FaqSection is a full-page section; inside the article column it drops
+     its own container padding and rhythm and behaves as a block. */
+  .article-faq :global(.section) {
+    padding-block: 0;
+  }
+
+  .article-faq :global(.container) {
+    inline-size: 100%;
+    padding-inline: 0;
+  }
+</style>

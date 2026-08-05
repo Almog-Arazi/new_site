@@ -4,7 +4,7 @@ import PageHead from '../components/blocks/PageHead.astro';
 import CtaBand from '../components/blocks/CtaBand.astro';
 import { BLOCKS } from '../components/blocks/registry';
 import { breadcrumb as breadcrumbSchema } from '../lib/schema';
-import type { Section } from '../content.config';
+import type { PlaceholderVariant, Section } from '../content.config';
 
 interface Props {
   title: string;
@@ -16,7 +16,7 @@ interface Props {
   lead: string;
   breadcrumb?: { label: string; href: string }[];
   breadcrumbLabel: string;
-  hero?: { placeholder: Parameters<typeof PageHead>[0]['hero'] } | undefined;
+  hero?: { placeholder: PlaceholderVariant; alt: string; note?: string };
   sections?: Section[];
   schemas?: unknown[];
   cta?: { heading: string; text?: string };
@@ -32,14 +32,11 @@ const {
   lead,
   breadcrumb = [],
   breadcrumbLabel,
+  hero,
   sections = [],
   schemas = [],
   cta,
 } = Astro.props;
-
-const hero = (Astro.props as Record<string, unknown>).hero as
-  | { placeholder: string; alt: string; note?: string }
-  | undefined;
 
 const trail = [{ label: 'ראשי', href: '/' }, ...breadcrumb];
 const allSchemas = [...schemas, breadcrumbSchema([...trail, { label: breadcrumbLabel, href: path }])];
@@ -58,13 +55,13 @@ const allSchemas = [...schemas, breadcrumbSchema([...trail, { label: breadcrumbL
     lead={lead}
     breadcrumb={trail}
     breadcrumbLabel={breadcrumbLabel}
-    hero={hero as never}
+    hero={hero}
   />
 
   {
     sections.map((section) => {
-      const Block = BLOCKS[section.type] as never;
-      return <Block {...(section as never)} />;
+      const Block = BLOCKS[section.type];
+      return <Block {...(section as unknown as Record<string, unknown>)} />;
     })
   }
 

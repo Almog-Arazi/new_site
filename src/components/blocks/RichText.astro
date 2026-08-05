@@ -7,9 +7,30 @@ import type { Section as Block } from '../../content.config';
 
 type Props = Extract<Block, { type: 'richText' }>;
 const { eyebrow, heading, body, tone, narrow } = Astro.props;
+
+/* Rendered with the shared markdown-it instance, which has `typographer:
+   false` — the typographer rewrites בע"מ, the company's own name, with a
+   curly quote. */
+const html = renderBlock(body);
 ---
 
 <Section tone={tone} width={narrow ? 'narrow' : 'default'}>
   <SectionHeader eyebrow={eyebrow} heading={heading} />
-  <Prose html={renderBlock(body)} narrow={narrow} />
+  <Prose html={html} narrow={narrow} class="rt" />
 </Section>
+
+<style>
+  /* A rich-text slab following a heading should not restate the header
+     spacing, so the first block loses its top margin. */
+  .rt :global(> :first-child) {
+    margin-block-start: 0;
+  }
+
+  :global(.section--dark) .rt {
+    color: var(--c-on-dark);
+  }
+
+  :global(.section--dark) .rt :global(strong) {
+    color: var(--c-white);
+  }
+</style>

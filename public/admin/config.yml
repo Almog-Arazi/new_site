@@ -1,0 +1,567 @@
+# ============================================================
+# Sveltia CMS — ארזי מיטב המהנדסים
+#
+# THIS FILE MIRRORS src/content.config.ts FIELD BY FIELD.
+# A mismatch saves cleanly in the CMS and then fails the build, which strands
+# a non-technical client. The two files change together or not at all.
+#
+# Netlify Identity / Git Gateway is not available for new sites, so this uses
+# the GitHub backend through a self-hosted sveltia-cms-auth Cloudflare Worker.
+# Replace REPLACE-ME values before launch — see docs/launch-checklist.md.
+# ============================================================
+
+backend:
+  name: github
+  repo: REPLACE-ME-owner/REPLACE-ME-repo
+  branch: main
+  base_url: https://REPLACE-ME-auth-worker.workers.dev
+
+# Local development against the file system (Chromium only).
+local_backend: true
+
+media_folder: public/uploads
+public_folder: /uploads
+
+publish_mode: simple
+
+i18n:
+  structure: single_file
+  locales: [he]
+  default_locale: he
+
+collections:
+  # ── הגדרות אתר ────────────────────────────────────────────
+  - name: settings
+    label: הגדרות
+    files:
+      - name: site
+        label: פרטי העסק ויצירת קשר
+        file: src/content/settings/site.json
+        editor: { preview: false }
+        fields:
+          - { name: businessName, label: שם החברה המלא, widget: string }
+          - { name: shortName, label: שם קצר, widget: string }
+          - { name: tagline, label: משפט תיאור, widget: string }
+          - { name: yearsExperience, label: שנות ניסיון, widget: number, value_type: int }
+          - {
+              name: phone,
+              label: טלפון לתצוגה,
+              widget: string,
+              hint: 'כפי שיוצג באתר, למשל 050-123-4567',
+            }
+          - {
+              name: phoneE164,
+              label: טלפון לחיוג,
+              widget: string,
+              pattern: ['^\+\d{9,15}$', 'חייב להיות בפורמט בינלאומי ללא רווחים, למשל ‎+972501234567'],
+              hint: 'פורמט בינלאומי בלבד. כל מקף או רווח שובר את החיוג בחלק ממכשירי אנדרואיד.',
+            }
+          - {
+              name: whatsapp,
+              label: מספר וואטסאפ,
+              widget: string,
+              pattern: ['^\+\d{9,15}$', 'פורמט בינלאומי ללא רווחים'],
+            }
+          - { name: whatsappMessage, label: הודעת וואטסאפ מוכנה מראש, widget: string }
+          - { name: email, label: כתובת מייל, widget: string }
+          - { name: hours, label: שעות פעילות לתצוגה, widget: string }
+          - name: hoursSchema
+            label: שעות פעילות (לגוגל)
+            widget: list
+            fields:
+              - {
+                  name: days,
+                  label: ימים,
+                  widget: select,
+                  multiple: true,
+                  options: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday],
+                }
+              - { name: opens, label: פתיחה, widget: string }
+              - { name: closes, label: סגירה, widget: string }
+          - { name: addressLocality, label: אזור, widget: string }
+          - {
+              name: addressCountry,
+              label: מדינה,
+              widget: string,
+              hint: 'קוד מדינה, IL. אין להמציא כתובת רחוב — גוגל מעניש על פרטי כתובת שגויים.',
+            }
+          - { name: areasServed, label: אזורי שירות, widget: list }
+          - { name: areaServedLabel, label: תיאור אזור שירות, widget: string }
+          - {
+              name: ga4Id,
+              label: מזהה Google Analytics,
+              widget: string,
+              hint: 'מתחיל ב־G-. כל עוד הערך הוא G-XXXXXXXXXX המעקב כבוי.',
+            }
+          - { name: domain, label: כתובת האתר, widget: string }
+          - { name: formProvider, label: ספק טפסים, widget: select, options: [netlify, none] }
+          - { name: formName, label: שם הטופס, widget: string }
+
+      - name: navigation
+        label: תפריטים
+        file: src/content/settings/navigation.json
+        editor: { preview: false }
+        fields:
+          - name: header
+            label: תפריט עליון
+            widget: list
+            fields:
+              - { name: label, label: כותרת, widget: string }
+              - { name: href, label: כתובת, widget: string }
+              - name: children
+                label: תת־תפריט
+                widget: list
+                required: false
+                fields:
+                  - { name: label, label: כותרת, widget: string }
+                  - { name: href, label: כתובת, widget: string }
+          - name: footer
+            label: תפריט תחתון
+            widget: list
+            fields:
+              - { name: title, label: כותרת עמודה, widget: string }
+              - name: links
+                label: קישורים
+                widget: list
+                fields:
+                  - { name: label, label: כותרת, widget: string }
+                  - { name: href, label: כתובת, widget: string }
+
+  # ── נתונים משותפים ────────────────────────────────────────
+  - name: data
+    label: נתונים משותפים
+    files:
+      - name: equipment
+        label: סוגי ציוד
+        file: src/content/data/equipment.json
+        editor: { preview: false }
+        hint: 'רשימה אחת שמזינה ארבעה מקומות: בורר הציוד בעמוד הבית, עמוד הציוד, הפוטר, ורשימת הציוד בטופס.'
+        fields:
+          - name: items
+            label: פריטים
+            widget: list
+            fields:
+              - { name: id, label: מזהה, widget: string }
+              - { name: label, label: שם, widget: string }
+              - { name: short, label: משפט קצר, widget: text }
+              - { name: href, label: קישור לעמוד, widget: string }
+              - name: placeholder
+                label: סוג איור
+                widget: select
+                options:
+                  [forklift, crane, platform, lifeline, accessory, generic, portrait, document, factory]
+              - { name: alt, label: 'תיאור התמונה (ALT)', widget: string }
+              - { name: note, label: הנחיית צילום, widget: string, required: false }
+              - { name: order, label: סדר, widget: number, value_type: int, default: 100 }
+
+      - name: process
+        label: שלבי העבודה
+        file: src/content/data/process.json
+        editor: { preview: false }
+        fields:
+          - name: items
+            label: שלבים
+            widget: list
+            fields:
+              - { name: id, label: מזהה, widget: string }
+              - { name: title, label: כותרת, widget: string }
+              - { name: text, label: תיאור, widget: text }
+              - { name: order, label: סדר, widget: number, value_type: int, default: 100 }
+
+      - name: credentials
+        label: יתרונות ואמינות
+        file: src/content/data/credentials.json
+        editor: { preview: false }
+        fields:
+          - name: items
+            label: פריטים
+            widget: list
+            fields:
+              - { name: id, label: מזהה, widget: string }
+              - { name: title, label: כותרת, widget: string }
+              - { name: text, label: תיאור, widget: text }
+              - name: icon
+                label: אייקון
+                widget: select
+                options:
+                  [shield, clock, phone, refresh, doc, calendar, users, factory, gear, pin, check]
+                default: shield
+              - { name: order, label: סדר, widget: number, value_type: int, default: 100 }
+
+  # ── שאלות ותשובות ─────────────────────────────────────────
+  - name: faq
+    label: שאלות נפוצות
+    folder: src/content/faq
+    extension: json
+    format: json
+    create: true
+    slug: '{{fields.group}}'
+    identifier_field: title
+    editor: { preview: false }
+    summary: '{{title}}'
+    hint: 'כל קובץ הוא קבוצת נושא אחת. השאלות מזינות גם את האקורדיון באתר וגם את הנתונים המובנים לגוגל — אין צורך לעדכן בשני מקומות.'
+    fields:
+      - { name: group, label: מזהה קבוצה, widget: string, hint: 'באנגלית, ללא רווחים' }
+      - { name: title, label: כותרת הקבוצה, widget: string }
+      - { name: order, label: סדר, widget: number, value_type: int, default: 100 }
+      - name: items
+        label: שאלות
+        widget: list
+        fields:
+          - { name: id, label: מזהה, widget: string }
+          - { name: q, label: שאלה, widget: string }
+          - {
+              name: a,
+              label: תשובה,
+              widget: text,
+              hint: 'טקסט רגיל. מותר **הדגשה** וקישורים בסגנון markdown.',
+            }
+          - {
+              name: showOn,
+              label: להציג בעמודים,
+              widget: list,
+              required: false,
+              hint: 'מזהי עמודים (slug), למשל forklift-inspection',
+            }
+          - { name: order, label: סדר, widget: number, value_type: int, default: 100 }
+
+  # ── מאמרים ────────────────────────────────────────────────
+  - name: articles
+    label: מאמרים
+    folder: src/content/articles
+    extension: md
+    create: true
+    slug: '{{fields.slug}}'
+    identifier_field: title
+    editor: { preview: false }
+    summary: '{{title}}'
+    fields:
+      - { name: title, label: כותרת, widget: string }
+      - { name: slug, label: כתובת (באנגלית), widget: string }
+      - {
+          name: description,
+          label: תיאור לגוגל,
+          widget: text,
+          hint: 'בין 50 ל־190 תווים. מופיע בתוצאות החיפוש.',
+        }
+      - { name: seoTitle, label: 'כותרת SEO (אופציונלי)', widget: string, required: false }
+      - { name: publishDate, label: תאריך פרסום, widget: datetime, format: 'YYYY-MM-DD' }
+      - {
+          name: updatedDate,
+          label: תאריך עדכון,
+          widget: datetime,
+          format: 'YYYY-MM-DD',
+          required: false,
+        }
+      - { name: author, label: מחבר, widget: string, default: ארזי מיטב המהנדסים }
+      - { name: category, label: קטגוריה, widget: string }
+      - { name: keywords, label: מילות מפתח, widget: list, required: false }
+      - {
+          name: readingMinutes,
+          label: זמן קריאה בדקות,
+          widget: number,
+          value_type: int,
+          default: 4,
+        }
+      - name: hero
+        label: תמונה ראשית
+        widget: object
+        fields:
+          - name: placeholder
+            label: סוג איור
+            widget: select
+            options:
+              [forklift, crane, platform, lifeline, accessory, generic, portrait, document, factory]
+          - { name: alt, label: 'תיאור התמונה (ALT)', widget: string }
+          - { name: note, label: הנחיית צילום, widget: string, required: false }
+      - { name: faqGroups, label: קבוצות שאלות להצגה, widget: list, required: false }
+      - { name: relatedPages, label: עמודי שירות קשורים, widget: list, required: false }
+      - { name: relatedArticles, label: מאמרים קשורים, widget: list, required: false }
+      - { name: featured, label: מאמר מוביל, widget: boolean, default: false }
+      - { name: draft, label: טיוטה, widget: boolean, default: false }
+      - { name: body, label: תוכן המאמר, widget: markdown }
+
+  # ── עמודים ────────────────────────────────────────────────
+  # This is the collection that lets the client create a NEW page — including
+  # future regional pages — with no developer. `sections` below must stay
+  # identical to the `sectionSchema` union in src/content.config.ts.
+  - name: pages
+    label: עמודים
+    folder: src/content/pages
+    extension: md
+    create: true
+    slug: '{{fields.slug}}'
+    identifier_field: h1
+    editor: { preview: false }
+    summary: '{{h1}}'
+    hint: 'ליצירת עמוד אזורי חדש: העתיקו עמוד אזורי קיים, שנו slug, כותרות ותוכן — ואל תשכפלו טקסט זהה, גוגל מעניש על כך.'
+    fields:
+      - {
+          name: slug,
+          label: כתובת העמוד,
+          widget: string,
+          hint: 'באנגלית, ללא סלאש. למשל lifting-inspection-haifa',
+        }
+      - name: template
+        label: סוג עמוד
+        widget: select
+        options:
+          - { label: עמוד שירות, value: service }
+          - { label: עמוד ציוד, value: equipment }
+          - { label: עמוד רכזת, value: hub }
+          - { label: עמוד שאלות נפוצות, value: faq }
+          - { label: אודות, value: about }
+          - { label: עמוד משפטי, value: legal }
+          - { label: עמוד אזורי, value: region }
+      - { name: order, label: סדר, widget: number, value_type: int, default: 100 }
+      - { name: draft, label: טיוטה, widget: boolean, default: false }
+      - name: breadcrumb
+        label: מסלול ניווט
+        widget: list
+        required: false
+        hint: 'רק שלבי הביניים. "ראשי" והעמוד הנוכחי מתווספים אוטומטית.'
+        fields:
+          - { name: label, label: כותרת, widget: string }
+          - { name: href, label: כתובת, widget: string }
+      - { name: breadcrumbLabel, label: שם העמוד במסלול, widget: string }
+      - { name: eyebrow, label: כותרת עילית, widget: string, required: false }
+      - { name: h1, label: 'כותרת ראשית (H1)', widget: string }
+      - { name: lead, label: פסקת פתיחה, widget: text }
+      - name: hero
+        label: תמונה ראשית
+        widget: object
+        required: false
+        fields:
+          - name: placeholder
+            label: סוג איור
+            widget: select
+            options:
+              [forklift, crane, platform, lifeline, accessory, generic, portrait, document, factory]
+          - { name: alt, label: 'תיאור התמונה (ALT)', widget: string }
+          - { name: note, label: הנחיית צילום, widget: string, required: false }
+      - name: seo
+        label: SEO
+        widget: object
+        fields:
+          - { name: title, label: כותרת לגוגל, widget: string, hint: 'עד 70 תווים' }
+          - { name: description, label: תיאור לגוגל, widget: text, hint: 'בין 50 ל־190 תווים' }
+          - { name: ogImage, label: תמונת שיתוף, widget: image, required: false }
+          - { name: noindex, label: להסתיר מגוגל, widget: boolean, default: false }
+      - name: schema
+        label: נתונים מובנים
+        widget: object
+        required: false
+        fields:
+          - name: kind
+            label: סוג
+            widget: select
+            options: [Service, CollectionPage, AboutPage, WebPage, FAQPage]
+          - { name: serviceName, label: שם השירות, widget: string, required: false }
+          - { name: serviceType, label: סוג השירות, widget: string, required: false }
+          - { name: areaServed, label: אזורי שירות, widget: list, required: false }
+      - name: cta
+        label: רצועת סיום
+        widget: object
+        required: false
+        fields:
+          - { name: heading, label: כותרת, widget: string }
+          - { name: text, label: טקסט, widget: text, required: false }
+      - { name: related, label: עמודים קשורים, widget: list, required: false }
+      - { name: updated, label: עודכן בתאריך, widget: datetime, format: 'YYYY-MM-DD', required: false }
+
+      # ── the 12 blocks. One entry per member of `sectionSchema`. ──
+      - name: sections
+        label: תוכן העמוד
+        widget: list
+        types:
+          - name: richText
+            label: טקסט
+            fields:
+              - { name: eyebrow, label: כותרת עילית, widget: string, required: false }
+              - { name: heading, label: כותרת, widget: string, required: false }
+              - { name: body, label: תוכן, widget: markdown }
+              - { name: tone, label: רקע, widget: select, options: [light, soft, tint, dark], default: light }
+              - { name: narrow, label: עמודה צרה, widget: boolean, default: false }
+
+          - name: checkList
+            label: רשימת סימון
+            fields:
+              - { name: eyebrow, label: כותרת עילית, widget: string, required: false }
+              - { name: heading, label: כותרת, widget: string, required: false }
+              - { name: intro, label: פסקת פתיחה, widget: text, required: false }
+              - { name: items, label: פריטים, widget: list }
+              - { name: columns, label: מספר עמודות, widget: number, value_type: int, default: 2, min: 1, max: 3 }
+              - { name: tone, label: רקע, widget: select, options: [light, soft, tint, dark], default: light }
+
+          - name: featureGrid
+            label: גריד יתרונות
+            fields:
+              - { name: eyebrow, label: כותרת עילית, widget: string, required: false }
+              - { name: heading, label: כותרת, widget: string, required: false }
+              - { name: intro, label: פסקת פתיחה, widget: text, required: false }
+              - name: items
+                label: כרטיסים
+                widget: list
+                fields:
+                  - { name: title, label: כותרת, widget: string }
+                  - { name: text, label: תיאור, widget: text }
+                  - { name: icon, label: אייקון, widget: string, required: false }
+              - { name: columns, label: מספר עמודות, widget: number, value_type: int, default: 3, min: 2, max: 4 }
+              - { name: tone, label: רקע, widget: select, options: [light, soft, tint, dark], default: light }
+
+          - name: processSteps
+            label: שלבי תהליך
+            fields:
+              - { name: eyebrow, label: כותרת עילית, widget: string, required: false }
+              - { name: heading, label: כותרת, widget: string, required: false }
+              - { name: intro, label: פסקת פתיחה, widget: text, required: false }
+              - name: steps
+                label: שלבים
+                widget: list
+                fields:
+                  - { name: title, label: כותרת, widget: string }
+                  - { name: text, label: תיאור, widget: text, required: false }
+              - { name: tone, label: רקע, widget: select, options: [light, soft, tint, dark], default: light }
+
+          - name: statRow
+            label: מספרים בולטים
+            fields:
+              - { name: heading, label: כותרת, widget: string, required: false }
+              - { name: intro, label: פסקת פתיחה, widget: text, required: false }
+              - name: stats
+                label: נתונים
+                widget: list
+                fields:
+                  - { name: value, label: מספר, widget: string }
+                  - { name: label, label: תיאור, widget: string }
+                  - { name: note, label: הערה, widget: string, required: false }
+              - { name: tone, label: רקע, widget: select, options: [light, soft, tint, dark], default: light }
+
+          - name: calloutBand
+            label: רצועת הדגשה
+            fields:
+              - { name: heading, label: כותרת, widget: string }
+              - { name: text, label: טקסט, widget: text, required: false }
+              - name: cta
+                label: כפתור
+                widget: object
+                required: false
+                fields:
+                  - { name: label, label: טקסט הכפתור, widget: string }
+                  - { name: href, label: כתובת, widget: string }
+                  - { name: style, label: סגנון, widget: select, options: [primary, secondary, ghost], default: primary }
+              - { name: tone, label: רקע, widget: select, options: [light, soft, tint, dark], default: tint }
+
+          - name: regulationTable
+            label: טבלה
+            hint: 'שימו לב: כל שורה היא רשימה של תאים לפי סדר העמודות. אם הטבלה נשברת אחרי עריכה — פנו למפתח.'
+            fields:
+              - { name: heading, label: כותרת, widget: string, required: false }
+              - { name: intro, label: פסקת פתיחה, widget: text, required: false }
+              - { name: columns, label: כותרות עמודות, widget: list }
+              - name: rows
+                label: שורות
+                widget: list
+                field: { name: cells, label: תאים, widget: list }
+              - { name: note, label: הערת שוליים, widget: string, required: false }
+              - { name: tone, label: רקע, widget: select, options: [light, soft, tint, dark], default: light }
+
+          - name: linkCards
+            label: כרטיסי קישור
+            fields:
+              - { name: eyebrow, label: כותרת עילית, widget: string, required: false }
+              - { name: heading, label: כותרת, widget: string, required: false }
+              - { name: intro, label: פסקת פתיחה, widget: text, required: false }
+              - name: cards
+                label: כרטיסים
+                widget: list
+                fields:
+                  - { name: title, label: כותרת, widget: string }
+                  - { name: text, label: תיאור, widget: text, required: false }
+                  - { name: href, label: כתובת, widget: string }
+                  - name: placeholder
+                    label: סוג איור
+                    widget: select
+                    required: false
+                    options:
+                      [forklift, crane, platform, lifeline, accessory, generic, portrait, document, factory]
+                  - { name: alt, label: 'תיאור התמונה (ALT)', widget: string, required: false }
+              - { name: columns, label: מספר עמודות, widget: number, value_type: int, default: 3, min: 2, max: 3 }
+              - { name: tone, label: רקע, widget: select, options: [light, soft, tint, dark], default: light }
+
+          - name: equipmentGrid
+            label: גריד ציוד
+            fields:
+              - { name: heading, label: כותרת, widget: string, required: false }
+              - { name: intro, label: פסקת פתיחה, widget: text, required: false }
+              - {
+                  name: ids,
+                  label: פריטים להצגה,
+                  widget: list,
+                  required: false,
+                  hint: 'ריק = כל סוגי הציוד',
+                }
+              - { name: tone, label: רקע, widget: select, options: [light, soft, tint, dark], default: light }
+
+          - name: photoBand
+            label: תמונה וטקסט
+            fields:
+              - { name: eyebrow, label: כותרת עילית, widget: string, required: false }
+              - { name: heading, label: כותרת, widget: string, required: false }
+              - { name: body, label: טקסט, widget: text, required: false }
+              - { name: bullets, label: נקודות, widget: list, required: false }
+              - name: placeholder
+                label: סוג איור
+                widget: select
+                options:
+                  [forklift, crane, platform, lifeline, accessory, generic, portrait, document, factory]
+              - { name: alt, label: 'תיאור התמונה (ALT)', widget: string }
+              - { name: note, label: הנחיית צילום, widget: string, required: false }
+              - { name: flip, label: תמונה בצד השני, widget: boolean, default: false }
+              - name: cta
+                label: כפתור
+                widget: object
+                required: false
+                fields:
+                  - { name: label, label: טקסט הכפתור, widget: string }
+                  - { name: href, label: כתובת, widget: string }
+                  - { name: style, label: סגנון, widget: select, options: [primary, secondary, ghost], default: primary }
+              - { name: tone, label: רקע, widget: select, options: [light, soft, tint, dark], default: light }
+
+          - name: faq
+            label: שאלות נפוצות
+            fields:
+              - { name: heading, label: כותרת, widget: string, required: false }
+              - { name: intro, label: פסקת פתיחה, widget: text, required: false }
+              - {
+                  name: groups,
+                  label: קבוצות שאלות,
+                  widget: list,
+                  hint: 'מזהי קבוצות מתוך "שאלות נפוצות", למשל general',
+                }
+              - { name: limit, label: מספר שאלות מקסימלי, widget: number, value_type: int, required: false }
+              - { name: moreHref, label: קישור לכל השאלות, widget: string, required: false }
+              - { name: tone, label: רקע, widget: select, options: [light, soft, tint, dark], default: light }
+
+          - name: ctaBand
+            label: רצועת פעולה
+            fields:
+              - { name: heading, label: כותרת, widget: string }
+              - { name: text, label: טקסט, widget: text, required: false }
+              - name: primary
+                label: כפתור ראשי
+                widget: object
+                required: false
+                fields:
+                  - { name: label, label: טקסט, widget: string }
+                  - { name: href, label: כתובת, widget: string }
+              - name: secondary
+                label: כפתור משני
+                widget: object
+                required: false
+                fields:
+                  - { name: label, label: טקסט, widget: string }
+                  - { name: href, label: כתובת, widget: string }
+              - { name: tone, label: רקע, widget: select, options: [light, soft, tint, dark], default: dark }
+
+      - { name: body, label: תוכן נוסף, widget: markdown, required: false }

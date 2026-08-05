@@ -1,0 +1,141 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Section from '../ui/Section.astro';
+import Prose from '../ui/Prose.astro';
+import Icon from '../ui/Icon.astro';
+import Blocks from './Blocks.astro';
+import FaqSection from '../blocks/FaqSection.astro';
+import RelatedLinks from '../blocks/RelatedLinks.astro';
+import { service } from '../../lib/schema';
+import { autoFaqItems, relatedLinks, siblingLinks, type TemplateProps } from './shared';
+
+/* ============================================================
+   REGION — /lifting-inspection-center, -south, -sharon, and whatever
+   the client adds from the CMS later.
+
+   Schema: Service with an explicit `areaServed`. That field is the whole
+   point of the template — everything else is a service page. `service()`
+   falls back to the site-wide areas when a regional page forgets it, so a
+   half-filled CMS entry still emits valid, if generic, markup.
+   ============================================================ */
+
+type Props = TemplateProps;
+const { page, path, hasBody = false } = Astro.props;
+const data = page.data;
+
+const areas = data.schema?.areaServed ?? [];
+
+const schemas = [
+  service({
+    name: data.schema?.serviceName ?? data.h1,
+    description: data.seo.description,
+    path,
+    serviceType: data.schema?.serviceType,
+    areaServed: areas,
+  }),
+];
+
+const faqItems = await autoFaqItems(data.slug, data.sections);
+
+const explicit = await relatedLinks(data.related);
+const related = explicit.length > 0 ? explicit : await siblingLinks(page);
+
+/* The areas are always in the schema. They are only put on the screen when
+   the page did not already list them itself — a regional page that repeats
+   its own catchment twice reads as thin, duplicated content, which is the
+   one thing these pages must not be. */
+const showAreas = areas.length > 0 && !data.sections.some((s) => s.type === 'checkList');
+---
+
+<PageLayout
+  title={data.seo.title}
+  description={data.seo.description}
+  path={path}
+  noindex={data.seo.noindex}
+  eyebrow={data.eyebrow}
+  h1={data.h1}
+  lead={data.lead}
+  breadcrumb={data.breadcrumb}
+  breadcrumbLabel={data.breadcrumbLabel}
+  hero={data.hero}
+  schemas={schemas}
+  cta={data.cta}
+>
+  {
+    showAreas && (
+      <Section tone="soft">
+        <h2 class="areas__title">אזורי שירות</h2>
+        <ul role="list" class="areas">
+          {areas.map((area) => (
+            <li class="areas__item">
+              <Icon name="pin" size={18} />
+              <span>{area}</span>
+            </li>
+          ))}
+        </ul>
+      </Section>
+    )
+  }
+
+  <Blocks sections={data.sections} />
+
+  {
+    hasBody && (
+      <Section width="narrow">
+        <Prose>
+          <slot />
+        </Prose>
+      </Section>
+    )
+  }
+
+  {
+    faqItems.length > 0 && (
+      <FaqSection
+        type="faq"
+        groups={[]}
+        items={faqItems}
+        heading="שאלות נפוצות"
+        moreHref="/faq"
+        tone="light"
+      />
+    )
+  }
+
+  <RelatedLinks heading="אזורי שירות נוספים" links={related} tone="light" />
+</PageLayout>
+
+<style>
+  .areas__title {
+    margin-block-end: var(--s-5);
+  }
+
+  .areas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .areas__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-block-size: var(--tap);
+    padding-inline: var(--s-5);
+    padding-block: var(--s-2);
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-med);
+    color: var(--c-heading);
+    background: var(--c-surface);
+    border: var(--hairline);
+    border-radius: var(--r-pill);
+  }
+
+  .areas__item :global(.icon) {
+    color: var(--c-action-ink);
+  }
+</style>

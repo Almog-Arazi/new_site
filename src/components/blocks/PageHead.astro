@@ -6,7 +6,8 @@ import Button from '../ui/Button.astro';
 import TelLink from '../ui/TelLink.astro';
 import type { PlaceholderVariant } from '../placeholders/index';
 
-/* The ONLY component in the codebase allowed to emit <h1>. */
+/* The ONLY component in the codebase allowed to emit <h1>. One per page,
+   always — check-html fails the build on a second one. */
 interface Props {
   eyebrow?: string;
   h1: string;
@@ -14,34 +15,58 @@ interface Props {
   breadcrumb?: { label: string; href: string }[];
   breadcrumbLabel: string;
   hero?: { placeholder: PlaceholderVariant; alt: string; note?: string };
+  /**
+   * Legal pages: no tinted slab, no hero, no CTA cluster. A privacy policy
+   * that opens with a "תיאום בדיקה" button reads as a sales page.
+   */
+  compact?: boolean;
 }
 
-const { eyebrow, h1, lead, breadcrumb = [], breadcrumbLabel, hero } = Astro.props;
+const {
+  eyebrow,
+  h1,
+  lead,
+  breadcrumb = [],
+  breadcrumbLabel,
+  hero,
+  compact = false,
+} = Astro.props;
+
+const showHero = Boolean(hero) && !compact;
 ---
 
-<section class="pagehead">
+<section class:list={['pagehead', compact && 'pagehead--compact']}>
   <div class="section__slab">
-    <div class="container pagehead__grid">
+    <div class:list={['container', compact && 'container--narrow', 'pagehead__grid']}>
       <div class="pagehead__text">
         <Breadcrumb trail={breadcrumb} current={breadcrumbLabel} />
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
         <h1>{h1}</h1>
-        <p class="t-lead">{lead}</p>
-        <div class="cluster">
-          <Button href="/contact" variant="primary" size="lg">תיאום בדיקה</Button>
-          <TelLink variant="plain" label="דברו איתנו עכשיו" />
-        </div>
+        <p class="t-lead pagehead__lead">{lead}</p>
+        {
+          !compact && (
+            <div class="cluster pagehead__actions">
+              <Button href="/contact" variant="primary" size="lg">
+                תיאום בדיקה
+              </Button>
+              <TelLink variant="plain" label="דברו איתנו עכשיו" />
+            </div>
+          )
+        }
       </div>
-      {hero && (
-        <PhotoFrame
-          variant={hero.placeholder}
-          alt={hero.alt}
-          note={hero.note}
-          ratio="card"
-          eager
-          class="pagehead__media"
-        />
-      )}
+
+      {
+        showHero && hero && (
+          <PhotoFrame
+            variant={hero.placeholder}
+            alt={hero.alt}
+            note={hero.note}
+            ratio="card"
+            eager
+            class="pagehead__media"
+          />
+        )
+      }
     </div>
   </div>
 </section>
@@ -59,12 +84,37 @@ const { eyebrow, h1, lead, breadcrumb = [], breadcrumbLabel, hero } = Astro.prop
     display: grid;
     gap: var(--s-8);
     align-items: center;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  }
+
+  /* Two columns only when there is something to put in the second one. */
+  @media (width >= 900px) {
+    .pagehead__grid:has(.pagehead__media) {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: var(--s-10);
+    }
   }
 
   .pagehead__text {
     display: grid;
     gap: var(--s-4);
     align-content: start;
+  }
+
+  .pagehead__lead {
+    margin: 0;
+  }
+
+  .pagehead__actions {
+    margin-block-start: var(--s-2);
+  }
+
+  /* ── compact (legal) ───────────────────────────────────────── */
+  .pagehead--compact {
+    padding-block: var(--s-5) 0;
+  }
+
+  .pagehead--compact .section__slab {
+    background: transparent;
+    padding-block-end: 0;
   }
 </style>

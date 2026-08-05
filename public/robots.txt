@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /toda
+
+Sitemap: https://ardi-engineers.co.il/sitemap-index.xml

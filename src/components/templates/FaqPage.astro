@@ -1,0 +1,83 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Section from '../ui/Section.astro';
+import Prose from '../ui/Prose.astro';
+import Blocks from './Blocks.astro';
+import FaqSection from '../blocks/FaqSection.astro';
+import RelatedLinks from '../blocks/RelatedLinks.astro';
+import { allFaqGroupIds, relatedLinks, type TemplateProps } from './shared';
+
+/* ============================================================
+   FAQ — /faq.
+
+   The one page where the FAQ is the page, so it is rendered grouped: an
+   <h2> per topic, every question an <h3>, and a topic rail that sticks
+   beside the groups on desktop and collapses to a flat row of jump links
+   on mobile.
+
+   No schema is built here. FaqSection is handed the same group list it
+   renders and emits the FAQPage itself — the single-source rule holds even
+   on the page whose entire purpose is the FAQ.
+   ============================================================ */
+
+type Props = TemplateProps;
+const { page, path, hasBody = false } = Astro.props;
+const data = page.data;
+
+/* The natural way to author this page in the CMS is one faq block per topic,
+   because that is what the block is for. Grouped mode wants them as a single
+   ordered list of groups instead — so they are merged here, in the order the
+   editor put them in, and the topic headings come from the group titles they
+   already carry. A page with no faq block at all falls back to every group in
+   the collection, so /faq is never empty because a field was left blank. */
+const blocks = data.sections.filter(
+  (section): section is Extract<typeof section, { type: 'faq' }> => section.type === 'faq'
+);
+
+const authored = [...new Set(blocks.flatMap((block) => block.groups))];
+const groups = authored.length > 0 ? authored : await allFaqGroupIds();
+
+const first = data.sections.findIndex((section) => section.type === 'faq');
+const last = data.sections.map((section) => section.type).lastIndexOf('faq');
+const before = first >= 0 ? data.sections.slice(0, first) : data.sections;
+const after = last >= 0 ? data.sections.slice(last + 1) : [];
+
+/* The group titles are the visible topic headings, so a second heading above
+   them would only repeat the <h1>. The intro, if the editor wrote one, still
+   earns its place. */
+const intro = blocks.find((block) => block.intro)?.intro;
+
+const related = await relatedLinks(data.related);
+---
+
+<PageLayout
+  title={data.seo.title}
+  description={data.seo.description}
+  path={path}
+  noindex={data.seo.noindex}
+  eyebrow={data.eyebrow}
+  h1={data.h1}
+  lead={data.lead}
+  breadcrumb={data.breadcrumb}
+  breadcrumbLabel={data.breadcrumbLabel}
+  hero={data.hero}
+  cta={data.cta}
+>
+  <Blocks sections={before} exclude={['faq']} />
+
+  <FaqSection type="faq" groups={groups} variant="grouped" sidebar heading="" intro={intro} />
+
+  {
+    hasBody && (
+      <Section width="narrow">
+        <Prose>
+          <slot />
+        </Prose>
+      </Section>
+    )
+  }
+
+  <Blocks sections={after} exclude={['faq']} />
+
+  <RelatedLinks heading="עמודים שאולי חיפשתם" links={related} tone="soft" />
+</PageLayout>

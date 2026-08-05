@@ -1,55 +1,103 @@
 ---
 import Section from '../ui/Section.astro';
 import Button from '../ui/Button.astro';
-import TelLink from '../ui/TelLink.astro';
+import { telHref } from '../../site.config';
+import Icon from '../ui/Icon.astro';
 import type { Section as Block } from '../../content.config';
 
 type Props = Extract<Block, { type: 'ctaBand' }>;
 const { heading, text, primary, secondary, tone } = Astro.props;
+
+const isDark = tone === 'dark';
 ---
 
 <Section tone={tone}>
   <div class="ctaband">
-    <span class="ctaband__rule" aria-hidden="true"></span>
     <div class="ctaband__text">
+      {/* The one sanctioned accent rule on the site: 4px of amber on navy. */}
+      <span class="ctaband__rule" aria-hidden="true"></span>
       <h2>{heading}</h2>
       {text && <p class="t-lead">{text}</p>}
     </div>
-    <div class="cluster">
+
+    <div class="ctaband__actions">
       <Button href={primary?.href ?? '/contact'} variant="primary" size="lg">
         {primary?.label ?? 'תיאום בדיקה'}
       </Button>
-      {secondary ? (
-        <Button href={secondary.href} variant="on-dark" size="lg">{secondary.label}</Button>
-      ) : (
-        <TelLink variant="plain" label="דברו איתנו עכשיו" />
-      )}
+
+      {
+        secondary ? (
+          <Button href={secondary.href} variant={isDark ? 'on-dark' : 'ghost'} size="lg">
+            {secondary.label}
+          </Button>
+        ) : (
+          /* `telHref` is bare E.164 with no formatting characters — anything
+             else breaks dialling on some Android dialers. */
+          <Button
+            href={telHref}
+            variant={isDark ? 'on-dark' : 'ghost'}
+            size="lg"
+            track="phone_click"
+          >
+            <Icon name="phone" size={20} />
+            <span>דברו איתנו עכשיו</span>
+          </Button>
+        )
+      }
     </div>
   </div>
 </Section>
 
 <style>
   .ctaband {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     gap: var(--s-7);
     align-items: center;
-    justify-content: space-between;
   }
 
-  /* The single sanctioned accent rule on the whole site. */
+  @media (width >= 900px) {
+    .ctaband {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--s-10);
+    }
+  }
+
+  .ctaband__text {
+    display: grid;
+    gap: var(--s-3);
+    max-inline-size: var(--measure);
+  }
+
   .ctaband__rule {
-    position: absolute;
-    inset-block-start: calc(var(--s-6) * -1);
-    inset-inline-start: 0;
     inline-size: 64px;
     block-size: 4px;
     border-radius: var(--r-pill);
-    background: var(--c-accent-dark);
+    background: var(--c-action);
   }
 
   .ctaband__text h2 {
-    margin-block-end: var(--s-2);
+    margin: 0;
+  }
+
+  .ctaband__text p {
+    margin: 0;
+  }
+
+  .ctaband__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+    align-items: center;
+  }
+
+  /* ── inside a dark slab ──────────────────────────────────────
+     Amber only reads as amber on navy; on any light surface the keyline
+     goes back to the action colour. */
+  :global(.section--dark) .ctaband__rule {
+    background: var(--c-accent-dark);
+  }
+
+  :global(.section--dark) .ctaband__text p {
+    color: var(--c-on-dark);
   }
 </style>

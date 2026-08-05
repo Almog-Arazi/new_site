@@ -1,21 +1,70 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Section from '../components/ui/Section.astro';
+import Hero from '../components/home/Hero.astro';
+import HomeTrust from '../components/home/HomeTrust.astro';
+import HomeServices from '../components/home/HomeServices.astro';
+import HomeEquipment from '../components/home/HomeEquipment.astro';
+import EquipmentPicker from '../components/home/EquipmentPicker.astro';
+import HomeWhy from '../components/home/HomeWhy.astro';
+import HomeValues from '../components/home/HomeValues.astro';
+import HomeProcess from '../components/home/HomeProcess.astro';
+import HomeFaq from '../components/home/HomeFaq.astro';
+import HomeArticles from '../components/home/HomeArticles.astro';
+import CtaBand from '../components/blocks/CtaBand.astro';
 import site from '../site.config';
 
-/* PHASE 0 STUB — ownership passes to Stream C, which builds the full
-   homepage (hero, chip picker, trust strip, services, equipment, process,
-   FAQ) per the design sketch. */
+/* Sketch P1. Schema: LocalBusiness (withBusiness) + FAQPage, the latter
+   emitted by FaqSection inside HomeFaq — never hand-written here. */
+
+const description =
+  'ארזי מיטב המהנדסים מבצעת בדיקות מתקני הרמה, אביזרי הרמה וקווי חיים על ידי בודק מוסמך. שירות למפעלים וחברות בכל הארץ.';
+
+const lead = `${site.shortName} מבצעת בדיקות ותסקירים לציוד הרמה ומתקני הרמה בהתאם לדרישות החוק והתקנים הרלוונטיים. עם מעל ${site.yearsExperience} שנות ניסיון בתחום, משרד פעיל ושירות מקצועי ומהיר — אנו מספקים בדיקות למפעלים, חברות תעשייתיות ומרכזים לוגיסטיים בכל הארץ.`;
+
+const trust = [
+  'בודק מוסמך למתקני הרמה ואביזרי הרמה',
+  `ניסיון של מעל ${site.yearsExperience} שנה בתחום`,
+  'בדיקות למפעלים וחברות תעשייתיות',
+  'מעקב ותזכורות לבדיקות עתידיות',
+];
 ---
 
 <BaseLayout
   title={`בדיקות מתקני הרמה ואביזרי הרמה | בודק מוסמך | ${site.shortName}`}
-  description="ארזי מיטב המהנדסים מבצעת בדיקות מתקני הרמה, אביזרי הרמה וקווי חיים על ידי בודק מוסמך. שירות למפעלים וחברות בכל הארץ."
+  description={description}
   path="/"
   withBusiness
 >
-  <Section>
-    <h1>{site.tagline}</h1>
-    <p class="t-lead">{site.shortName} — עמוד הבית בבנייה.</p>
-  </Section>
+  <Hero
+    h1={site.tagline}
+    lead={lead}
+    trust={trust}
+    media={{
+      placeholder: 'factory',
+      alt: 'בודק מוסמך מטעם ארזי מיטב המהנדסים בסביבת מפעל פעיל עם ציוד הרמה',
+      note: 'וידאו HERO 15–30 שנ׳: מפעל פעיל, עגורן גשר בעבודה, בודק מוסמך עם ציוד מדידה',
+    }}
+  />
+
+  <HomeTrust />
+  <HomeServices />
+  <HomeEquipment />
+  <EquipmentPicker />
+  <HomeWhy />
+  <HomeValues />
+  <HomeProcess />
+  <HomeFaq />
+  <HomeArticles />
+
+  <CtaBand
+    type="ctaBand"
+    heading="צריכים לבצע בדיקה לציוד ההרמה שלכם?"
+    text={`צרו קשר עם ${site.shortName} לקבלת זמינות, מחיר ותיאום בדיקה.`}
+    tone="dark"
+    primary={{ label: 'תיאום בדיקה', href: '/contact' }}
+  />
 </BaseLayout>
+
+<script>
+  import '../scripts/chips';
+</script>

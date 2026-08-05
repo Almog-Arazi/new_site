@@ -1,0 +1,84 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Section from '../ui/Section.astro';
+import Prose from '../ui/Prose.astro';
+import Blocks from './Blocks.astro';
+import FaqSection from '../blocks/FaqSection.astro';
+import RelatedLinks from '../blocks/RelatedLinks.astro';
+import { service } from '../../lib/schema';
+import { autoFaqItems, relatedLinks, siblingLinks, type TemplateProps } from './shared';
+
+/* ============================================================
+   EQUIPMENT — /forklift-inspection, /crane-inspection,
+   /lift-platform-inspection, /additional-lifting-equipment.
+
+   The heaviest SEO pages on the site. Same Service schema as a service
+   page, but the composition is denser: these pages carry long roll-calls
+   of sub-types ("מלגזות חשמליות", "מלגזות Reach Truck", "מלגזות צריח" …)
+   that are a keyword index, not prose, so `dense` tells CheckList to set
+   uniformly short lists as tags instead of a ✓ column list.
+   ============================================================ */
+
+type Props = TemplateProps;
+const { page, path, hasBody = false } = Astro.props;
+const data = page.data;
+
+const schemas = [
+  service({
+    name: data.schema?.serviceName ?? data.h1,
+    description: data.seo.description,
+    path,
+    serviceType: data.schema?.serviceType,
+    areaServed: data.schema?.areaServed,
+  }),
+];
+
+const faqItems = await autoFaqItems(data.slug, data.sections);
+
+/* An equipment page with no explicit `related` still wants its siblings —
+   the other equipment pages under the same hub. */
+const explicit = await relatedLinks(data.related);
+const related = explicit.length > 0 ? explicit : await siblingLinks(page);
+---
+
+<PageLayout
+  title={data.seo.title}
+  description={data.seo.description}
+  path={path}
+  noindex={data.seo.noindex}
+  eyebrow={data.eyebrow}
+  h1={data.h1}
+  lead={data.lead}
+  breadcrumb={data.breadcrumb}
+  breadcrumbLabel={data.breadcrumbLabel}
+  hero={data.hero}
+  schemas={schemas}
+  cta={data.cta}
+>
+  <Blocks sections={data.sections} extra={{ dense: true }} />
+
+  {
+    hasBody && (
+      <Section width="narrow">
+        <Prose>
+          <slot />
+        </Prose>
+      </Section>
+    )
+  }
+
+  {
+    faqItems.length > 0 && (
+      <FaqSection
+        type="faq"
+        groups={[]}
+        items={faqItems}
+        heading="שאלות נפוצות על הבדיקה"
+        moreHref="/faq"
+        tone="soft"
+      />
+    )
+  }
+
+  <RelatedLinks heading="ציוד נוסף שאנו בודקים" links={related} tone="light" />
+</PageLayout>

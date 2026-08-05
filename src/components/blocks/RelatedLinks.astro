@@ -2,20 +2,26 @@
 import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import Icon from '../ui/Icon.astro';
+import type { Tone } from '../../content.config';
 
+/**
+ * Not a CMS block — the templates render this from a page's `related` list.
+ * Deliberately absent from the frozen registry, which stays at twelve types.
+ */
 interface Props {
   heading?: string;
+  intro?: string;
   links: { label: string; href: string }[];
-  tone?: 'light' | 'soft' | 'tint' | 'dark';
+  tone?: Tone;
 }
 
-const { heading = 'קישורים נוספים', links, tone = 'soft' } = Astro.props;
+const { heading = 'קישורים נוספים', intro, links, tone = 'soft' } = Astro.props;
 ---
 
 {
   links.length > 0 && (
     <Section tone={tone}>
-      <SectionHeader heading={heading} level={2} />
+      <SectionHeader heading={heading} intro={intro} level={2} />
       <ul role="list" class="related">
         {links.map((link) => (
           <li>
@@ -34,9 +40,10 @@ const { heading = 'קישורים נוספים', links, tone = 'soft' } = Astro.
   .related {
     display: grid;
     gap: var(--s-3);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
     margin: 0;
     padding: 0;
+    list-style: none;
   }
 
   .related a {
@@ -44,18 +51,26 @@ const { heading = 'קישורים נוספים', links, tone = 'soft' } = Astro.
     align-items: center;
     justify-content: space-between;
     gap: var(--s-3);
+    block-size: 100%;
     min-block-size: var(--tap);
     padding: var(--s-4) var(--s-5);
     background: var(--c-surface);
     border: var(--hairline);
     border-radius: var(--r-3);
     font-family: var(--ff-head);
+    font-size: var(--fs-sm);
     font-weight: var(--fw-med);
     color: var(--c-heading);
+    text-decoration: none;
     transition:
       border-color var(--dur) var(--ease),
       box-shadow var(--dur) var(--ease),
+      color var(--dur) var(--ease),
       transform var(--dur) var(--ease);
+  }
+
+  .related a :global(.icon) {
+    color: var(--c-action-ink);
   }
 
   .related a:hover {
@@ -63,5 +78,26 @@ const { heading = 'קישורים נוספים', links, tone = 'soft' } = Astro.
     box-shadow: var(--e-2);
     transform: translateY(var(--lift));
     color: var(--c-link);
+  }
+
+  .related a:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+  }
+
+  /* ── inside a dark slab ────────────────────────────────────── */
+  :global(.section--dark) .related a {
+    background: var(--c-on-dark-surface-soft);
+    border-color: var(--c-border-dark);
+    color: var(--c-on-dark);
+  }
+
+  :global(.section--dark) .related a :global(.icon) {
+    color: var(--c-accent-dark);
+  }
+
+  :global(.section--dark) .related a:hover {
+    background: var(--c-on-dark-surface-hover);
+    color: var(--c-white);
   }
 </style>

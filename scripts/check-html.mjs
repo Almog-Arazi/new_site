@@ -15,7 +15,8 @@ async function walk(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     const path = join(dir, entry.name);
     if (entry.isDirectory()) await walk(path);
-    else if (entry.name.endsWith('.html')) files.push(path);
+    /* /admin is the CMS shell — noindex, no content of its own. */
+    else if (entry.name.endsWith('.html') && !path.includes('admin')) files.push(path);
   }
 }
 await walk(root);

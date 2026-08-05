@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHead from '../blocks/PageHead.astro';
+import Section from '../ui/Section.astro';
+import Prose from '../ui/Prose.astro';
+import Blocks from './Blocks.astro';
+import { breadcrumb as breadcrumbSchema, webPage } from '../../lib/schema';
+import type { TemplateProps } from './shared';
+
+/* ============================================================
+   LEGAL — /privacy, and any future terms or accessibility statement.
+
+   The one template that does not go through PageLayout, because a legal
+   page must not carry the floating CTA rail or the closing CTA band, and
+   PageLayout adds both. It reproduces exactly what PageLayout guarantees —
+   PageHead as the only <h1>, a BreadcrumbList, blocks through the frozen
+   registry — and nothing else.
+   ============================================================ */
+
+type Props = TemplateProps;
+const { page, path, hasBody = false } = Astro.props;
+const data = page.data;
+
+const trail = [{ label: 'ראשי', href: '/' }, ...data.breadcrumb];
+const schemas = [
+  webPage({ name: data.h1, description: data.seo.description, path }),
+  breadcrumbSchema([...trail, { label: data.breadcrumbLabel, href: path }]),
+];
+---
+
+<BaseLayout
+  title={data.seo.title}
+  description={data.seo.description}
+  path={path}
+  noindex={data.seo.noindex}
+  schemas={schemas}
+  showRail={false}
+>
+  <PageHead
+    eyebrow={data.eyebrow}
+    h1={data.h1}
+    lead={data.lead}
+    breadcrumb={trail}
+    breadcrumbLabel={data.breadcrumbLabel}
+    compact
+  />
+
+  <div class="legal">
+    <Blocks sections={data.sections} />
+
+    {
+      hasBody && (
+        <Section width="narrow">
+          <Prose>
+            <slot />
+          </Prose>
+        </Section>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  /* One narrow column the whole way down. A policy is read, not scanned,
+     so nothing here spans the full grid. */
+  .legal :global(.container) {
+    inline-size: min(100%, var(--container-narrow));
+  }
+
+  .legal :global(.section) {
+    padding-block: var(--s-8);
+  }
+
+  .legal :global(.section__slab) {
+    inline-size: min(100%, var(--container-narrow));
+  }
+</style>

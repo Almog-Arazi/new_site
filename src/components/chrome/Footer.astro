@@ -1,13 +1,13 @@
 ---
-import site, { mailHref } from '../../site.config';
+import site, { mailHref, waHref } from '../../site.config';
 import { footerNav } from '../../lib/nav';
 import Logo from '../media/Logo.astro';
-import TelLink from '../ui/TelLink.astro';
-import WaLink from '../ui/WaLink.astro';
 import Icon from '../ui/Icon.astro';
+import { displayPhone, telHrefFor } from '../../lib/format';
 
-/* PHASE 0 STUB — ownership passes to Stream A. */
 const year = new Date().getFullYear();
+const phone = displayPhone(site.phoneE164);
+const tel = telHrefFor(site.phoneE164);
 ---
 
 <footer class="site-footer">
@@ -15,7 +15,14 @@ const year = new Date().getFullYear();
     <div class="site-footer__brand">
       <Logo variant="mask" width={190} />
       <p class="site-footer__tagline">{site.tagline}</p>
-      <p class="site-footer__area">{site.areaServedLabel} · {site.hours}</p>
+      <p class="site-footer__area">
+        <Icon name="pin" size={16} />
+        <span>{site.areaServedLabel}</span>
+      </p>
+      <p class="site-footer__area">
+        <Icon name="clock" size={16} />
+        <span>{site.hours}</span>
+      </p>
     </div>
 
     {
@@ -33,11 +40,21 @@ const year = new Date().getFullYear();
       ))
     }
 
-    <div class="site-footer__col">
+    <div class="site-footer__col site-footer__col--contact">
       <h2 class="site-footer__title">יצירת קשר</h2>
-      <ul role="list" class="site-footer__contact">
-        <li><TelLink variant="plain" /></li>
-        <li><WaLink variant="plain" /></li>
+      <ul role="list">
+        <li>
+          <a href={tel} data-track="phone_click" class="site-footer__strong">
+            <Icon name="phone" size={20} />
+            <bdi class="ltr num">{phone}</bdi>
+          </a>
+        </li>
+        <li>
+          <a href={waHref} data-track="whatsapp_click" target="_blank" rel="noopener">
+            <Icon name="whatsapp" size={20} />
+            <span>וואטסאפ</span>
+          </a>
+        </li>
         <li>
           <a href={mailHref} class="site-footer__mail">
             <Icon name="mail" size={20} />
@@ -50,7 +67,11 @@ const year = new Date().getFullYear();
 
   <div class="container site-footer__legal">
     <p>© {year} {site.businessName}. כל הזכויות שמורות.</p>
-    <a href="/privacy">מדיניות פרטיות</a>
+    <p class="site-footer__legal-links">
+      <a href="/privacy">מדיניות פרטיות</a>
+      <span aria-hidden="true">·</span>
+      <a href="/contact">צור קשר</a>
+    </p>
   </div>
 </footer>
 
@@ -60,44 +81,50 @@ const year = new Date().getFullYear();
     padding-block: var(--section-y);
     background: var(--c-bg-dark);
     color: var(--c-on-dark);
+    /* Rounded top corners only — the slab rises out of the white page. */
     border-start-start-radius: var(--r-6);
     border-start-end-radius: var(--r-6);
   }
 
   .site-footer__grid {
     display: grid;
-    gap: var(--grid-gap) var(--s-8);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: var(--s-8) var(--s-7);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
   }
 
   .site-footer__brand {
     display: grid;
-    gap: var(--s-4);
+    gap: var(--s-3);
     align-content: start;
+    color: var(--c-white);
   }
 
   .site-footer__tagline {
     font-size: var(--fs-sm);
     line-height: var(--lh-body);
+    color: var(--c-on-dark);
     max-inline-size: 34ch;
+    margin-block-end: var(--s-2);
   }
 
   .site-footer__area {
-    font-family: var(--ff-mono);
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
     font-size: var(--fs-xs);
     color: var(--c-accent-dark);
   }
 
   .site-footer__title {
+    font-family: var(--ff-head);
     font-size: var(--fs-sm);
     font-weight: var(--fw-bold);
     color: var(--c-white);
-    margin-block-end: var(--s-4);
+    margin-block-end: var(--s-3);
   }
 
   .site-footer__col ul {
     display: grid;
-    gap: var(--s-1);
     margin: 0;
     padding: 0;
   }
@@ -109,21 +136,33 @@ const year = new Date().getFullYear();
     min-block-size: var(--tap);
     font-size: var(--fs-sm);
     color: var(--c-on-dark);
+    text-decoration: none;
     transition: color var(--dur) var(--ease);
   }
 
   .site-footer__col a:hover {
     color: var(--c-accent-dark);
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+  }
+
+  .site-footer__strong {
+    font-family: var(--ff-head);
+    font-weight: var(--fw-bold);
+  }
+
+  .site-footer__strong bdi {
+    font-size: var(--fs-lead);
   }
 
   .site-footer__mail {
-    word-break: break-all;
+    word-break: break-word;
   }
 
   .site-footer__legal {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--s-4);
+    gap: var(--s-3) var(--s-5);
     justify-content: space-between;
     align-items: center;
     margin-block-start: var(--s-9);
@@ -133,7 +172,32 @@ const year = new Date().getFullYear();
     color: var(--c-on-dark-muted);
   }
 
+  .site-footer__legal-links {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+  }
+
+  .site-footer__legal a {
+    color: var(--c-on-dark-muted);
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+    transition: color var(--dur) var(--ease);
+  }
+
   .site-footer__legal a:hover {
     color: var(--c-accent-dark);
+  }
+
+  .site-footer :is(a):focus-visible {
+    outline: none;
+    box-shadow: var(--ring-on-dark);
+    border-radius: var(--r-1);
+  }
+
+  @media (width >= 1080px) {
+    .site-footer__grid {
+      grid-template-columns: 1.5fr repeat(3, 1fr) 1.1fr;
+    }
   }
 </style>

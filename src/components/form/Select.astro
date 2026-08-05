@@ -1,0 +1,60 @@
+---
+/* Labelled <select>. Options come from the caller — on the lead form they
+   are the six items of the `equipment` collection, the same source that
+   feeds the chip picker and /equipment. */
+
+interface Props {
+  id: string;
+  name: string;
+  label: string;
+  options: { value: string; label: string }[];
+  placeholder?: string;
+  required?: boolean;
+  hint?: string;
+}
+
+const { id, name, label, options, placeholder, required = false, hint } = Astro.props;
+
+const hintId = hint ? `${id}-hint` : undefined;
+const errorId = `${id}-error`;
+const describedBy = [hintId, errorId].filter(Boolean).join(' ');
+---
+
+<div class="field">
+  <label class="field__label" for={id}>
+    <span>{label}</span>
+    {
+      required ? (
+        <>
+          <span class="field__req" aria-hidden="true">
+            *
+          </span>
+          <span class="vh">(שדה חובה)</span>
+        </>
+      ) : (
+        <span class="field__opt">(לא חובה)</span>
+      )
+    }
+  </label>
+
+  {hint && <p class="field__hint" id={hintId}>{hint}</p>}
+
+  {/* Native appearance is kept on purpose: the platform arrow already sits
+      on the correct side under dir="rtl", and every mobile browser gives a
+      better picker than anything re-implemented here. */}
+  <select
+    class="field__control field__control--select"
+    id={id}
+    name={name}
+    required={required}
+    aria-describedby={describedBy}
+  >
+    {placeholder && <option value="">{placeholder}</option>}
+    {options.map((option) => <option value={option.value}>{option.label}</option>)}
+  </select>
+
+  <p class="field__error" id={errorId} data-error-for={name} hidden>
+    <span class="field__error-mark" aria-hidden="true">!</span>
+    <span data-error-text></span>
+  </p>
+</div>

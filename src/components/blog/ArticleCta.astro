@@ -1,0 +1,77 @@
+---
+import Button from '../ui/Button.astro';
+
+/* The navy in-article box (sketch P13) — one contextual next step in the
+   middle of the long-form flow, before the page-level CtaBand. */
+
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  text?: string;
+  href: string;
+  label?: string;
+}
+
+const {
+  eyebrow = 'לקריאה נוספת',
+  heading,
+  text,
+  href,
+  label = 'לעמוד השירות',
+} = Astro.props;
+---
+
+<aside class="acta">
+  <div class="acta__text">
+    <p class="acta__eyebrow">{eyebrow}</p>
+    <p class="acta__heading">{heading}</p>
+    {text && <p class="acta__body">{text}</p>}
+  </div>
+  <Button href={href} variant="primary" class="acta__btn">{label}</Button>
+</aside>
+
+<style>
+  .acta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-6);
+    padding: var(--card-pad);
+    background: var(--c-bg-dark);
+    color: var(--c-on-dark);
+    border-radius: var(--r-5);
+  }
+
+  .acta__text {
+    display: grid;
+    gap: var(--s-2);
+    flex: 1 1 16rem;
+    min-inline-size: 0;
+  }
+
+  .acta__eyebrow {
+    font-family: var(--ff-mono);
+    font-size: var(--fs-xs);
+    color: var(--c-accent-dark);
+  }
+
+  .acta__heading {
+    font-family: var(--ff-head);
+    font-size: var(--fs-h3);
+    line-height: var(--lh-h3);
+    font-weight: var(--fw-bold);
+    color: var(--c-white);
+  }
+
+  .acta__body {
+    font-size: var(--fs-sm);
+    line-height: var(--lh-body);
+    color: var(--c-on-dark-muted);
+  }
+
+  /* Handed to Button.astro, whose root never carries this file's scope id. */
+  :global(.acta__btn) {
+    flex: none;
+  }
+</style>

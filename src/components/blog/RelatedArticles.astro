@@ -1,0 +1,103 @@
+---
+import Icon from '../ui/Icon.astro';
+import ArticleMeta from './ArticleMeta.astro';
+import { articlePath } from '../../lib/routes';
+import type { CollectionEntry } from 'astro:content';
+
+/* Compact end-of-article list. Deliberately not ArticleCard — a second
+   photo grid under the body competes with the CTA band that follows. */
+
+interface Props {
+  articles: CollectionEntry<'articles'>[];
+  heading?: string;
+}
+
+const { articles, heading = 'מאמרים נוספים' } = Astro.props;
+---
+
+{
+  articles.length > 0 && (
+    <nav class="rel" aria-labelledby="related-articles">
+      <h2 class="rel__heading" id="related-articles">
+        {heading}
+      </h2>
+      <ul role="list" class="rel__list">
+        {articles.map((article) => (
+          <li>
+            <a class="rel__item" href={articlePath(article.data.slug)}>
+              <span class="rel__text">
+                <span class="rel__title">{article.data.title}</span>
+                <ArticleMeta
+                  category={article.data.category}
+                  readingMinutes={article.data.readingMinutes}
+                />
+              </span>
+              <Icon name="arrow" size={18} class="rel__arrow" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<style>
+  .rel {
+    display: grid;
+    gap: var(--s-5);
+  }
+
+  .rel__heading {
+    font-size: var(--fs-h3);
+    line-height: var(--lh-h3);
+  }
+
+  .rel__list {
+    display: grid;
+    gap: var(--s-3);
+    margin: 0;
+    padding: 0;
+  }
+
+  .rel__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-4);
+    min-block-size: var(--tap);
+    padding: var(--s-4) var(--s-5);
+    background: var(--c-surface);
+    border: var(--hairline);
+    border-radius: var(--r-3);
+    transition:
+      border-color var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
+  }
+
+  .rel__item:hover {
+    border-color: transparent;
+    box-shadow: var(--e-2);
+    transform: translateY(var(--lift));
+  }
+
+  .rel__text {
+    display: grid;
+    gap: var(--s-1);
+    min-inline-size: 0;
+  }
+
+  .rel__title {
+    font-family: var(--ff-head);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-h3);
+    color: var(--c-heading);
+  }
+
+  /* Handed to Icon.astro, whose root never carries this file's scope id. */
+  :global(.rel__arrow) {
+    flex: none;
+    color: var(--c-link);
+  }
+</style>

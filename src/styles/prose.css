@@ -1,2 +1,199 @@
-/* Long-form article body. OWNED BY STREAM C — Phase 0 creates it empty
-   so BaseLayout can import it without a build error. */
+/* ============================================================
+   Long-form article body (sketch P13). Loaded by ArticleLayout only.
+
+   ui/Prose.astro already owns the skeleton — measure, vertical rhythm,
+   h2/h3 sizes, list indent, link colour. Everything here is what markdown
+   from the CMS additionally emits: lead paragraph, markers, blockquote,
+   tables, figures, rules, code. Nothing below re-declares a property
+   Prose.astro sets, so the two never fight over specificity.
+
+   Hebrew RTL: logical properties only, letter-spacing 0, line-height 1.75.
+   ============================================================ */
+
+.prose {
+  color: var(--c-text);
+  text-wrap: pretty;
+}
+
+.prose > *:first-child {
+  margin-block-start: 0;
+}
+
+/* ── headings ──────────────────────────────────────────────── */
+
+.prose :is(h2, h3, h4) {
+  color: var(--c-heading);
+  scroll-margin-block-start: var(--s-11);
+  text-wrap: balance;
+  max-inline-size: var(--measure);
+}
+
+.prose h4 {
+  font-family: var(--ff-head);
+  font-weight: var(--fw-bold);
+}
+
+/* A heading straight after another heading has no paragraph to breathe
+   against, so it tightens up. */
+.prose :is(h2, h3) + :is(h3, h4) {
+  margin-block-start: var(--s-5);
+}
+
+/* ── paragraphs ────────────────────────────────────────────── */
+
+.prose p {
+  max-inline-size: var(--measure);
+}
+
+/* The standfirst: markdown's first paragraph carries the summary. */
+.article__body .prose > p:first-of-type {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+  font-weight: var(--fw-reg);
+  color: var(--c-text-strong);
+}
+
+/* ── lists ─────────────────────────────────────────────────── */
+
+.prose :is(ul, ol) {
+  max-inline-size: var(--measure);
+}
+
+.prose :is(ul, ol) > li::marker {
+  color: var(--c-link);
+  font-weight: var(--fw-bold);
+}
+
+.prose li > :is(ul, ol) {
+  margin-block-start: var(--s-2);
+}
+
+.prose li > p + p {
+  margin-block-start: var(--s-3);
+}
+
+/* ── blockquote ────────────────────────────────────────────── */
+
+.prose blockquote {
+  max-inline-size: var(--measure);
+  padding: var(--s-5) var(--s-6);
+  background: var(--c-bg-tint);
+  border-inline-start: 3px solid var(--c-link);
+  border-start-start-radius: var(--r-3);
+  border-start-end-radius: var(--r-3);
+  border-end-start-radius: var(--r-3);
+  border-end-end-radius: var(--r-3);
+  color: var(--c-text-strong);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+}
+
+.prose blockquote > * + * {
+  margin-block-start: var(--s-3);
+}
+
+/* ── media ─────────────────────────────────────────────────── */
+
+.prose :is(img, video) {
+  inline-size: 100%;
+  /* The asymmetric frame motif, built from logical corners — the
+     border-radius shorthand is physical and mirrors wrong under dir=rtl. */
+  border-start-start-radius: var(--r-frame-ss);
+  border-start-end-radius: var(--r-frame-se);
+  border-end-start-radius: var(--r-frame-es);
+  border-end-end-radius: var(--r-frame-ee);
+}
+
+.prose figure {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.prose figcaption {
+  font-size: var(--fs-sm);
+  color: var(--c-text);
+}
+
+/* ── rules ─────────────────────────────────────────────────── */
+
+.prose hr {
+  max-inline-size: var(--measure);
+  block-size: 1px;
+  border: 0;
+  background: var(--c-border-strong);
+  margin-block: var(--s-8);
+}
+
+/* ── tables ────────────────────────────────────────────────── */
+
+.prose table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  text-align: start;
+}
+
+.prose :is(th, td) {
+  padding: var(--s-3) var(--s-4);
+  border-block-end: var(--hairline);
+  text-align: start;
+  vertical-align: top;
+}
+
+.prose th {
+  font-family: var(--ff-head);
+  font-weight: var(--fw-bold);
+  color: var(--c-heading);
+  background: var(--c-bg-tint);
+}
+
+.prose tbody tr:last-child :is(th, td) {
+  border-block-end: 0;
+}
+
+/* ── code ──────────────────────────────────────────────────── */
+
+.prose :not(pre) > code {
+  padding-inline: var(--s-2);
+  padding-block: var(--s-1);
+  background: var(--c-bg-soft);
+  border: var(--hairline);
+  border-radius: var(--r-1);
+  font-family: var(--ff-mono);
+  font-size: var(--fs-sm);
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.prose pre {
+  max-inline-size: 100%;
+  overflow-x: auto;
+  padding: var(--s-5);
+  background: var(--c-bg-soft);
+  border: var(--hairline);
+  border-radius: var(--r-3);
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.prose pre code {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-sm);
+}
+
+/* ── links ─────────────────────────────────────────────────── */
+
+.prose a:focus-visible {
+  outline: 2px solid var(--c-link);
+  outline-offset: 2px;
+  border-radius: var(--r-1);
+}
+
+/* ── blocks the page drops into the column ─────────────────── */
+
+/* ArticleCta / RelatedArticles / the FAQ accordion sit at the full width
+   of the article column, not inside the reading measure. */
+.article__body .prose > :is(aside, nav, .article-faq) {
+  max-inline-size: none;
+  margin-block-start: var(--s-9);
+}

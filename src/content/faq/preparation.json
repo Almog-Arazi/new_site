@@ -1,0 +1,54 @@
+{
+  "group": "preparation",
+  "title": "הכנה לבדיקה ומהלך העבודה",
+  "order": 40,
+  "items": [
+    {
+      "id": "during-production",
+      "q": "האם אפשר לבצע בדיקה בזמן שהמפעל עובד?",
+      "a": "ברוב המקרים כן. הבדיקה מתואמת מראש כדי לצמצם הפרעה לפעילות השוטפת, ובמידת הצורך מתאמים עצירה זמנית של ציוד מסוים.",
+      "showOn": [
+        "lifting-equipment-inspection",
+        "crane-inspection",
+        "lifting-inspection-center",
+        "lifting-inspection-south",
+        "lifting-inspection-sharon",
+        "faq"
+      ],
+      "order": 10
+    },
+    {
+      "id": "prepare",
+      "q": "מה צריך להכין לפני בדיקה?",
+      "a": "יש להכין גישה לציוד, מסמכים קיימים, תסקיר קודם במידה ויש, ותנאים המאפשרים לבצע את הבדיקה בצורה בטוחה.",
+      "showOn": [
+        "lifting-equipment-inspection",
+        "forklift-inspection",
+        "lift-platform-inspection",
+        "lifeline-inspection",
+        "faq"
+      ],
+      "order": 20
+    },
+    {
+      "id": "fleet-same-day",
+      "q": "אפשר לבדוק כמה מלגזות באותו יום?",
+      "a": "כן. במחסנים ובמרכזים לוגיסטיים אנו מבצעים בדיקה מרוכזת לכל הצי באותו ביקור, בתיאום מראש עם מנהל המחסן.",
+      "showOn": [
+        "forklift-inspection",
+        "lifting-inspection-center",
+        "lifting-inspection-south",
+        "lifting-inspection-sharon",
+        "faq"
+      ],
+      "order": 30
+    },
+    {
+      "id": "next-due-tracking",
+      "q": "איך אני לא מפספס את מועד הבדיקה הבא?",
+      "a": "אנו מנהלים מעקב אחר מועדי הבדיקות של לקוחותינו. לפני מועד הבדיקה הבא אנו יוצרים קשר ומתאמים את המשך הטיפול, כך שאין צורך לנהל את המעקב לבד.",
+      "showOn": ["about", "services", "equipment", "faq"],
+      "order": 40
+    }
+  ]
+}

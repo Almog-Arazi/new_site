@@ -1,0 +1,36 @@
+{
+  "group": "inspector",
+  "title": "מי מבצע את הבדיקה",
+  "order": 20,
+  "items": [
+    {
+      "id": "who-inspects",
+      "q": "מי רשאי לבצע בדיקות למתקני הרמה?",
+      "a": "רק בודק מוסמך בעל הסמכה מתאימה מטעם משרד העבודה רשאי לבצע בדיקות למתקני הרמה ולהפיק תסקיר בדיקה. תסקיר הבדיקה מהווה מסמך מקצועי המאשר את תוצאות הבדיקה בהתאם לדרישות החוק.",
+      "showOn": [
+        "services",
+        "lifting-equipment-inspection",
+        "crane-inspection",
+        "lift-platform-inspection",
+        "lifeline-inspection",
+        "about",
+        "faq"
+      ],
+      "order": 10
+    },
+    {
+      "id": "large-plants",
+      "q": "האם אתם מבצעים בדיקות למפעלים גדולים?",
+      "a": "כן. השירות מתאים למפעלים, חברות תעשייתיות ומרכזים לוגיסטיים עם מגוון גדול של ציוד הרמה, כולל תיאום בדיקות מרוכזות ומעקב מועדים.",
+      "showOn": [
+        "about",
+        "services",
+        "lifting-inspection-center",
+        "lifting-inspection-south",
+        "lifting-inspection-sharon",
+        "faq"
+      ],
+      "order": 20
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+---
+import ArticleCard from './ArticleCard.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  articles: CollectionEntry<'articles'>[];
+  columns?: 2 | 3;
+  level?: 2 | 3;
+  class?: string;
+}
+
+const { articles, columns = 3, level = 3, class: className } = Astro.props;
+---
+
+{
+  articles.length > 0 && (
+    <div class:list={['grid', columns === 2 ? 'grid--2' : 'grid--3', className]}>
+      {articles.map((article) => (
+        <ArticleCard article={article} level={level} />
+      ))}
+    </div>
+  )
+}

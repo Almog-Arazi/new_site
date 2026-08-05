@@ -1,41 +1,81 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHead from '../../components/blocks/PageHead.astro';
 import Section from '../../components/ui/Section.astro';
-import Card from '../../components/ui/Card.astro';
-import { blog, itemList } from '../../lib/schema';
+import CtaBand from '../../components/blocks/CtaBand.astro';
+import ArticleCard from '../../components/blog/ArticleCard.astro';
+import ArticleGrid from '../../components/blog/ArticleGrid.astro';
+import { blog, breadcrumb, itemList } from '../../lib/schema';
 import { articlePath } from '../../lib/routes';
 import site from '../../site.config';
 
-/* PHASE 0 STUB — ownership passes to Stream C. */
+/* Sketch P12: one featured card, then the rest in a grid. Robust with a
+   single article (the grid renders nothing) and with seven. */
+
 const path = '/blog';
+const h1 = 'מידע מקצועי בתחום בדיקות ציוד הרמה';
 const description =
   'מאמרים מקצועיים על בדיקות מתקני הרמה, בדיקת מלגזה, אביזרי הרמה וקווי חיים — מידע למנהלי אחזקה וממוני בטיחות.';
+
 const articles = (await getCollection('articles', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
 );
+
+/* An explicit `featured` flag wins; otherwise the newest article leads. */
+const featured = articles.find((a) => a.data.featured) ?? articles[0];
+const rest = articles.filter((a) => a.id !== featured?.id);
+
+const trail = [{ label: 'ראשי', href: '/' }];
 ---
 
 <BaseLayout
-  title={`מידע מקצועי בתחום בדיקות ציוד הרמה | ${site.shortName}`}
+  title={`${h1} | ${site.shortName}`}
   description={description}
   path={path}
   schemas={[
-    blog({ name: 'מידע מקצועי בתחום בדיקות ציוד הרמה', description, path }),
+    blog({ name: h1, description, path }),
     itemList(articles.map((a) => ({ name: a.data.title, url: articlePath(a.data.slug) }))),
+    breadcrumb([...trail, { label: 'מאמרים מקצועיים', href: path }]),
   ]}
 >
+  <PageHead
+    h1={h1}
+    lead="ארזי מיטב המהנדסים מרכזת מידע מקצועי בנושא בדיקות מתקני הרמה, אביזרי הרמה, קווי חיים ודרישות הבטיחות הרלוונטיות למפעלים וחברות. המאמרים נכתבים מתוך עבודה בשטח ומיועדים למנהלי אחזקה, ממוני בטיחות ומנהלי מחסנים."
+    breadcrumb={trail}
+    breadcrumbLabel="מאמרים מקצועיים"
+    hero={{
+      placeholder: 'document',
+      alt: 'תסקירי בדיקה ומסמכים מקצועיים שמפיק בודק מוסמך',
+      note: 'צילום: בודק בשטח עם מסמכי בדיקה / סביבת מפעל',
+    }}
+  />
+
   <Section>
-    <h1>מידע מקצועי בתחום בדיקות ציוד הרמה</h1>
-    <p class="t-lead">{description}</p>
-    <div class="grid grid--3" style="margin-block-start:var(--s-8)">
-      {articles.map((a) => (
-        <Card href={articlePath(a.data.slug)}>
-          <p class="t-eyebrow">{a.data.category}</p>
-          <h2 class="t-h3">{a.data.title}</h2>
-          <p class="t-body">{a.data.description}</p>
-        </Card>
-      ))}
-    </div>
+    {
+      featured ? (
+        <div class="blog__list">
+          <ArticleCard article={featured} variant="featured" level={2} />
+          <ArticleGrid articles={rest} columns={3} level={2} />
+        </div>
+      ) : (
+        <p class="t-lead">מאמרים חדשים יפורסמו כאן בקרוב.</p>
+      )
+    }
   </Section>
+
+  <CtaBand
+    type="ctaBand"
+    heading="יש לכם שאלה מקצועית?"
+    text="התקשרו אלינו — נשמח לענות גם לפני שהזמנתם בדיקה."
+    tone="dark"
+    primary={{ label: 'תיאום בדיקה', href: '/contact' }}
+  />
 </BaseLayout>
+
+<style>
+  .blog__list {
+    display: grid;
+    gap: var(--grid-gap);
+  }
+</style>

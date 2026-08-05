@@ -1,59 +1,186 @@
 ---
 import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
+import Icon from '../ui/Icon.astro';
 import type { Section as Block } from '../../content.config';
 
 type Props = Extract<Block, { type: 'processSteps' }>;
 const { eyebrow, heading, intro, steps, tone } = Astro.props;
+
+/* Up to five steps get one column each — the five-step "איך עובדים איתנו"
+   flow is the shape this block was designed around. Beyond that the row
+   would crush, so it wraps and the connectors are dropped. */
+const inline = steps.length <= 5;
 ---
 
 <Section tone={tone}>
   <SectionHeader eyebrow={eyebrow} heading={heading} intro={intro} align="center" />
-  <ol role="list" class="steps">
-    {steps.map((step, i) => (
-      <li class="steps__item">
-        <span class="steps__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-        <h3>{step.title}</h3>
-        {step.text && <p class="t-body">{step.text}</p>}
-      </li>
-    ))}
+
+  <ol
+    role="list"
+    class:list={['steps', inline ? 'steps--inline' : 'steps--wrap']}
+    style={`--n:${steps.length}`}
+  >
+    {
+      steps.map((step, i) => (
+        <li class="steps__item">
+          <div class="steps__head">
+            <span class="steps__num" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            {i < steps.length - 1 && (
+              <span class="steps__link" aria-hidden="true">
+                <span class="steps__line" />
+                {/* The sprite arrow points along the inline axis; under dir="rtl"
+                    that is right-to-left, the direction the steps actually run,
+                    so it is NOT flipped. See ProcessSteps note in the report. */}
+                <Icon name="arrow" size={18} class="steps__arrow" />
+              </span>
+            )}
+          </div>
+          <div class="steps__body">
+            <h3>{step.title}</h3>
+            {step.text && <p class="t-body">{step.text}</p>}
+          </div>
+        </li>
+      ))
+    }
   </ol>
 </Section>
 
 <style>
+  /* ── mobile: a clean vertical list on a dashed rail ────────────
+     Never a horizontally scrolling row — a swipeable strip hides steps
+     behind an edge and reads as an ad carousel.
+     ──────────────────────────────────────────────────────────── */
   .steps {
+    --badge: 2.75rem;
+
     display: grid;
-    gap: var(--grid-gap);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+    gap: 0;
     margin: 0;
     padding: 0;
-    counter-reset: step;
+    list-style: none;
   }
 
   .steps__item {
     display: grid;
-    gap: var(--s-2);
-    align-content: start;
-    padding: var(--card-pad);
-    background: var(--c-surface);
-    border: var(--hairline);
-    border-radius: var(--r-4);
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: var(--s-5);
+  }
+
+  .steps__head {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Vertical rail joining one badge to the next. */
+  .steps__item:not(:last-child) .steps__head::after {
+    content: '';
+    position: absolute;
+    inset-block-start: var(--badge);
+    inset-block-end: calc(var(--s-4) * -1);
+    inset-inline-start: calc(var(--badge) / 2);
+    border-inline-start: 2px dashed var(--c-border-strong);
   }
 
   .steps__num {
     display: inline-grid;
     place-items: center;
-    inline-size: 40px;
-    block-size: 40px;
+    flex: none;
+    inline-size: var(--badge);
+    block-size: var(--badge);
     border-radius: var(--r-pill);
     background: var(--c-bg-tint);
     color: var(--c-link);
     font-family: var(--ff-head);
+    font-size: var(--fs-sm);
     font-weight: var(--fw-black);
+    font-variant-numeric: tabular-nums;
   }
 
+  /* The last badge is the outcome — the תסקיר — so it carries the action colour.
+     Orange is a surface here with a white 800-weight label, never orange text. */
   .steps__item:last-child .steps__num {
     background: var(--c-action);
     color: var(--c-on-action);
+  }
+
+  .steps__body {
+    padding-block: var(--s-1) var(--s-8);
+  }
+
+  .steps__body h3 {
+    margin-block-end: var(--s-2);
+  }
+
+  /* The horizontal connector is desktop-only. */
+  .steps__link {
+    display: none;
+  }
+
+  /* ── desktop: the connected path ───────────────────────────── */
+  @media (width >= 900px) {
+    .steps--inline {
+      grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+      column-gap: var(--s-5);
+    }
+
+    .steps--wrap {
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+      gap: var(--s-8) var(--s-5);
+    }
+
+    .steps__item {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--s-4);
+      align-content: start;
+    }
+
+    /* Kill the vertical rail; the horizontal one takes over. */
+    .steps__item:not(:last-child) .steps__head::after {
+      content: none;
+    }
+
+    .steps--inline .steps__link {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      gap: var(--s-2);
+      /* Reach into the column gap so the path is continuous. */
+      margin-inline-end: calc(var(--s-5) * -1);
+      padding-inline-start: var(--s-3);
+      color: var(--c-text-muted);
+    }
+
+    .steps__line {
+      flex: 1;
+      border-block-start: 2px dashed var(--c-border-strong);
+    }
+
+    .steps__body {
+      padding-block: 0;
+    }
+  }
+
+  /* ── inside a dark slab ────────────────────────────────────── */
+  :global(.section--dark) .steps__num {
+    background: var(--c-on-dark-surface);
+    color: var(--c-accent-dark);
+  }
+
+  :global(.section--dark) .steps__item:last-child .steps__num {
+    background: var(--c-action);
+    color: var(--c-on-action);
+  }
+
+  :global(.section--dark) .steps__line,
+  :global(.section--dark) .steps__item:not(:last-child) .steps__head::after {
+    border-color: var(--c-border-dark);
+  }
+
+  :global(.section--dark) .steps__link {
+    color: var(--c-on-dark-muted);
   }
 </style>

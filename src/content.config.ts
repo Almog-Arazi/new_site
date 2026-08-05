@@ -321,8 +321,12 @@ const faq = defineCollection({
 });
 
 /** Six items feeding four consumers: chip picker, /equipment, footer, form select. */
+/** The JSON wraps its array in `{ items: [...] }` so the CMS can edit it as a
+ *  single file; the parser unwraps it back to the array the loader expects. */
+const unwrapItems = (text: string) => JSON.parse(text).items as Record<string, unknown>[];
+
 const equipment = defineCollection({
-  loader: file('./src/content/data/equipment.json'),
+  loader: file('./src/content/data/equipment.json', { parser: unwrapItems }),
   schema: z.object({
     id: z.string(),
     label: z.string(),
@@ -336,7 +340,7 @@ const equipment = defineCollection({
 });
 
 const process = defineCollection({
-  loader: file('./src/content/data/process.json'),
+  loader: file('./src/content/data/process.json', { parser: unwrapItems }),
   schema: z.object({
     id: z.string(),
     title: z.string(),
@@ -346,7 +350,7 @@ const process = defineCollection({
 });
 
 const credentials = defineCollection({
-  loader: file('./src/content/data/credentials.json'),
+  loader: file('./src/content/data/credentials.json', { parser: unwrapItems }),
   schema: z.object({
     id: z.string(),
     title: z.string(),

@@ -5,32 +5,73 @@ import type { Section as Block } from '../../content.config';
 
 type Props = Extract<Block, { type: 'calloutBand' }>;
 const { heading, text, cta, tone } = Astro.props;
+
+const isDark = tone === 'dark';
+const variant = cta?.style === 'primary' ? 'primary' : isDark ? 'on-dark' : 'secondary';
 ---
 
 <Section tone={tone}>
   <div class="callout">
-    <div>
+    <div class="callout__text">
+      <span class="callout__rule" aria-hidden="true"></span>
       <h2>{heading}</h2>
       {text && <p class="t-lead">{text}</p>}
     </div>
-    {cta && (
-      <Button href={cta.href} variant={cta.style === 'primary' ? 'primary' : 'secondary'} size="lg">
-        {cta.label}
-      </Button>
-    )}
+    {
+      cta && (
+        <div class="callout__action">
+          <Button href={cta.href} variant={variant} size="lg">
+            {cta.label}
+          </Button>
+        </div>
+      )
+    }
   </div>
 </Section>
 
 <style>
   .callout {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     gap: var(--s-6);
     align-items: center;
-    justify-content: space-between;
   }
 
-  .callout h2 {
-    margin-block-end: var(--s-2);
+  @media (width >= 800px) {
+    .callout {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--s-9);
+    }
+  }
+
+  .callout__text {
+    display: grid;
+    gap: var(--s-3);
+    max-inline-size: var(--measure);
+  }
+
+  /* A short keyline instead of a second heading weight — the callout is an
+     aside, not a section header. */
+  .callout__rule {
+    inline-size: var(--s-8);
+    block-size: 4px;
+    border-radius: var(--r-pill);
+    background: var(--c-action);
+  }
+
+  .callout__text h2 {
+    margin: 0;
+  }
+
+  .callout__text p {
+    margin: 0;
+  }
+
+  /* ── inside a dark slab ────────────────────────────────────── */
+  :global(.section--dark) .callout__rule {
+    background: var(--c-accent-dark);
+  }
+
+  :global(.section--dark) .callout__text p {
+    color: var(--c-on-dark);
   }
 </style>

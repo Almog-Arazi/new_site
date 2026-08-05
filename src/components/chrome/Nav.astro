@@ -1,0 +1,200 @@
+---
+import Icon from '../ui/Icon.astro';
+import { headerNav, isActive, normalise } from '../../lib/nav';
+
+/* Desktop navigation. The two dropdown groups open on :hover and
+   :focus-within, so the menu is fully readable and operable with the
+   keyboard even if JavaScript never loads. nav.ts only *enhances* it
+   (Escape to dismiss, ArrowDown to enter). */
+
+interface Props {
+  pathname: string;
+  class?: string;
+}
+
+const { pathname, class: className } = Astro.props;
+const here = normalise(pathname);
+---
+
+<nav class:list={['site-nav', className]} aria-label="ניווט ראשי" data-site-nav>
+  <ul role="list" class="site-nav__list">
+    {
+      headerNav.map((link) => {
+        const branchActive = isActive(link, pathname);
+        const exact = normalise(link.href) === here;
+        return (
+          <li class="site-nav__item" data-nav-item={link.children ? '' : undefined}>
+            <a
+              href={link.href}
+              class:list={['site-nav__link', branchActive && 'is-active']}
+              aria-current={exact ? 'page' : undefined}
+            >
+              <span>{link.label}</span>
+              {link.children && <Icon name="chevron" size={16} class="site-nav__caret" />}
+            </a>
+
+            {link.children && (
+              <ul role="list" class="site-nav__sub" aria-label={link.label}>
+                {link.children.map((child) => (
+                  <li>
+                    <a
+                      href={child.href}
+                      class:list={[
+                        'site-nav__sublink',
+                        normalise(child.href) === here && 'is-active',
+                      ]}
+                      aria-current={normalise(child.href) === here ? 'page' : undefined}
+                    >
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>
+
+<style>
+  .site-nav {
+    display: none;
+  }
+
+  .site-nav__list {
+    display: flex;
+    align-items: center;
+    gap: var(--s-1);
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-nav__item {
+    position: relative;
+  }
+
+  .site-nav__link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-1);
+    min-block-size: var(--tap);
+    padding-inline: var(--s-3);
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-med);
+    color: var(--c-heading);
+    text-decoration: none;
+    border-radius: var(--r-pill);
+    white-space: nowrap;
+    transition:
+      background-color var(--dur) var(--ease),
+      color var(--dur) var(--ease);
+  }
+
+  .site-nav__link:hover,
+  .site-nav__item:focus-within > .site-nav__link {
+    background: var(--c-bg-tint);
+    color: var(--c-link);
+  }
+
+  /* Active branch is never colour-only: it also carries an underline mark. */
+  .site-nav__link.is-active {
+    color: var(--c-link);
+    background: var(--c-bg-tint);
+  }
+
+  .site-nav__link.is-active::after {
+    content: '';
+    position: absolute;
+    inset-block-end: 2px;
+    inset-inline: var(--s-4);
+    block-size: 2px;
+    border-radius: var(--r-pill);
+    background: var(--c-action);
+  }
+
+  .site-nav__link :global(.site-nav__caret) {
+    /* The sprite chevron points to the inline start; a caret points down. */
+    transform: rotate(-90deg);
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .site-nav__item:hover .site-nav__link :global(.site-nav__caret),
+  .site-nav__item:focus-within .site-nav__link :global(.site-nav__caret) {
+    transform: rotate(-90deg) translateX(-2px);
+  }
+
+  .site-nav__sub {
+    position: absolute;
+    inset-block-start: calc(100% + var(--s-1));
+    inset-inline-start: 0;
+    min-inline-size: 244px;
+    margin: 0;
+    padding: var(--s-2);
+    display: grid;
+    gap: var(--s-1);
+    background: var(--c-surface);
+    border: var(--hairline);
+    border-radius: var(--r-4);
+    box-shadow: var(--e-2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition:
+      opacity var(--dur) var(--ease),
+      transform var(--dur) var(--ease),
+      visibility var(--dur);
+  }
+
+  .site-nav__item:hover > .site-nav__sub,
+  .site-nav__item:focus-within > .site-nav__sub {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* Escape suppresses the panel while focus deliberately stays on the
+     parent link. Cleared on focusout / ArrowDown by nav.ts. */
+  .site-nav__item.is-suppressed > .site-nav__sub {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+  }
+
+  .site-nav__sublink {
+    display: flex;
+    align-items: center;
+    min-block-size: var(--tap);
+    padding-inline: var(--s-4);
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-med);
+    color: var(--c-heading);
+    text-decoration: none;
+    border-radius: var(--r-2);
+    transition:
+      background-color var(--dur) var(--ease),
+      color var(--dur) var(--ease);
+  }
+
+  .site-nav__sublink:hover,
+  .site-nav__sublink.is-active {
+    background: var(--c-bg-tint);
+    color: var(--c-link);
+  }
+
+  .site-nav__link:focus-visible,
+  .site-nav__sublink:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+  }
+
+  @media (width >= 1080px) {
+    .site-nav {
+      display: block;
+    }
+  }
+</style>

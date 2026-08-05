@@ -1,21 +1,32 @@
 ---
-import site from '../../site.config';
+import site, { waHref } from '../../site.config';
 import { displayPhone, telHrefFor } from '../../lib/format';
-import { waHref } from '../../site.config';
 import Icon from '../ui/Icon.astro';
 
-/* PHASE 0 STUB — ownership passes to Stream A. */
+/* Fixed bottom bar, mobile only. base.css reserves the matching bottom
+   padding on <body> below 900px so nothing hides underneath it. */
+
+const phone = displayPhone(site.phoneE164);
+const tel = telHrefFor(site.phoneE164);
 ---
 
-<div class="cta-bar hide-desktop">
-  <a href={telHrefFor(site.phoneE164)} class="cta-bar__call" data-track="phone_click">
+<div class="cta-bar" role="group" aria-label="יצירת קשר מהירה">
+  <a href={tel} class="cta-bar__call" data-track="phone_click">
     <Icon name="phone" size={22} />
     <span>התקשרו עכשיו</span>
-    <span class="vh"><bdi class="ltr">{displayPhone(site.phoneE164)}</bdi></span>
+    <span class="vh"><bdi class="ltr num">{phone}</bdi></span>
   </a>
-  <a href={waHref} class="cta-bar__wa" data-track="whatsapp_click" target="_blank" rel="noopener">
+
+  <a
+    href={waHref}
+    class="cta-bar__wa"
+    data-track="whatsapp_click"
+    target="_blank"
+    rel="noopener"
+  >
     <Icon name="whatsapp" size={22} />
     <span>וואטסאפ</span>
+    <span class="vh">{site.whatsappMessage}</span>
   </a>
 </div>
 
@@ -37,15 +48,23 @@ import Icon from '../ui/Icon.astro';
 
   .cta-bar a {
     display: inline-flex;
-    flex: 1;
     align-items: center;
     justify-content: center;
     gap: var(--s-2);
     min-block-size: var(--tap-lg);
+    min-inline-size: 0;
     font-family: var(--ff-head);
     font-size: var(--fs-btn);
     font-weight: var(--fw-bold);
+    text-decoration: none;
     border-radius: var(--r-pill);
+    transition:
+      background-color var(--dur) var(--ease),
+      transform var(--dur-fast) var(--ease);
+  }
+
+  .cta-bar a:active {
+    transform: translateY(var(--press));
   }
 
   .cta-bar__call {
@@ -54,15 +73,32 @@ import Icon from '../ui/Icon.astro';
     color: var(--c-on-action);
   }
 
+  .cta-bar__call:hover {
+    background: var(--c-action-hover);
+  }
+
   .cta-bar__wa {
+    flex: 1;
     background: var(--c-on-dark-surface);
     color: var(--c-white);
     border: 1.5px solid var(--c-border-dark);
   }
 
+  .cta-bar__wa:hover {
+    background: var(--c-on-dark-surface-hover);
+  }
+
   .cta-bar a:focus-visible {
     outline: none;
     box-shadow: var(--ring-on-dark);
+  }
+
+  /* Narrow phones: keep both labels on one line rather than wrapping. */
+  @media (width <= 360px) {
+    .cta-bar a {
+      font-size: var(--fs-sm);
+      gap: var(--s-1);
+    }
   }
 
   @media (width >= 901px) {

@@ -1,0 +1,123 @@
+---
+import { getCollection } from 'astro:content';
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+
+/* Homepage variant of the five steps (sketch P1: a connected rail, not the
+   card row that blocks/ProcessSteps.astro renders on inner pages). Same
+   `process` collection feeds both. */
+
+interface Props {
+  heading?: string;
+  intro?: string;
+}
+
+const {
+  heading = 'איך עובדים איתנו',
+  intro = 'חמישה שלבים מהפנייה הראשונה ועד התזכורת לבדיקה הבאה.',
+} = Astro.props;
+
+const steps = (await getCollection('process')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Section tone="soft">
+  <SectionHeader heading={heading} intro={intro} align="center" />
+  <ol role="list" class="flow">
+    {
+      steps.map((step, i) => (
+        <li class="flow__step">
+          <span class="flow__rail" aria-hidden="true" />
+          <span
+            class:list={['flow__num', i === steps.length - 1 && 'flow__num--last']}
+            aria-hidden="true"
+          >
+            {i + 1}
+          </span>
+          <h3 class="flow__title">{step.data.title}</h3>
+          <p class="t-body flow__text">{step.data.text}</p>
+        </li>
+      ))
+    }
+  </ol>
+</Section>
+
+<style>
+  .flow {
+    display: grid;
+    gap: var(--s-7) var(--grid-gap);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+    margin: 0;
+    padding: 0;
+  }
+
+  /* One row for every step, whatever the step count — so no rail is ever left
+     reaching for a step that wrapped to the next line. */
+  @media (width >= 901px) {
+    .flow {
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      grid-template-columns: none;
+    }
+  }
+
+  .flow__step {
+    position: relative;
+    display: grid;
+    gap: var(--s-2);
+    align-content: start;
+    justify-items: center;
+    text-align: center;
+  }
+
+  /* Hairline connector between the numbers; the last step has none, and it
+     disappears whenever the row wraps to a single column. */
+  .flow__rail {
+    display: none;
+    position: absolute;
+    inset-block-start: calc(var(--tap) / 2);
+    inset-inline: 50% -50%;
+    block-size: 1px;
+    background: var(--c-border-strong);
+  }
+
+  .flow__step:last-child .flow__rail {
+    display: none;
+  }
+
+  .flow__num {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--tap);
+    block-size: var(--tap);
+    border-radius: var(--r-pill);
+    background: var(--c-link);
+    color: var(--c-white);
+    font-family: var(--ff-head);
+    font-weight: var(--fw-black);
+    font-size: var(--fs-lead);
+  }
+
+  .flow__num--last {
+    background: var(--c-action);
+    color: var(--c-on-action);
+  }
+
+  .flow__title {
+    margin-block-start: var(--s-2);
+  }
+
+  .flow__text {
+    max-inline-size: 32ch;
+  }
+
+  @media (width >= 901px) {
+    .flow__rail {
+      display: block;
+    }
+
+    .flow__step:last-child .flow__rail {
+      display: none;
+    }
+  }
+</style>

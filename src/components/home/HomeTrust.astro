@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Card from '../ui/Card.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  heading?: string;
+  intro?: string;
+}
+
+const {
+  heading = 'ניסיון, מקצועיות ושירות שמותאם למפעלים וחברות',
+  intro,
+} = Astro.props;
+
+const items = (await getCollection('credentials')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Section>
+  <SectionHeader heading={heading} intro={intro} />
+  <div class="grid grid--4">
+    {
+      items.map((item, i) => (
+        <Card tone={i === items.length - 1 ? 'tint' : 'surface'}>
+          <span class="trust__badge" aria-hidden="true">
+            <Icon name={item.data.icon} size={22} />
+          </span>
+          <h3 class="trust__title">{item.data.title}</h3>
+          <p class="t-body">{item.data.text}</p>
+        </Card>
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  /* A hairline-ringed icon tile, not a filled blob — keeps the row quiet. */
+  .trust__badge {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--tap);
+    block-size: var(--tap);
+    margin-block-end: var(--s-4);
+    color: var(--c-link);
+    border: 1.5px solid var(--c-border-strong);
+    border-radius: var(--r-3);
+  }
+
+  .trust__title {
+    margin-block-end: var(--s-2);
+  }
+</style>

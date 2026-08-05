@@ -1,0 +1,30 @@
+---
+import { BLOCKS } from '../blocks/registry';
+import type { Section } from '../../content.config';
+
+/**
+ * Renders a page's `sections` through the FROZEN block registry.
+ *
+ * Templates use this instead of handing `sections` to PageLayout so that a
+ * template can (a) hold back a block it wants to render differently — the FAQ
+ * page renders its faq block grouped, with a topic rail — and (b) pass a
+ * density hint down to every block in one place.
+ */
+interface Props {
+  sections?: Section[];
+  /** Block types this template renders itself. */
+  exclude?: Section['type'][];
+  /** Extra props merged into every block. Blocks that do not read them ignore them. */
+  extra?: Record<string, unknown>;
+}
+
+const { sections = [], exclude = [], extra = {} } = Astro.props;
+const list = exclude.length ? sections.filter((s) => !exclude.includes(s.type)) : sections;
+---
+
+{
+  list.map((section) => {
+    const Block = BLOCKS[section.type];
+    return <Block {...(section as unknown as Record<string, unknown>)} {...extra} />;
+  })
+}

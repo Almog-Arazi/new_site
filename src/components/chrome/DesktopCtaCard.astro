@@ -1,32 +1,70 @@
 ---
-import site from '../../site.config';
-import TelLink from '../ui/TelLink.astro';
-import WaLink from '../ui/WaLink.astro';
+import site, { waHref } from '../../site.config';
+import { displayPhone, telHrefFor } from '../../lib/format';
+import Icon from '../ui/Icon.astro';
 import Button from '../ui/Button.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
 
-/* PHASE 0 STUB — ownership passes to Stream A. */
+/* Sticky side rail. It genuinely floats, so it is one of the very few
+   things allowed a resting shadow.
+
+   Overlap policy: the widest slab on the site is --container-wide (1320px).
+   The rail is 210px and needs air on both sides, so it only appears once
+   the free margin can hold it — 1800px and up. Below that it is display:none
+   and the mobile bar / in-page CTAs carry the conversion. */
+
+const phone = displayPhone(site.phoneE164);
+const tel = telHrefFor(site.phoneE164);
 ---
 
-<aside class="cta-rail hide-mobile" aria-label="יצירת קשר מהירה">
+<aside class="cta-rail" aria-label="יצירת קשר מהירה">
   <Eyebrow>תיאום בדיקה</Eyebrow>
-  <p class="cta-rail__text">מענה אנושי ומהיר, {site.hours}</p>
-  <TelLink variant="row" />
-  <WaLink variant="row" />
+  <p class="cta-rail__text">מענה אנושי ומהיר,<br />{site.hours}</p>
+
+  <a href={tel} class="cta-rail__row cta-rail__row--call" data-track="phone_click">
+    <span class="cta-rail__icon" aria-hidden="true">
+      <Icon name="phone" size={20} />
+    </span>
+    <span class="cta-rail__stack">
+      <bdi class="ltr num cta-rail__num">{phone}</bdi>
+      <span class="cta-rail__sub">שיחת טלפון</span>
+    </span>
+  </a>
+
+  <a
+    href={waHref}
+    class="cta-rail__row"
+    data-track="whatsapp_click"
+    target="_blank"
+    rel="noopener"
+  >
+    <span class="cta-rail__icon cta-rail__icon--wa" aria-hidden="true">
+      <Icon name="whatsapp" size={20} />
+    </span>
+    <span class="cta-rail__stack">
+      <span class="cta-rail__num">וואטסאפ</span>
+      <span class="cta-rail__sub">הודעה מוכנה מראש</span>
+    </span>
+  </a>
+
   <Button href="/contact" variant="primary" full>תיאום בדיקה</Button>
 </aside>
 
 <style>
-  /* The rail genuinely floats, so it is one of the few things allowed a
-     resting shadow. */
   .cta-rail {
+    display: none;
     position: fixed;
-    inset-inline-end: var(--s-5);
+    /* Hug the outer edge of the widest container instead of the viewport
+       edge, so on very wide screens the rail stays near the content. */
+    inset-inline-end: max(
+      var(--s-4),
+      calc(50vw - var(--container-wide) / 2 - var(--rail-w) - var(--s-5))
+    );
     inset-block-start: 50%;
     transform: translateY(-50%);
     z-index: var(--z-rail);
-    inline-size: 216px;
-    display: grid;
+    --rail-w: 210px;
+    inline-size: var(--rail-w);
     gap: var(--s-3);
     padding: var(--s-5);
     background: var(--c-surface);
@@ -41,9 +79,62 @@ import Eyebrow from '../ui/Eyebrow.astro';
     color: var(--c-text);
   }
 
-  @media (width <= 1500px) {
+  .cta-rail__row {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    min-block-size: var(--tap);
+    padding: var(--s-2);
+    color: var(--c-heading);
+    text-decoration: none;
+    border-radius: var(--r-3);
+    transition: background-color var(--dur) var(--ease);
+  }
+
+  .cta-rail__row:hover {
+    background: var(--c-bg-tint);
+  }
+
+  .cta-rail__icon {
+    display: grid;
+    place-items: center;
+    inline-size: var(--s-8);
+    block-size: var(--s-8);
+    flex: none;
+    color: var(--c-on-action);
+    background: var(--c-action);
+    border-radius: var(--r-2);
+  }
+
+  .cta-rail__icon--wa {
+    background: var(--c-link);
+  }
+
+  .cta-rail__stack {
+    display: grid;
+    min-inline-size: 0;
+  }
+
+  .cta-rail__num {
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-bold);
+    color: var(--c-heading);
+  }
+
+  .cta-rail__sub {
+    font-size: var(--fs-xs);
+    color: var(--c-text);
+  }
+
+  .cta-rail :is(a):focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+  }
+
+  @media (width >= 1800px) {
     .cta-rail {
-      display: none;
+      display: grid;
     }
   }
 </style>

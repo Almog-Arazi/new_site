@@ -45,7 +45,7 @@ for (const file of files.filter((f) => f.endsWith('.html'))) {
     if (!path || path === '/') continue;
 
     /* Static assets live on disk under the same path. */
-    if (/\.\w{2,5}$/.test(path)) {
+    if (/\.\w{2,12}$/.test(path)) {
       const onDisk = files.some((f) => '/' + relative(root, f).replaceAll('\\', '/') === path);
       if (!onDisk) problems.push(`${rel}: asset not found — ${path}`);
       continue;

@@ -3,20 +3,91 @@ import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import type { Section as Block } from '../../content.config';
 
-type Props = Extract<Block, { type: 'checkList' }>;
-const { eyebrow, heading, intro, items, columns, tone } = Astro.props;
+type Props = Extract<Block, { type: 'checkList' }> & {
+  /** Set by the equipment template — see the note below. */
+  dense?: boolean;
+};
+
+const { eyebrow, heading, intro, items, columns, tone, dense = false } = Astro.props;
+
+/* ── the sub-type chip list ───────────────────────────────────
+   An equipment page carries two kinds of list that look identical in the
+   CMS: the long roll-call of sub-types it inspects ("מלגזות חשמליות",
+   "מלגזות Reach Truck", "מלגזות צריח" …) and the shorter list of what an
+   inspection actually covers ("בדיקות תפקוד וניסוי בהתאם לצורך").
+
+   The first is a keyword index and wants to be dense and scannable; the
+   second is prose and wants the ✓ column list. They are told apart by
+   shape, not by a thirteenth block type: only the equipment template opts
+   in via `dense`, and even then only a list of at least five uniformly
+   short labels becomes chips. One long item and the whole list stays a
+   check list, which is the safe direction to fail in.
+   ────────────────────────────────────────────────────────────── */
+const asChips = dense && items.length >= 5 && items.every((item) => item.length <= 24);
 ---
 
 <Section tone={tone}>
   <SectionHeader eyebrow={eyebrow} heading={heading} intro={intro} />
-  <ul role="list" class="checks" style={`--cols:${columns}`}>
-    {items.map((item) => <li>{item}</li>)}
-  </ul>
+
+  {
+    asChips ? (
+      <ul role="list" class="tags">
+        {items.map((item) => (
+          <li class="tags__item">{item}</li>
+        ))}
+      </ul>
+    ) : (
+      <ul role="list" class="checks" style={`--cols:${columns}`}>
+        {items.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    )
+  }
 </Section>
 
 <style>
   .checks {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: var(--s-4) var(--s-8);
+    max-inline-size: var(--measure);
+  }
+
+  @media (width >= 700px) {
+    .checks {
+      grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+      max-inline-size: none;
+    }
+  }
+
+  /* Dense sub-type list: static tags, not interactive chips, so they are
+     plain <li> with no tap target and no hover affordance to promise a link
+     that is not there. */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tags__item {
+    display: inline-flex;
+    align-items: center;
+    padding-inline: var(--s-5);
+    padding-block: var(--s-3);
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-med);
+    line-height: 1.3;
+    color: var(--c-heading);
+    background: var(--c-bg-tint);
+    border-radius: var(--r-pill);
+  }
+
+  /* ── inside a dark slab ────────────────────────────────────── */
+  :global(.section--dark) .tags__item {
+    background: var(--c-on-dark-surface);
+    color: var(--c-on-dark);
   }
 </style>

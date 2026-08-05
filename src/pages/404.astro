@@ -1,22 +1,98 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/ui/Section.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import Card from '../components/ui/Card.astro';
 import Button from '../components/ui/Button.astro';
+import Eyebrow from '../components/ui/Eyebrow.astro';
+import Icon from '../components/ui/Icon.astro';
+import site from '../site.config';
+import { displayPhone, telHrefFor } from '../lib/format';
+
+const phone = displayPhone(site.phoneE164);
+const tel = telHrefFor(site.phoneE164);
+
+const routes = [
+  { title: 'שירותי בדיקה', text: 'מתקני הרמה, אביזרי הרמה וקווי חיים.', href: '/services' },
+  { title: 'הציוד שאנו בודקים', text: 'מלגזות, עגורנים, במות הרמה ועוד.', href: '/equipment' },
+  { title: 'שאלות נפוצות', text: 'תדירות בדיקות, תסקירים ודרישות החוק.', href: '/faq' },
+  { title: 'צור קשר', text: 'טלפון, וואטסאפ וטופס תיאום קצר.', href: '/contact' },
+];
 ---
 
 <BaseLayout
   title="הדף לא נמצא"
-  description="הדף שחיפשתם לא נמצא. אפשר לחזור לעמוד הבית או ליצור קשר."
+  description="הדף שחיפשתם לא נמצא באתר ארזי מיטב המהנדסים. אפשר לחזור לעמוד הבית, לעבור לעמודי השירות או ליצור קשר ישירות."
   path="/404"
   noindex
   showRail={false}
 >
   <Section tone="tint">
-    <h1>הדף לא נמצא</h1>
-    <p class="t-lead">ייתכן שהכתובת השתנתה. אפשר לחזור לעמוד הבית או לפנות אלינו ישירות.</p>
-    <div class="cluster">
-      <Button href="/" variant="primary">לעמוד הבית</Button>
-      <Button href="/contact" variant="secondary">צור קשר</Button>
+    <div class="oops">
+      <Eyebrow>שגיאה 404</Eyebrow>
+      <h1>הדף לא נמצא</h1>
+      <p class="t-lead">
+        ייתכן שהכתובת השתנתה או שהקישור שגוי. אפשר לחזור לעמוד הבית, לבחור אחד מהעמודים
+        למטה, או פשוט להתקשר — נעזור למצוא את מה שחיפשתם.
+      </p>
+      <div class="cluster">
+        <Button href="/" variant="primary" size="lg">לעמוד הבית</Button>
+        <Button href={tel} variant="ghost" size="lg" track="phone_click">
+          <Icon name="phone" size={20} />
+          <bdi class="ltr num">{phone}</bdi>
+        </Button>
+      </div>
+    </div>
+  </Section>
+
+  <Section>
+    <SectionHeader heading="העמודים המבוקשים ביותר" />
+    <div class="grid grid--2">
+      {
+        routes.map((route) => (
+          <Card href={route.href} accent="blue">
+            <h2 class="route__title">{route.title}</h2>
+            <p class="route__text">{route.text}</p>
+            <span class="route__go">
+              <span>למעבר</span>
+              <Icon name="arrow" size={18} />
+            </span>
+          </Card>
+        ))
+      }
     </div>
   </Section>
 </BaseLayout>
+
+<style>
+  .oops {
+    display: grid;
+    justify-items: start;
+    gap: var(--s-4);
+    max-inline-size: var(--measure);
+  }
+
+  .route__title {
+    font-size: var(--fs-h3);
+    line-height: var(--lh-h3);
+    font-weight: var(--fw-bold);
+    margin-block-end: var(--s-2);
+  }
+
+  .route__text {
+    font-size: var(--fs-sm);
+    line-height: var(--lh-body);
+    color: var(--c-text);
+  }
+
+  .route__go {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    margin-block-start: var(--s-4);
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-bold);
+    color: var(--c-link);
+  }
+</style>

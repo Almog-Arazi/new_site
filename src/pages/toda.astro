@@ -1,23 +1,206 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/ui/Section.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import Card from '../components/ui/Card.astro';
 import Button from '../components/ui/Button.astro';
-import TelLink from '../components/ui/TelLink.astro';
+import Eyebrow from '../components/ui/Eyebrow.astro';
+import Icon from '../components/ui/Icon.astro';
+import site, { waHref } from '../site.config';
+import { displayPhone, telHrefFor } from '../lib/format';
+
+/* Post-submit landing page. noindex, no rail — the visitor has already
+   converted; the job now is to set expectations and stay reachable. */
+
+const phone = displayPhone(site.phoneE164);
+const tel = telHrefFor(site.phoneE164);
+
+const steps = [
+  {
+    title: 'קיבלנו את הפנייה',
+    text: 'הפרטים הגיעו אלינו. אין צורך לשלוח שוב.',
+  },
+  {
+    title: 'נחזור אליכם בטלפון',
+    text: `בשעות העבודה (${site.hours}), בדרך כלל באותו יום עסקים.`,
+  },
+  {
+    title: 'נתאם מועד בדיקה',
+    text: 'נסכם זמינות ומחיר, ונקבע הגעה לאתר בזמן שנוח לכם.',
+  },
+];
+
+const next = [
+  { title: 'שאלות נפוצות', text: 'תדירות בדיקות, תסקירים ומה נדרש להכין.', href: '/faq' },
+  { title: 'הציוד שאנו בודקים', text: 'מלגזות, עגורנים, במות הרמה ואביזרים.', href: '/equipment' },
+  { title: 'מאמרים מקצועיים', text: 'רגולציה, בטיחות ותחזוקת ציוד הרמה.', href: '/blog' },
+];
 ---
 
 <BaseLayout
   title="תודה על פנייתכם"
-  description="קיבלנו את הפנייה ונחזור אליכם עם זמינות ומחיר."
+  description="קיבלנו את הפנייה לתיאום בדיקת ציוד הרמה ונחזור אליכם עם זמינות ומחיר בשעות העבודה."
   path="/toda"
   noindex
   showRail={false}
 >
   <Section tone="tint">
-    <h1>תודה, קיבלנו את הפנייה</h1>
-    <p class="t-lead">נחזור אליכם עם זמינות ומחיר. אם זה דחוף — אפשר פשוט להתקשר.</p>
-    <div class="cluster">
-      <TelLink variant="button" />
-      <Button href="/" variant="secondary">חזרה לעמוד הבית</Button>
+    <div class="thanks">
+      <span class="thanks__mark" aria-hidden="true">
+        <Icon name="check" size={32} />
+      </span>
+      <Eyebrow>הפנייה נשלחה</Eyebrow>
+      <h1>תודה, קיבלנו את הפנייה</h1>
+      <p class="t-lead">
+        נחזור אליכם עם זמינות ומחיר. אם זה דחוף — אפשר פשוט להתקשר, ונענה בשעות העבודה.
+      </p>
+
+      <div class="cluster">
+        <Button href={tel} variant="primary" size="lg" track="phone_click">
+          <Icon name="phone" size={20} />
+          <bdi class="ltr num">{phone}</bdi>
+        </Button>
+        <Button
+          href={waHref}
+          variant="ghost"
+          size="lg"
+          track="whatsapp_click"
+          target="_blank"
+          rel="noopener"
+        >
+          <Icon name="whatsapp" size={20} />
+          וואטסאפ
+        </Button>
+      </div>
     </div>
   </Section>
+
+  <Section>
+    <SectionHeader eyebrow="מה קורה עכשיו" heading="שלושה שלבים עד הבדיקה" />
+    <ol role="list" class="steps">
+      {
+        steps.map((step, index) => (
+          <li class="step">
+            <span class="step__num" aria-hidden="true">
+              {index + 1}
+            </span>
+            <div class="step__body">
+              <h3 class="step__title">{step.title}</h3>
+              <p class="step__text">{step.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </Section>
+
+  <Section tone="soft">
+    <SectionHeader heading="בינתיים, אולי יעניין אתכם" />
+    <div class="grid grid--3">
+      {
+        next.map((item) => (
+          <Card href={item.href} accent="blue">
+            <h3 class="next__title">{item.title}</h3>
+            <p class="next__text">{item.text}</p>
+            <span class="next__go">
+              <span>למעבר</span>
+              <Icon name="arrow" size={18} />
+            </span>
+          </Card>
+        ))
+      }
+    </div>
+    <p class="back">
+      <a href="/">חזרה לעמוד הבית</a>
+    </p>
+  </Section>
 </BaseLayout>
+
+<style>
+  .thanks {
+    display: grid;
+    justify-items: start;
+    gap: var(--s-4);
+    max-inline-size: var(--measure);
+  }
+
+  .thanks__mark {
+    display: grid;
+    place-items: center;
+    inline-size: var(--s-10);
+    block-size: var(--s-10);
+    color: var(--c-white);
+    background: var(--c-link);
+    border-radius: var(--r-pill);
+  }
+
+  .steps {
+    display: grid;
+    gap: var(--grid-gap);
+    margin: 0;
+    padding: 0;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s-4);
+    align-items: start;
+  }
+
+  .step__num {
+    display: grid;
+    place-items: center;
+    inline-size: var(--s-8);
+    block-size: var(--s-8);
+    font-family: var(--ff-head);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-black);
+    color: var(--c-link);
+    background: var(--c-bg-tint);
+    border-radius: var(--r-pill);
+  }
+
+  .step__body {
+    display: grid;
+    gap: var(--s-2);
+  }
+
+  .step__title {
+    font-size: var(--fs-h3);
+  }
+
+  .step__text {
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    color: var(--c-text);
+  }
+
+  .next__title {
+    font-size: var(--fs-h3);
+    margin-block-end: var(--s-2);
+  }
+
+  .next__text {
+    font-size: var(--fs-sm);
+    line-height: var(--lh-body);
+    color: var(--c-text);
+  }
+
+  .next__go {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    margin-block-start: var(--s-4);
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-bold);
+    color: var(--c-link);
+  }
+
+  .back {
+    margin-block-start: var(--s-7);
+    font-size: var(--fs-sm);
+  }
+</style>

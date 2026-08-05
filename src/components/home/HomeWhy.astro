@@ -1,0 +1,120 @@
+---
+import Section from '../ui/Section.astro';
+import PhotoFrame from '../media/PhotoFrame.astro';
+import Button from '../ui/Button.astro';
+import type { PlaceholderVariant } from '../placeholders/index';
+
+interface Props {
+  heading?: string;
+  body?: string;
+  bullets?: string[];
+  media?: { placeholder: PlaceholderVariant; alt: string; note?: string };
+}
+
+const {
+  heading = 'פתרון מקצועי למפעלים וחברות',
+  body = 'במפעלים ובחברות תעשייתיות יש מגוון גדול של ציוד הרמה הדורש בדיקות, מעקב וניהול מסודר. המטרה שלנו היא לאפשר ללקוחות להתמקד בעבודה השוטפת, כאשר ציוד ההרמה שלהם מנוהל בצורה מקצועית ומסודרת.',
+  bullets = [
+    'תיאום בדיקות מול המשרד',
+    'ביצוע בדיקות בשטח על ידי בודק מוסמך',
+    'הפקת תסקירי בדיקה מסודרים',
+    'מעקב אחר מועדי בדיקה עתידיים',
+    'מענה מקצועי גם לאחר הבדיקה',
+  ],
+  media = {
+    placeholder: 'factory' as PlaceholderVariant,
+    alt: 'סביבת מפעל פעיל שבה מתבצעות בדיקות ציוד הרמה',
+    note: 'צילום: משרד פעיל / מפעל — מעקב מועדי בדיקה והכנת תסקיר',
+  },
+} = Astro.props;
+---
+
+<Section tone="dark">
+  <div class="why">
+    <PhotoFrame
+      variant={media.placeholder}
+      alt={media.alt}
+      note={media.note}
+      ratio="card"
+      tone="dark"
+      class="why__media"
+    />
+    <div class="why__text">
+      <h2>{heading}</h2>
+      <p class="t-lead why__body">{body}</p>
+      <ul role="list" class="why__list">
+        {
+          bullets.map((item) => (
+            <li class="why__item">
+              <span class="why__tick" aria-hidden="true">
+                ✓
+              </span>
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+      <div class="cluster why__cta">
+        <Button href="/services" variant="on-dark" size="lg">לשירותי הבדיקה</Button>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<style>
+  /* A class handed to a child component lands on that component's root,
+     which never carries this file's scope id — hence :global here only. */
+  :global(.why__media) {
+    align-self: stretch;
+  }
+
+  .why {
+    display: grid;
+    gap: var(--s-9);
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  }
+
+  .why__text {
+    display: grid;
+    gap: var(--s-5);
+    align-content: start;
+  }
+
+  .why__body {
+    color: var(--c-on-dark-muted);
+  }
+
+  .why__list {
+    display: grid;
+    gap: var(--s-3);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    margin: 0;
+    padding: 0;
+  }
+
+  .why__item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s-3);
+    align-items: start;
+    padding: var(--s-3) var(--s-4);
+    background: var(--c-on-dark-surface-soft);
+    border-radius: var(--r-3);
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-med);
+    line-height: var(--lh-h3);
+    color: var(--c-white);
+  }
+
+  /* Amber is small marks on navy only. */
+  .why__tick {
+    color: var(--c-accent-dark);
+    font-weight: var(--fw-black);
+  }
+
+  .why__cta {
+    margin-block-start: var(--s-1);
+  }
+</style>

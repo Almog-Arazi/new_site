@@ -1,0 +1,62 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Section from '../ui/Section.astro';
+import Prose from '../ui/Prose.astro';
+import Blocks from './Blocks.astro';
+import RelatedLinks from '../blocks/RelatedLinks.astro';
+import { aboutPage, localBusiness } from '../../lib/schema';
+import { relatedLinks, type TemplateProps } from './shared';
+
+/* ============================================================
+   ABOUT — /about.
+
+   Schema: AboutPage, whose `mainEntity` points at the Organization by @id.
+
+   The Organization node itself is already emitted on every page by
+   BaseLayout, so re-declaring it here would only duplicate an identical
+   @id. What /about adds instead is the full ProfessionalService entity —
+   hours, area served, telephone, what the business knows about — which
+   otherwise only the homepage carries, and which every Service node on the
+   site references as its provider.
+   ============================================================ */
+
+type Props = TemplateProps;
+const { page, path, hasBody = false } = Astro.props;
+const data = page.data;
+
+const schemas = [
+  aboutPage({ name: data.h1, description: data.seo.description, path }),
+  localBusiness(),
+];
+
+const related = await relatedLinks(data.related);
+---
+
+<PageLayout
+  title={data.seo.title}
+  description={data.seo.description}
+  path={path}
+  noindex={data.seo.noindex}
+  eyebrow={data.eyebrow}
+  h1={data.h1}
+  lead={data.lead}
+  breadcrumb={data.breadcrumb}
+  breadcrumbLabel={data.breadcrumbLabel}
+  hero={data.hero}
+  schemas={schemas}
+  cta={data.cta}
+>
+  <Blocks sections={data.sections} />
+
+  {
+    hasBody && (
+      <Section width="narrow">
+        <Prose>
+          <slot />
+        </Prose>
+      </Section>
+    )
+  }
+
+  <RelatedLinks heading="התחומים שאנו בודקים" links={related} tone="soft" />
+</PageLayout>
