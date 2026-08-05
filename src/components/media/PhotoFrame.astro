@@ -1,0 +1,84 @@
+---
+import PlaceholderArt from '../placeholders/PlaceholderArt.astro';
+import type { PlaceholderVariant } from '../placeholders/index';
+
+interface Props {
+  variant: PlaceholderVariant;
+  alt: string;
+  /** Real photo path under /uploads once the photo day happens. */
+  image?: string;
+  note?: string;
+  ratio?: 'hero' | 'card' | 'wide' | 'portrait' | 'auto';
+  tone?: 'tint' | 'dark';
+  eager?: boolean;
+  class?: string;
+}
+
+const {
+  variant,
+  alt,
+  image,
+  note,
+  ratio = 'card',
+  tone = 'tint',
+  eager = false,
+  class: className,
+} = Astro.props;
+---
+
+<figure class:list={['frame', `frame--${ratio}`, className]}>
+  {
+    image ? (
+      <img
+        src={image}
+        alt={alt}
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+        fetchpriority={eager ? 'high' : 'auto'}
+      />
+    ) : (
+      <>
+        <PlaceholderArt variant={variant} note={note} tone={tone} />
+        <figcaption class="vh">{alt}</figcaption>
+      </>
+    )
+  }
+</figure>
+
+<style>
+  /* The signature motif: asymmetric corners built from LOGICAL properties.
+     The border-radius shorthand is physical and mirrors wrong under dir=rtl. */
+  .frame {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    background: var(--c-bg-tint);
+    border-start-start-radius: var(--r-frame-ss);
+    border-start-end-radius: var(--r-frame-se);
+    border-end-start-radius: var(--r-frame-es);
+    border-end-end-radius: var(--r-frame-ee);
+    box-shadow: inset 0 0 0 1px var(--c-border);
+  }
+
+  .frame--hero {
+    aspect-ratio: var(--ar-hero);
+  }
+
+  .frame--card {
+    aspect-ratio: var(--ar-card);
+  }
+
+  .frame--wide {
+    aspect-ratio: var(--ar-wide);
+  }
+
+  .frame--portrait {
+    aspect-ratio: var(--ar-portrait);
+  }
+
+  .frame img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+</style>

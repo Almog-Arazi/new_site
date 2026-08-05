@@ -1,0 +1,136 @@
+---
+import '../styles/prose.css';
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumb from '../components/chrome/Breadcrumb.astro';
+import PhotoFrame from '../components/media/PhotoFrame.astro';
+import CtaBand from '../components/blocks/CtaBand.astro';
+import Prose from '../components/ui/Prose.astro';
+import { hebrewDate, isoDate } from '../lib/format';
+import { article as articleSchema, breadcrumb as breadcrumbSchema } from '../lib/schema';
+import type { PlaceholderVariant } from '../components/placeholders/index';
+
+interface Props {
+  title: string;
+  seoTitle?: string;
+  description: string;
+  path: string;
+  publishDate: Date;
+  updatedDate?: Date;
+  author: string;
+  category: string;
+  keywords?: string[];
+  readingMinutes: number;
+  hero: { placeholder: PlaceholderVariant; alt: string; note?: string };
+  schemas?: unknown[];
+}
+
+const {
+  title,
+  seoTitle,
+  description,
+  path,
+  publishDate,
+  updatedDate,
+  author,
+  category,
+  keywords = [],
+  readingMinutes,
+  hero,
+  schemas = [],
+} = Astro.props;
+
+const trail = [
+  { label: 'ראשי', href: '/' },
+  { label: 'מאמרים מקצועיים', href: '/blog' },
+];
+
+const allSchemas = [
+  articleSchema({
+    title,
+    description,
+    path,
+    published: publishDate,
+    updated: updatedDate,
+    author,
+    keywords,
+  }),
+  breadcrumbSchema([...trail, { label: title, href: path }]),
+  ...schemas,
+];
+---
+
+<BaseLayout
+  title={seoTitle ?? title}
+  description={description}
+  path={path}
+  ogType="article"
+  publishedTime={publishDate.toISOString()}
+  modifiedTime={(updatedDate ?? publishDate).toISOString()}
+  schemas={allSchemas}
+>
+  <article class="article">
+    <header class="article__head">
+      <div class="container container--narrow">
+        <Breadcrumb trail={trail} current={title} />
+        <p class="t-eyebrow">{category}</p>
+        <h1>{title}</h1>
+        <p class="article__meta">
+          <span>{author}</span>
+          <span aria-hidden="true">·</span>
+          <time datetime={isoDate(updatedDate ?? publishDate)}>
+            עודכן {hebrewDate(updatedDate ?? publishDate)}
+          </time>
+          <span aria-hidden="true">·</span>
+          <span>{readingMinutes} דקות קריאה</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="container container--narrow article__body">
+      <PhotoFrame
+        variant={hero.placeholder}
+        alt={hero.alt}
+        note={hero.note}
+        ratio="wide"
+        eager
+      />
+      <Prose>
+        <slot />
+      </Prose>
+    </div>
+  </article>
+
+  <CtaBand
+    type="ctaBand"
+    heading="צריכים לבצע בדיקה לציוד ההרמה שלכם?"
+    text="צרו קשר לקבלת זמינות, מחיר ותיאום בדיקה."
+    tone="dark"
+    primary={{ label: 'תיאום בדיקה', href: '/contact' }}
+  />
+</BaseLayout>
+
+<style>
+  .article__head {
+    padding-block: var(--s-8) var(--s-7);
+    background: var(--c-bg-tint);
+  }
+
+  .article__head h1 {
+    margin-block: var(--s-2);
+  }
+
+  .article__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    font-family: var(--ff-mono);
+    font-size: var(--fs-xs);
+    color: var(--c-text);
+  }
+
+  .article__body {
+    display: grid;
+    gap: var(--s-8);
+    padding-block: var(--section-y);
+  }
+</style>

@@ -1,0 +1,96 @@
+---
+interface Props {
+  href?: string;
+  /** `tint` for the one emphasised card in a row; `dark` inside dark slabs. */
+  tone?: 'surface' | 'tint' | 'dark';
+  /** Adds the top accent rule used by the value-prop cards. */
+  accent?: 'none' | 'blue' | 'orange';
+  padded?: boolean;
+  class?: string;
+}
+
+const {
+  href,
+  tone = 'surface',
+  accent = 'none',
+  padded = true,
+  class: className,
+} = Astro.props;
+
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag
+  href={href}
+  class:list={[
+    'card',
+    `card--${tone}`,
+    accent !== 'none' && `card--accent-${accent}`,
+    padded && 'card--padded',
+    href && 'card--link',
+    className,
+  ]}
+>
+  <slot />
+</Tag>
+
+<style>
+  /* Separation is hairline + tint. No resting shadow — elevation is
+     reserved for things that genuinely float (rail, bar, hover). */
+  .card {
+    position: relative;
+    display: block;
+    border-radius: var(--r-4);
+    border: var(--hairline);
+    background: var(--c-surface);
+    color: inherit;
+    overflow: hidden;
+    transition:
+      box-shadow var(--dur) var(--ease),
+      border-color var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
+  }
+
+  .card--padded {
+    padding: var(--card-pad);
+  }
+
+  .card--tint {
+    background: var(--c-bg-tint);
+    border-color: transparent;
+  }
+
+  .card--dark {
+    background: var(--c-on-dark-surface-soft);
+    border-color: var(--c-border-dark);
+    color: var(--c-on-dark);
+  }
+
+  .card--accent-blue::before,
+  .card--accent-orange::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: 4px;
+  }
+
+  .card--accent-blue::before {
+    background: var(--c-link);
+  }
+
+  .card--accent-orange::before {
+    background: var(--c-action);
+  }
+
+  .card--link:hover {
+    box-shadow: var(--e-2);
+    border-color: transparent;
+    transform: translateY(var(--lift));
+  }
+
+  .card--link:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+  }
+</style>

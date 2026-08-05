@@ -1,0 +1,111 @@
+/* Type. Hebrew-first: no uppercase transforms, no positive tracking,
+   generous line-height in body copy. */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--ff-head);
+  color: var(--c-heading);
+  font-weight: var(--fw-black);
+}
+
+h1,
+.t-hero {
+  font-size: var(--fs-hero);
+  line-height: var(--lh-hero);
+  letter-spacing: var(--ls-hero);
+}
+
+h2,
+.t-h2 {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+}
+
+h3,
+.t-h3 {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  font-weight: var(--fw-bold);
+}
+
+h4 {
+  font-size: var(--fs-body);
+  line-height: var(--lh-h3);
+  font-weight: var(--fw-bold);
+}
+
+.t-lead {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+  color: var(--c-text);
+  max-inline-size: var(--measure);
+}
+
+.t-body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  max-inline-size: var(--measure);
+}
+
+.t-sm {
+  font-size: var(--fs-sm);
+}
+
+.t-xs {
+  font-size: var(--fs-xs);
+}
+
+.t-strong {
+  color: var(--c-text-strong);
+  font-weight: var(--fw-reg);
+}
+
+/* Eyebrow: monospace label above a heading. Latin fragments inside a
+   Hebrew eyebrow keep their own direction via <bdi>. */
+.t-eyebrow {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-reg);
+  color: var(--c-action-ink);
+  display: block;
+}
+
+.section--dark .t-eyebrow {
+  color: var(--c-accent-dark);
+}
+
+/* Muted text is 3.12:1 — decorative or ≥19px only. Never body copy,
+   never form hints. Enforced by review, not by the linter. */
+.t-muted {
+  color: var(--c-text-muted);
+}
+
+a:not([class]) {
+  color: var(--c-link);
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+  transition: color var(--dur) var(--ease);
+}
+
+a:not([class]):hover {
+  color: var(--c-action-ink);
+}
+
+/* Latin runs inside Hebrew flow — phone numbers, emails, URLs, "WhatsApp".
+   Without isolation a leading + or digit jumps to the wrong end. */
+.ltr,
+bdi.ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+}

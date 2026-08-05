@@ -1,0 +1,35 @@
+---
+interface Props {
+  name: string;
+  size?: number;
+  /** Directional icons must mirror under RTL. */
+  flip?: boolean;
+  class?: string;
+}
+
+const { name, size = 24, flip = false, class: className } = Astro.props;
+---
+
+<svg
+  class:list={['icon', flip && 'icon--flip', className]}
+  width={size}
+  height={size}
+  aria-hidden="true"
+  focusable="false"
+>
+  <use href={`#i-${name}`}></use>
+</svg>
+
+<style>
+  .icon {
+    display: inline-block;
+    flex: none;
+    vertical-align: middle;
+  }
+
+  /* Under dir=rtl the document is already mirrored for layout but SVG
+     geometry is not — arrows and chevrons need an explicit flip. */
+  :global([dir='rtl']) .icon--flip {
+    transform: scaleX(-1);
+  }
+</style>

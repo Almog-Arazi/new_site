@@ -1,0 +1,22 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import type { Section as Block } from '../../content.config';
+
+type Props = Extract<Block, { type: 'checkList' }>;
+const { eyebrow, heading, intro, items, columns, tone } = Astro.props;
+---
+
+<Section tone={tone}>
+  <SectionHeader eyebrow={eyebrow} heading={heading} intro={intro} />
+  <ul role="list" class="checks" style={`--cols:${columns}`}>
+    {items.map((item) => <li>{item}</li>)}
+  </ul>
+</Section>
+
+<style>
+  .checks {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: var(--s-4) var(--s-8);
+  }
+</style>

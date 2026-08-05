@@ -1,0 +1,69 @@
+/* ============================================================
+   Self-hosted variable fonts, Hebrew + Latin subsets only.
+   Latin is required even on Hebrew pages: phone numbers, years,
+   "WhatsApp", email addresses. Never load from a font CDN.
+
+   Measured metrics (fontTools):
+     Heebo      upm 2048  asc 2146  desc 862  adv(ה) 1204  adv(n) 1131
+     Assistant  upm 1000  asc 1021  desc 287  adv(ה)  528  adv(n)  526
+     Arial      upm 2048  asc 1854  desc 434  adv(ה) 1233  adv(n) 1139
+   The @font-face fallbacks below re-shape Arial to those metrics so the
+   swap does not shift the 43px hero H1 (CLS).
+   ============================================================ */
+
+@font-face {
+  font-family: 'Heebo Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/heebo-hebrew-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+
+@font-face {
+  font-family: 'Heebo Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/heebo-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Assistant Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('/fonts/assistant-hebrew-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+
+@font-face {
+  font-family: 'Assistant Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('/fonts/assistant-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ── metric-matched fallbacks (used during swap) ── */
+@font-face {
+  font-family: 'Heebo Fallback';
+  src: local('Arial Hebrew'), local('Arial');
+  size-adjust: 98%;
+  ascent-override: 104.8%;
+  descent-override: 42.1%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Assistant Fallback';
+  src: local('Arial Hebrew'), local('Arial');
+  size-adjust: 88%;
+  ascent-override: 102.1%;
+  descent-override: 28.7%;
+  line-gap-override: 0%;
+}

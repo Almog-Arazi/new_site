@@ -1,0 +1,43 @@
+---
+import Eyebrow from './Eyebrow.astro';
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  intro?: string;
+  /** Section headings are always h2 — h1 belongs to PageHead alone. */
+  level?: 2 | 3;
+  align?: 'start' | 'center';
+  class?: string;
+}
+
+const { eyebrow, heading, intro, level = 2, align = 'start', class: className } = Astro.props;
+const Heading = `h${level}` as 'h2' | 'h3';
+---
+
+{
+  (eyebrow || heading || intro) && (
+    <header class:list={['sh', align === 'center' && 'sh--center', className]}>
+      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+      {heading && <Heading>{heading}</Heading>}
+      {intro && <p class="t-lead">{intro}</p>}
+    </header>
+  )
+}
+
+<style>
+  .sh {
+    display: grid;
+    gap: var(--s-3);
+    margin-block-end: var(--s-8);
+  }
+
+  .sh--center {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .sh--center :global(.t-lead) {
+    margin-inline: auto;
+  }
+</style>

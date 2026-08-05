@@ -1,0 +1,62 @@
+---
+interface Props {
+  html?: string;
+  narrow?: boolean;
+  class?: string;
+}
+
+const { html, narrow = false, class: className } = Astro.props;
+---
+
+<div class:list={['prose', narrow && 'prose--narrow', className]}>
+  {html ? <Fragment set:html={html} /> : <slot />}
+</div>
+
+<style>
+  .prose {
+    max-inline-size: var(--measure);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    color: var(--c-text);
+  }
+
+  .prose--narrow {
+    max-inline-size: 60ch;
+  }
+
+  .prose :global(> * + *) {
+    margin-block-start: var(--s-5);
+  }
+
+  .prose :global(h2) {
+    margin-block-start: var(--s-9);
+    font-size: var(--fs-h2);
+  }
+
+  .prose :global(h3) {
+    margin-block-start: var(--s-7);
+    font-size: var(--fs-h3);
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-inline-start: var(--s-6);
+    display: grid;
+    gap: var(--s-2);
+  }
+
+  .prose :global(strong) {
+    color: var(--c-text-strong);
+    font-weight: var(--fw-bold);
+  }
+
+  .prose :global(a) {
+    color: var(--c-link);
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+  }
+
+  .prose :global(a:hover) {
+    color: var(--c-action-ink);
+  }
+</style>

@@ -1,0 +1,232 @@
+---
+import Logo from '../media/Logo.astro';
+import Icon from '../ui/Icon.astro';
+import TelLink from '../ui/TelLink.astro';
+import { headerNav, isActive } from '../../lib/nav';
+
+/* PHASE 0 STUB — ownership passes to Stream A, which adds the full
+   drawer behaviour (focus trap, inert, Esc, scroll lock). */
+const pathname = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="/" class="site-header__brand" aria-label="ארזי מיטב המהנדסים — לעמוד הבית">
+      <Logo width={168} eager />
+    </a>
+
+    <nav class="site-nav hide-mobile" aria-label="ניווט ראשי">
+      <ul role="list" class="site-nav__list">
+        {
+          headerNav.map((link) => (
+            <li class="site-nav__item">
+              <a
+                href={link.href}
+                class:list={['site-nav__link', isActive(link, pathname) && 'is-active']}
+                aria-current={isActive(link, pathname) ? 'page' : undefined}
+              >
+                {link.label}
+                {link.children && <Icon name="chevron" size={16} class="site-nav__caret" />}
+              </a>
+              {link.children && (
+                <ul role="list" class="site-nav__sub">
+                  {link.children.map((child) => (
+                    <li>
+                      <a href={child.href}>{child.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <TelLink variant="button" label="תיאום בדיקה" class="hide-mobile" />
+      <button
+        type="button"
+        class="site-header__burger hide-desktop"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        data-nav-toggle
+      >
+        <Icon name="menu" size={26} />
+        <span class="vh">תפריט</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav" hidden data-nav-panel>
+    <nav aria-label="ניווט ראשי במובייל">
+      <ul role="list">
+        {
+          headerNav.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+              {link.children && (
+                <ul role="list" class="mobile-nav__sub">
+                  {link.children.map((child) => (
+                    <li>
+                      <a href={child.href}>{child.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--z-header);
+    background: var(--c-bg);
+    border-block-end: var(--hairline);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-5);
+    padding-block: var(--s-3);
+  }
+
+  .site-header__brand {
+    flex: none;
+  }
+
+  .site-nav__list {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-nav__item {
+    position: relative;
+  }
+
+  .site-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-1);
+    min-block-size: var(--tap);
+    padding-inline: var(--s-3);
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-med);
+    color: var(--c-heading);
+    border-radius: var(--r-pill);
+    transition:
+      background-color var(--dur) var(--ease),
+      color var(--dur) var(--ease);
+  }
+
+  .site-nav__link:hover,
+  .site-nav__link.is-active {
+    background: var(--c-bg-tint);
+    color: var(--c-link);
+  }
+
+  .site-nav__sub {
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline-start: 0;
+    min-inline-size: 220px;
+    margin: 0;
+    padding: var(--s-2);
+    display: grid;
+    gap: 2px;
+    background: var(--c-surface);
+    border: var(--hairline);
+    border-radius: var(--r-3);
+    box-shadow: var(--e-2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition:
+      opacity var(--dur) var(--ease),
+      transform var(--dur) var(--ease),
+      visibility var(--dur);
+  }
+
+  .site-nav__item:hover .site-nav__sub,
+  .site-nav__item:focus-within .site-nav__sub {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .site-nav__sub a {
+    display: block;
+    padding: var(--s-3);
+    font-size: var(--fs-sm);
+    color: var(--c-heading);
+    border-radius: var(--r-2);
+  }
+
+  .site-nav__sub a:hover {
+    background: var(--c-bg-tint);
+    color: var(--c-link);
+  }
+
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+  }
+
+  .site-header__burger {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--tap);
+    block-size: var(--tap);
+    border-radius: var(--r-2);
+    color: var(--c-heading);
+  }
+
+  .mobile-nav {
+    border-block-start: var(--hairline);
+    padding: var(--s-4) var(--gutter) var(--s-6);
+  }
+
+  .mobile-nav ul {
+    display: grid;
+    gap: var(--s-1);
+    margin: 0;
+    padding: 0;
+  }
+
+  .mobile-nav a {
+    display: block;
+    padding: var(--s-3);
+    font-family: var(--ff-head);
+    font-weight: var(--fw-med);
+    color: var(--c-heading);
+    border-radius: var(--r-2);
+    min-block-size: var(--tap);
+  }
+
+  .mobile-nav a:hover {
+    background: var(--c-bg-tint);
+  }
+
+  .mobile-nav__sub {
+    padding-inline-start: var(--s-4);
+  }
+
+  .mobile-nav__sub a {
+    font-weight: var(--fw-light);
+    font-family: var(--ff-body);
+    color: var(--c-text);
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+import type { Tone } from '../../content.config';
+
+interface Props {
+  tone?: Tone;
+  size?: 'default' | 'lg';
+  id?: string;
+  as?: string;
+  /** Container width used inside the slab. */
+  width?: 'default' | 'narrow' | 'wide';
+  class?: string;
+}
+
+const {
+  tone = 'light',
+  size = 'default',
+  id,
+  as: Tag = 'section',
+  width = 'default',
+  class: className,
+} = Astro.props;
+
+/* light = plain white flow; everything else becomes an inset rounded slab
+   floating on white, rather than an edge-to-edge stripe. */
+const isSlab = tone !== 'light';
+---
+
+<Tag
+  id={id}
+  class:list={[
+    'section',
+    size === 'lg' && 'section--lg',
+    tone === 'soft' && 'section--soft',
+    tone === 'tint' && 'section--tint',
+    tone === 'dark' && 'section--dark',
+    className,
+  ]}
+>
+  {
+    isSlab ? (
+      <div class="section__slab">
+        <div
+          class:list={[
+            'container',
+            width === 'narrow' && 'container--narrow',
+            width === 'wide' && 'container--wide',
+          ]}
+        >
+          <slot />
+        </div>
+      </div>
+    ) : (
+      <div
+        class:list={[
+          'container',
+          width === 'narrow' && 'container--narrow',
+          width === 'wide' && 'container--wide',
+        ]}
+      >
+        <slot />
+      </div>
+    )
+  }
+</Tag>
+
+<style>
+  /* A slab already carries its own block padding. */
+  .section:has(> .section__slab) {
+    padding-block: calc(var(--section-y) / 2);
+  }
+</style>

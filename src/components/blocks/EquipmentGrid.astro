@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Card from '../ui/Card.astro';
+import PhotoFrame from '../media/PhotoFrame.astro';
+import Icon from '../ui/Icon.astro';
+import type { Section as Block } from '../../content.config';
+
+type Props = Extract<Block, { type: 'equipmentGrid' }>;
+const { heading, intro, ids, tone } = Astro.props;
+
+/* One dataset, four consumers: this grid, the chip picker, the footer and
+   the lead form's equipment field. */
+const all = (await getCollection('equipment')).sort((a, b) => a.data.order - b.data.order);
+const items = ids.length ? all.filter((e) => ids.includes(e.data.id)) : all;
+---
+
+<Section tone={tone}>
+  <SectionHeader heading={heading} intro={intro} />
+  <div class="grid grid--3">
+    {items.map((item) => (
+      <Card href={item.data.href} padded={false}>
+        <PhotoFrame
+          variant={item.data.placeholder}
+          alt={item.data.alt}
+          note={item.data.note}
+          ratio="wide"
+          class="eq__media"
+        />
+        <div class="eq__body">
+          <h3>{item.data.label}</h3>
+          <p class="t-body">{item.data.short}</p>
+          <span class="eq__more">לפרטים<Icon name="arrow" size={18} /></span>
+        </div>
+      </Card>
+    ))}
+  </div>
+</Section>
+
+<style>
+  .eq__media {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .eq__body {
+    display: grid;
+    gap: var(--s-2);
+    padding: var(--card-pad);
+  }
+
+  .eq__more {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    margin-block-start: var(--s-1);
+    font-family: var(--ff-head);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-sm);
+    color: var(--c-action-ink);
+  }
+</style>

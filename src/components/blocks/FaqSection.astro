@@ -1,0 +1,132 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Icon from '../ui/Icon.astro';
+import JsonLd from '../seo/JsonLd.astro';
+import { getFaqFor } from '../../lib/faq';
+import { faqPage } from '../../lib/schema';
+import { normalise } from '../../lib/nav';
+import type { Section as Block } from '../../content.config';
+
+type Props = Extract<Block, { type: 'faq' }> & { emitSchema?: boolean };
+
+const {
+  heading = 'שאלות נפוצות',
+  intro,
+  groups,
+  limit,
+  moreHref,
+  tone,
+  emitSchema = true,
+} = Astro.props;
+
+/* ONE array feeds BOTH the visible accordion and the FAQPage schema.
+   They cannot drift out of sync, because there is nothing to sync. */
+const items = await getFaqFor(groups, limit);
+const path = normalise(Astro.url.pathname);
+---
+
+<Section tone={tone} id="faq">
+  <SectionHeader heading={heading} intro={intro} />
+
+  <div class="faq">
+    {
+      items.map((item, i) => (
+        <details class="faq__item" name="faq" open={i === 0}>
+          <summary class="faq__q">
+            <h3>{item.q}</h3>
+            <Icon name="chevron" size={20} class="faq__caret" />
+          </summary>
+          <div class="faq__a">
+            <p set:html={item.aHtml} />
+          </div>
+        </details>
+      ))
+    }
+  </div>
+
+  {
+    moreHref && (
+      <p class="faq__more">
+        <a href={moreHref}>לכל השאלות הנפוצות</a>
+      </p>
+    )
+  }
+</Section>
+
+{emitSchema && items.length > 0 && <JsonLd data={faqPage(items, path)} />}
+
+<style>
+  /* Hairline-separated rows inside one panel — not a stack of shadowed boxes. */
+  .faq {
+    border: var(--hairline);
+    border-radius: var(--r-4);
+    overflow: hidden;
+    background: var(--c-surface);
+  }
+
+  .faq__item + .faq__item {
+    border-block-start: var(--hairline);
+  }
+
+  .faq__item[open] {
+    background: var(--c-bg-tint);
+  }
+
+  .faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-4);
+    min-block-size: var(--tap-lg);
+    padding: var(--s-5) var(--card-pad);
+    cursor: pointer;
+    /* Safari positions the native marker physically; we hide it and draw
+       our own chevron on the inline-end side. */
+    list-style: none;
+  }
+
+  .faq__q::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__q h3 {
+    font-size: var(--fs-h3);
+    margin: 0;
+  }
+
+  .faq__caret {
+    flex: none;
+    color: var(--c-link);
+    transform: rotate(-90deg);
+    transition: transform var(--dur-slow) var(--ease);
+  }
+
+  .faq__item[open] .faq__caret {
+    transform: rotate(90deg);
+  }
+
+  .faq__q:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+    border-radius: var(--r-3);
+  }
+
+  .faq__a {
+    padding: 0 var(--card-pad) var(--s-6);
+  }
+
+  .faq__a p {
+    max-inline-size: var(--measure);
+  }
+
+  .faq__more {
+    margin-block-start: var(--s-5);
+    font-family: var(--ff-head);
+    font-weight: var(--fw-bold);
+  }
+
+  .faq__more a {
+    color: var(--c-action-ink);
+  }
+</style>

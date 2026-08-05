@@ -1,0 +1,172 @@
+/* ============================================================
+   ARDI — design tokens. THE ONLY PLACE RAW VALUES MAY EXIST.
+   Components reference var(--…) exclusively. `npm run verify`
+   fails the build on a raw hex / px / shadow inside a component.
+   ============================================================ */
+
+:root {
+  /* ── palette (raw — never referenced directly by a component) ── */
+  --p-navy-900: #0e1834;
+  --p-navy: #14224a;
+  --p-navy-700: #1d2f5f;
+  --p-blue: #2e4b9b;
+  --p-blue-600: #3a5bb5;
+  --p-blue-100: #eef2fb;
+  --p-blue-200: #dce4f6;
+  --p-orange: #e8620c;
+  --p-orange-600: #cf5309;
+  --p-orange-700: #b84e08;
+  --p-amber: #f2a20c;
+  --p-gray-50: #f7f8fb;
+  --p-gray-200: #e4e8f2;
+  --p-gray-400: #8792ab;
+  --p-ink: #3d4a66;
+  --p-ink-soft: #4a5a7a;
+
+  /* ── semantic colour ── */
+  --c-bg: #fff;
+  --c-bg-soft: var(--p-gray-50);
+  --c-bg-tint: var(--p-blue-100);
+  --c-bg-tint-strong: var(--p-blue-200);
+  --c-bg-dark: var(--p-navy);
+  --c-bg-dark-deep: var(--p-navy-900);
+  --c-surface: #fff;
+  --c-border: rgb(20 34 74 / 10%);
+  --c-border-strong: var(--p-gray-200);
+  --c-border-dark: rgb(255 255 255 / 14%);
+  --c-heading: var(--p-navy);
+  --c-text: var(--p-ink-soft);
+  --c-text-strong: var(--p-ink);
+  --c-text-muted: var(--p-gray-400); /* 3.12:1 — decorative / ≥19px only */
+  --c-link: var(--p-blue); /* 8.09:1 on white */
+  --c-link-hover: var(--p-blue-600);
+  --c-action: var(--p-orange);
+  --c-action-hover: var(--p-orange-600);
+  --c-action-ink: var(--p-orange-700); /* 5.08:1 — orange AS TEXT on light */
+  --c-on-action: #fff;
+  --c-accent-dark: var(--p-amber); /* 7.35:1 on navy */
+  --c-white: #fff;
+  --c-on-dark: #e8edf9;
+  --c-on-dark-muted: #afbbd8;
+  /* translucent surfaces used only inside dark slabs */
+  --c-on-dark-surface-soft: rgb(255 255 255 / 6%);
+  --c-on-dark-surface: rgb(255 255 255 / 10%);
+  --c-on-dark-surface-hover: rgb(255 255 255 / 16%);
+  --c-danger: #b3261e;
+  --c-success: #1e6b45;
+
+  /* ── radii — sketch used a flat 6/8/10; this is warmer and fluid ── */
+  --r-1: 8px; /* tags, checkboxes, inner chips */
+  --r-2: 12px; /* inputs, selects */
+  --r-3: 16px; /* small cards, alerts, table shell */
+  --r-4: clamp(18px, 2.2vw, 22px); /* content cards, form panel */
+  --r-5: clamp(22px, 3vw, 28px); /* floating CTA card, callouts */
+  --r-6: clamp(26px, 4vw, 36px); /* section slabs, hero media, mobile bar */
+  --r-pill: 999px;
+
+  /* asymmetric photo-frame motif — LOGICAL corners only, never the shorthand */
+  --r-frame-ss: var(--r-6);
+  --r-frame-se: var(--r-4);
+  --r-frame-es: var(--r-4);
+  --r-frame-ee: var(--r-6);
+
+  /* ── elevation — two-stop, negative spread, tinted by its own surface ── */
+  --e-1: 0 1px 2px rgb(20 34 74 / 4%), 0 8px 20px -10px rgb(20 34 74 / 10%);
+  --e-2: 0 2px 4px rgb(20 34 74 / 4%), 0 18px 38px -16px rgb(20 34 74 / 14%);
+  --e-3: 0 4px 10px rgb(20 34 74 / 5%), 0 34px 64px -24px rgb(20 34 74 / 18%);
+  --e-action: 0 8px 20px -8px rgb(232 98 12 / 42%);
+  --e-action-hover: 0 12px 26px -8px rgb(207 83 9 / 50%);
+  --e-bar: 0 -6px 24px -12px rgb(20 34 74 / 22%);
+  --hairline: 1px solid var(--c-border);
+  --hairline-strong: 1px solid var(--c-border-strong);
+  --ring: 0 0 0 3px rgb(46 75 155 / 32%);
+  --ring-on-dark: 0 0 0 3px rgb(242 162 12 / 55%);
+
+  /* ── spacing — 4px base; section rhythm ~35% roomier than the sketch ── */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-7: 32px;
+  --s-8: 40px;
+  --s-9: 56px;
+  --s-10: 72px;
+  --s-11: 96px;
+  --s-12: 128px;
+  --gutter: clamp(16px, 5vw, 32px);
+  --container: 1160px;
+  --container-narrow: 720px;
+  --container-wide: 1320px;
+  --section-y: clamp(56px, 8vw, 104px);
+  --section-y-lg: clamp(72px, 11vw, 144px);
+  --card-pad: clamp(20px, 3.4vw, 32px);
+  --panel-pad: clamp(24px, 4vw, 40px);
+  --grid-gap: clamp(16px, 2.4vw, 28px);
+  --stack: var(--s-6);
+  --tap: 44px;
+  --tap-lg: 52px;
+
+  /* ── type ── */
+  --ff-head: 'Heebo Variable', 'Heebo Fallback', system-ui, 'Arial Hebrew', arial, sans-serif;
+  --ff-body: 'Assistant Variable', 'Assistant Fallback', system-ui, 'Arial Hebrew', arial, sans-serif;
+  --ff-mono: ui-monospace, 'SF Mono', menlo, monospace;
+  --fs-hero: clamp(27px, 5.6vw, 43px);
+  --lh-hero: 1.15;
+  --ls-hero: -0.01em;
+  --fs-h2: clamp(21px, 3.2vw, 30px);
+  --lh-h2: 1.25;
+  --fs-h3: clamp(18px, 1.8vw, 21px);
+  --lh-h3: 1.4;
+  --fs-lead: clamp(16px, 1.5vw, 19px);
+  --lh-lead: 1.65;
+  --fs-body: clamp(15px, 1.1vw, 16px);
+  --lh-body: 1.75;
+  --fs-btn: clamp(17px, 1.4vw, 19px);
+  --fs-sm: 14px;
+  --fs-xs: 13px;
+  --fw-light: 300;
+  --fw-reg: 400;
+  --fw-med: 500;
+  --fw-bold: 700;
+  --fw-black: 800;
+  --measure: 68ch;
+
+  /* ── motion ── */
+  --dur-fast: 120ms;
+  --dur: 200ms;
+  --dur-slow: 320ms;
+  --dur-slower: 480ms;
+  --ease: cubic-bezier(0.22, 0.75, 0.28, 1);
+  --ease-soft-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --lift: -2px;
+  --press: 1px;
+
+  /* ── aspect ratios ── */
+  --ar-hero: 16 / 10;
+  --ar-card: 4 / 3;
+  --ar-wide: 21 / 9;
+  --ar-portrait: 3 / 4;
+
+  /* ── z-index ── */
+  --z-base: 1;
+  --z-sticky: 10;
+  --z-rail: 20;
+  --z-header: 40;
+  --z-bar: 50;
+  --z-drawer: 60;
+  --z-skip: 70;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 1ms;
+    --dur: 1ms;
+    --dur-slow: 1ms;
+    --dur-slower: 1ms;
+    --lift: 0px;
+    --press: 0px;
+  }
+}

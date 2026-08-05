@@ -1,0 +1,59 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import type { Section as Block } from '../../content.config';
+
+type Props = Extract<Block, { type: 'processSteps' }>;
+const { eyebrow, heading, intro, steps, tone } = Astro.props;
+---
+
+<Section tone={tone}>
+  <SectionHeader eyebrow={eyebrow} heading={heading} intro={intro} align="center" />
+  <ol role="list" class="steps">
+    {steps.map((step, i) => (
+      <li class="steps__item">
+        <span class="steps__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        <h3>{step.title}</h3>
+        {step.text && <p class="t-body">{step.text}</p>}
+      </li>
+    ))}
+  </ol>
+</Section>
+
+<style>
+  .steps {
+    display: grid;
+    gap: var(--grid-gap);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+    margin: 0;
+    padding: 0;
+    counter-reset: step;
+  }
+
+  .steps__item {
+    display: grid;
+    gap: var(--s-2);
+    align-content: start;
+    padding: var(--card-pad);
+    background: var(--c-surface);
+    border: var(--hairline);
+    border-radius: var(--r-4);
+  }
+
+  .steps__num {
+    display: inline-grid;
+    place-items: center;
+    inline-size: 40px;
+    block-size: 40px;
+    border-radius: var(--r-pill);
+    background: var(--c-bg-tint);
+    color: var(--c-link);
+    font-family: var(--ff-head);
+    font-weight: var(--fw-black);
+  }
+
+  .steps__item:last-child .steps__num {
+    background: var(--c-action);
+    color: var(--c-on-action);
+  }
+</style>

@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><meta name="design_doc_mode" content="canvas"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet"><style>
+body{margin:0;background:#e9e7e2;font-family:'Heebo','Assistant',system-ui,sans-serif}
+a{color:#2E4B9B;text-decoration:none}a:hover{color:#E8620C}
+summary{list-style:none;cursor:pointer}summary::-webkit-details-marker{display:none}
+@keyframes pulseCta{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+.pg{padding:34px 44px;border-bottom:1px solid rgba(0,0,0,.09);scroll-margin-top:14px}
+.pg-h{display:flex;align-items:baseline;gap:10px;margin:0 0 6px}
+.pg-id{font:700 11px ui-monospace,Menlo,monospace;padding:4px 8px;background:#14224A;color:#fff;border-radius:4px;text-decoration:none}
+.pg-name{font:700 15px/1.2 'Heebo',sans-serif;color:#14224A}
+.spec{display:flex;flex-wrap:wrap;gap:4px 26px;margin:0 0 16px;font:400 11.5px/1.7 ui-monospace,Menlo,monospace;color:#5c6880;max-width:1180px}
+.spec b{color:#B4531B;font-weight:700}
+.row{display:flex;gap:24px;align-items:flex-start}
+.card{background:#fff;border:1px solid rgba(0,0,0,.1);box-shadow:0 2px 10px rgba(0,0,0,.09);overflow:hidden;position:relative;width:1180px;flex:none}
+.mob{background:#fff;border:1px solid rgba(0,0,0,.1);box-shadow:0 2px 10px rgba(0,0,0,.09);overflow:hidden;position:relative;width:390px;flex:none}
+.pg:target .pg-id{background:#E8620C}
+h2,h3{text-wrap:pretty}
+</style></helmet>
+
+<section style="padding:40px 44px 26px;background:#14224A">
+<h1 style="margin:0 0 10px;font:800 30px/1.2 'Heebo',sans-serif;color:#fff">ארזי מיטב המהנדסים — עיצוב אתר מלא (כיוון 1d)</h1>
+<p style="margin:0 0 18px;font:300 16px/1.7 'Assistant',sans-serif;color:rgba(255,255,255,.75);max-width:900px">כל עמודי האתר בשפה החזותית של סקיצה 1d: כחול הנדסי, כתום בטיחות, טופס תיאום בפתיחה וכפתור צף קבוע. כל עמוד מוצג בדסקטופ 1180px, ועמודי המפתח גם במובייל 390px. מעל כל עמוד רצועת מפרט (URL / Title / Meta / H1 / Schema) להעברה למפתח.</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px;font:600 12.5px/1 'Heebo',sans-serif">
+<a href="#P1" style="background:#E8620C;color:#fff;padding:8px 12px;border-radius:5px">P1 בית</a>
+<a href="#P2" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P2 שירותים</a>
+<a href="#P3" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P3 מתקני הרמה</a>
+<a href="#P4" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P4 אביזרי הרמה</a>
+<a href="#P5" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P5 קווי חיים</a>
+<a href="#P6" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P6 ציוד שאנו בודקים</a>
+<a href="#P7" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P7 מלגזות</a>
+<a href="#P8" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P8 עגורנים</a>
+<a href="#P9" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P9 במות הרמה</a>
+<a href="#P10" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P10 ליפטים ומתקנים</a>
+<a href="#P11" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P11 שאלות נפוצות</a>
+<a href="#P12" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P12 מאמרים</a>
+<a href="#P13" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P13 מאמר בודד</a>
+<a href="#P14" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P14 אודות</a>
+<a href="#P15" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P15 צור קשר</a>
+<a href="#P16" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P16 מדיניות פרטיות</a>
+<a href="#P17" style="background:rgba(255,255,255,.12);color:#fff;padding:8px 12px;border-radius:5px">P17 עמוד אזורי (עתידי)</a>
+</div>
+</section>
+
+<section class="pg" id="P1">
+<div class="pg-h"><a class="pg-id" href="#P1">P1</a><span class="pg-name">עמוד הבית</span></div>
+<div class="spec"><span><b>URL</b> /</span><span><b>Title</b> בדיקות מתקני הרמה ואביזרי הרמה | בודק מוסמך | ארזי מיטב המהנדסים</span><span><b>Meta</b> ארזי מיטב המהנדסים מבצעת בדיקות מתקני הרמה, אביזרי הרמה וקווי חיים על ידי בודק מוסמך. שירות למפעלים וחברות בכל הארץ.</span><span><b>H1</b> בדיקות בודק מוסמך למתקני הרמה, אביזרי הרמה וקווי חיים</span><span><b>Schema</b> LocalBusiness + FAQPage</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+
+<div style="display:grid;grid-template-columns:1fr .8fr;background:#EEF2FB;align-items:stretch">
+<div style="padding:46px 40px 44px;display:flex;flex-direction:column;gap:20px;justify-content:center">
+<h1 style="margin:0;font:800 43px/1.15 'Heebo',sans-serif;color:#14224A;letter-spacing:-.015em">בדיקות בודק מוסמך למתקני הרמה, אביזרי הרמה וקווי חיים</h1>
+<p style="margin:0;font:300 17.5px/1.75 'Assistant',sans-serif;color:#3d4a66;max-width:530px">ארזי מיטב המהנדסים מבצעת בדיקות ותסקירים לציוד הרמה ומתקני הרמה בהתאם לדרישות החוק והתקנים הרלוונטיים. עם מעל 15 שנות ניסיון בתחום, משרד פעיל ושירות מקצועי ומהיר — אנו מספקים בדיקות למפעלים, חברות תעשייתיות ומרכזים לוגיסטיים בכל הארץ.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:9px 16px">
+<span style="display:flex;gap:9px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;background:#fff;padding:12px 14px;border-radius:6px"><span style="color:#2E4B9B;font-weight:700">✓</span>בודק מוסמך למתקני הרמה ואביזרי הרמה</span>
+<span style="display:flex;gap:9px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;background:#fff;padding:12px 14px;border-radius:6px"><span style="color:#2E4B9B;font-weight:700">✓</span>ניסיון של מעל 15 שנה בתחום</span>
+<span style="display:flex;gap:9px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;background:#fff;padding:12px 14px;border-radius:6px"><span style="color:#2E4B9B;font-weight:700">✓</span>בדיקות למפעלים וחברות תעשייתיות</span>
+<span style="display:flex;gap:9px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;background:#fff;padding:12px 14px;border-radius:6px"><span style="color:#2E4B9B;font-weight:700">✓</span>מעקב ותזכורות לבדיקות עתידיות</span>
+</div>
+<div style="height:210px;border-radius:8px;overflow:hidden;display:flex"><dc-import name="Photo" note="וידאו HERO 15–30 שנ׳ — מפעל פעיל, עגורן גשר בעבודה, בודק מוסמך עם ציוד מדידה. חלופה: תמונה גדולה של בודק בסביבת מפעל" hint-size="100%,210px" style="flex:1"></dc-import></div>
+</div>
+<div style="background:#2E4B9B;padding:40px 32px;display:flex;flex-direction:column;gap:13px;justify-content:center">
+<span style="font:400 11.5px/1 ui-monospace,Menlo,monospace;color:#F2A20C;letter-spacing:.12em">תיאום בדיקה · 30 שניות</span>
+<h2 style="margin:0;font:800 25px/1.28 'Heebo',sans-serif;color:#fff">נחזור אליכם עם זמינות ומחיר</h2>
+<span style="background:#fff;border-radius:6px;padding:14px;font:400 15px/1 'Heebo',sans-serif;color:#98a3b8">שם מלא</span>
+<span style="background:#fff;border-radius:6px;padding:14px;font:400 15px/1 'Heebo',sans-serif;color:#98a3b8">שם החברה / המפעל</span>
+<span style="background:#fff;border-radius:6px;padding:14px;font:400 15px/1 'Heebo',sans-serif;color:#98a3b8">טלפון</span>
+<span style="background:#fff;border-radius:6px;padding:14px;font:400 15px/1 'Heebo',sans-serif;color:#98a3b8">סוג הציוד לבדיקה</span>
+<a href="#" style="background:#E8620C;color:#fff;padding:16px;text-align:center;font:800 17px/1 'Heebo',sans-serif;border-radius:6px" style-hover="background:#CF5309">שליחת בקשה</a>
+<span style="font:300 13px/1.6 'Assistant',sans-serif;color:rgba(255,255,255,.75);text-align:center">או התקשרו ישירות: <a href="tel:0500000000" style="color:#fff;font-weight:700">{{ phone }}</a></span>
+</div>
+</div>
+
+<div style="padding:52px 40px;background:#fff">
+<h2 style="margin:0 0 26px;font:800 30px/1.25 'Heebo',sans-serif;color:#14224A">ניסיון, מקצועיות ושירות שמותאם למפעלים וחברות</h2>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;padding:22px 20px;display:flex;flex-direction:column;gap:9px" style-hover="border-color:#2E4B9B;box-shadow:0 8px 22px rgba(20,34,74,.1)"><span style="width:40px;height:40px;border:1.5px solid #2E4B9B;border-radius:8px;display:flex;align-items:center;justify-content:center;font:400 17px/1 'Heebo',sans-serif;color:#2E4B9B">◷</span><h3 style="margin:0;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">מעל 15 שנות ניסיון</h3><p style="margin:0;font:300 14.5px/1.65 'Assistant',sans-serif;color:#4a5a7a">ניסיון מעשי בתחום בדיקות ציוד הרמה בסביבות תעשייתיות מורכבות.</p></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;padding:22px 20px;display:flex;flex-direction:column;gap:9px" style-hover="border-color:#2E4B9B;box-shadow:0 8px 22px rgba(20,34,74,.1)"><span style="width:40px;height:40px;border:1.5px solid #2E4B9B;border-radius:8px;display:flex;align-items:center;justify-content:center;font:400 17px/1 'Heebo',sans-serif;color:#2E4B9B">✓</span><h3 style="margin:0;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">בודק מוסמך</h3><p style="margin:0;font:300 14.5px/1.65 'Assistant',sans-serif;color:#4a5a7a">בדיקות ותסקירים בהתאם לדרישות החוק והתקנים הרלוונטיים.</p></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;padding:22px 20px;display:flex;flex-direction:column;gap:9px" style-hover="border-color:#2E4B9B;box-shadow:0 8px 22px rgba(20,34,74,.1)"><span style="width:40px;height:40px;border:1.5px solid #2E4B9B;border-radius:8px;display:flex;align-items:center;justify-content:center;font:400 17px/1 'Heebo',sans-serif;color:#2E4B9B">☎</span><h3 style="margin:0;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">משרד פעיל וזמין</h3><p style="margin:0;font:300 14.5px/1.65 'Assistant',sans-serif;color:#4a5a7a">מענה אנושי ומהיר, תיאום בדיקות והכנת הצעות מחיר במהירות.</p></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;padding:22px 20px;display:flex;flex-direction:column;gap:9px;background:#EEF2FB" style-hover="border-color:#E8620C"><span style="width:40px;height:40px;border:1.5px solid #E8620C;border-radius:8px;display:flex;align-items:center;justify-content:center;font:400 17px/1 'Heebo',sans-serif;color:#E8620C">⟳</span><h3 style="margin:0;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">מעקב אחר מועדי בדיקה</h3><p style="margin:0;font:300 14.5px/1.65 'Assistant',sans-serif;color:#4a5a7a">אנו מנהלים מעקב אחר מועדי הבדיקות ויוצרים קשר מראש לפני הבדיקה הבאה.</p></div>
+</div>
+</div>
+
+<div style="padding:52px 40px;background:#F7F8FB">
+<h2 style="margin:0 0 26px;font:800 30px/1.25 'Heebo',sans-serif;color:#14224A">שירותי בדיקות ציוד הרמה</h2>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+<div style="background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(20,34,74,.08);overflow:hidden;display:flex;flex-direction:column" style-hover="box-shadow:0 12px 28px rgba(20,34,74,.16)"><div style="height:150px;display:flex"><dc-import name="Photo" note="עגורן גשר / מלגזה באולם ייצור" hint-size="100%,150px" style="flex:1"></dc-import></div><div style="padding:20px;display:flex;flex-direction:column;gap:10px;flex:1"><h3 style="margin:0;font:700 21px/1.3 'Heebo',sans-serif;color:#14224A">בדיקות מתקני הרמה</h3><p style="margin:0;font:300 14.5px/1.7 'Assistant',sans-serif;color:#3d4a66;flex:1">בדיקות למתקני הרמה במפעלים, חברות ומרכזים לוגיסטיים בהתאם לדרישות החוק — מלגזות, עגורנים, במות הרמה ומתקני הרמה נוספים.</p><a href="#" style="font:700 14.5px/1 'Heebo',sans-serif;color:#E8620C">לעמוד השירות ←</a></div></div>
+<div style="background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(20,34,74,.08);overflow:hidden;display:flex;flex-direction:column" style-hover="box-shadow:0 12px 28px rgba(20,34,74,.16)"><div style="height:150px;display:flex"><dc-import name="Photo" note="קרוב: רצועות, שרשראות, שאקלים" hint-size="100%,150px" style="flex:1"></dc-import></div><div style="padding:20px;display:flex;flex-direction:column;gap:10px;flex:1"><h3 style="margin:0;font:700 21px/1.3 'Heebo',sans-serif;color:#14224A">בדיקות אביזרי הרמה</h3><p style="margin:0;font:300 14.5px/1.7 'Assistant',sans-serif;color:#3d4a66;flex:1">בדיקות לאביזרים המשמשים להרמת מטענים: רצועות הרמה, שרשראות, שאקלים, אונקלים, קורות הרמה ואביזרי חיבור.</p><a href="#" style="font:700 14.5px/1 'Heebo',sans-serif;color:#E8620C">לעמוד השירות ←</a></div></div>
+<div style="background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(20,34,74,.08);overflow:hidden;display:flex;flex-direction:column" style-hover="box-shadow:0 12px 28px rgba(20,34,74,.16)"><div style="height:150px;display:flex"><dc-import name="Photo" note="מערכת קו חיים על גג מבנה" hint-size="100%,150px" style="flex:1"></dc-import></div><div style="padding:20px;display:flex;flex-direction:column;gap:10px;flex:1"><h3 style="margin:0;font:700 21px/1.3 'Heebo',sans-serif;color:#14224A">בדיקות קווי חיים</h3><p style="margin:0;font:300 14.5px/1.7 'Assistant',sans-serif;color:#3d4a66;flex:1">בדיקות למערכות קווי חיים אופקיים ואנכיים, נקודות עיגון ומערכות הגנה לעבודה בגובה.</p><a href="#" style="font:700 14.5px/1 'Heebo',sans-serif;color:#E8620C">לעמוד השירות ←</a></div></div>
+</div>
+</div>
+
+<div style="padding:52px 40px;background:#fff">
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:22px"><h2 style="margin:0;font:800 30px/1.25 'Heebo',sans-serif;color:#14224A">ציוד ומתקני הרמה שאנו בודקים</h2><a href="#" style="font:700 14.5px/1 'Heebo',sans-serif;color:#2E4B9B">לכל סוגי הציוד ←</a></div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B;background:#F7F8FB"><span style="height:110px;display:flex"><dc-import name="Photo" note="מלגזה בתוך מפעל או מחסן לוגיסטי" hint-size="100%,110px" style="flex:1"></dc-import></span><span style="padding:15px 16px 17px"><strong style="display:block;font:700 18px/1.3 'Heebo',sans-serif;margin-bottom:5px">מלגזות וציוד שינוע</strong><span style="font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">בדיקות למגוון סוגי מלגזות וציוד שינוע: חשמליות, דיזל, היגש, צריח, טלסקופיות ועוד.</span></span></a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B;background:#F7F8FB"><span style="height:110px;display:flex"><dc-import name="Photo" note="עגורן גשר בתוך אולם ייצור" hint-size="100%,110px" style="flex:1"></dc-import></span><span style="padding:15px 16px 17px"><strong style="display:block;font:700 18px/1.3 'Heebo',sans-serif;margin-bottom:5px">עגורנים</strong><span style="font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">בדיקות לעגורני גשר, עגורני שער, עגורני זרוע ועגורנים עיליים מסוגים שונים.</span></span></a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B;background:#F7F8FB"><span style="height:110px;display:flex"><dc-import name="Photo" note="במת הרמה באתר עבודה או מפעל" hint-size="100%,110px" style="flex:1"></dc-import></span><span style="padding:15px 16px 17px"><strong style="display:block;font:700 18px/1.3 'Heebo',sans-serif;margin-bottom:5px">במות הרמה</strong><span style="font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">בדיקות לבמות מספריים, במות זרוע, במות מפרקיות, במות טלסקופיות ושולחנות הרמה.</span></span></a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B;background:#F7F8FB"><span style="height:110px;display:flex"><dc-import name="Photo" note="מתקן הרמה ייעודי במפעל / ליפט לרכב" hint-size="100%,110px" style="flex:1"></dc-import></span><span style="padding:15px 16px 17px"><strong style="display:block;font:700 18px/1.3 'Heebo',sans-serif;margin-bottom:5px">מתקני הרמה נוספים</strong><span style="font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">בדיקות לליפטים לרכב, כננות ומתקני הרמה ייעודיים.</span></span></a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B;background:#F7F8FB"><span style="height:110px;display:flex"><dc-import name="Photo" note="רצועות, שרשראות ושאקלים" hint-size="100%,110px" style="flex:1"></dc-import></span><span style="padding:15px 16px 17px"><strong style="display:block;font:700 18px/1.3 'Heebo',sans-serif;margin-bottom:5px">אביזרי הרמה</strong><span style="font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">בדיקות לרצועות הרמה, שרשראות, חבלי פלדה, שאקלים, אונקלים וקורות הרמה.</span></span></a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B;background:#F7F8FB"><span style="height:110px;display:flex"><dc-import name="Photo" note="מערכת קו חיים על גג או מבנה" hint-size="100%,110px" style="flex:1"></dc-import></span><span style="padding:15px 16px 17px"><strong style="display:block;font:700 18px/1.3 'Heebo',sans-serif;margin-bottom:5px">קווי חיים</strong><span style="font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">בדיקות לקווי חיים, נקודות עיגון ומערכות הגנה לעבודה בגובה.</span></span></a>
+</div>
+</div>
+
+<div style="padding:44px 40px;background:#F7F8FB;border-top:1px solid rgba(20,34,74,.1)">
+<h2 style="margin:0 0 6px;font:800 26px/1.3 'Heebo',sans-serif;color:#14224A">איזה ציוד צריך בדיקה?</h2>
+<p style="margin:0 0 18px;font:300 15.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">בחרו את סוגי הציוד ואנחנו נחזור אליכם עם הצעה מדויקת.</p>
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px">
+<sc-for list="{{ chips }}" as="c" hint-placeholder-count="6"><button type="button" onClick="{{ c.toggle }}" style="{{ c.style }}">{{ c.name }}</button></sc-for>
+</div>
+<div style="display:flex;align-items:center;gap:18px;background:#fff;border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:16px 20px;flex-wrap:wrap"><span style="font:500 15px/1.5 'Heebo',sans-serif;color:#14224A;flex:1;min-width:300px">{{ pickedLabel }}</span><a href="tel:0500000000" style="background:#14224A;color:#fff;padding:13px 22px;font:700 15.5px/1 'Heebo',sans-serif;border-radius:6px" style-hover="background:#0F1E45">📞 דברו איתנו עכשיו</a><a href="#" style="background:#E8620C;color:#fff;padding:13px 22px;font:700 15.5px/1 'Heebo',sans-serif;border-radius:6px" style-hover="background:#CF5309">📋 שליחת בקשה</a></div>
+</div>
+
+<div style="display:grid;grid-template-columns:.9fr 1.1fr;background:#14224A">
+<div style="min-height:420px;display:flex"><dc-import name="Photo" note="משרד פעיל — מחשב עם מערכת מעקב מועדי בדיקה, הכנת תסקיר / הצעת מחיר" hint-size="100%,420px" style="flex:1"></dc-import></div>
+<div style="padding:52px 40px;display:flex;flex-direction:column;gap:16px;justify-content:center">
+<h2 style="margin:0;font:800 30px/1.25 'Heebo',sans-serif;color:#fff">פתרון מקצועי למפעלים וחברות</h2>
+<p style="margin:0;font:300 16px/1.75 'Assistant',sans-serif;color:rgba(255,255,255,.75);max-width:540px">במפעלים ובחברות תעשייתיות יש מגוון גדול של ציוד הרמה הדורש בדיקות, מעקב וניהול מסודר. המטרה שלנו היא לאפשר ללקוחות להתמקד בעבודה השוטפת, כאשר ציוד ההרמה שלהם מנוהל בצורה מקצועית ומסודרת.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;font:500 15px/1.45 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>תיאום בדיקות מול המשרד</span>
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;font:500 15px/1.45 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>ביצוע בדיקות בשטח</span>
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;font:500 15px/1.45 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>הפקת תסקירים</span>
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;font:500 15px/1.45 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>מעקב אחר מועדי בדיקה עתידיים</span>
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;font:500 15px/1.45 'Heebo',sans-serif;color:#fff;display:flex;gap:9px;grid-column:span 2"><span style="color:#F2A20C">✓</span>מענה מקצועי גם לאחר הבדיקה</span>
+</div>
+</div>
+</div>
+
+<div style="padding:52px 40px;background:#fff">
+<h2 style="margin:0 0 10px;font:800 30px/1.25 'Heebo',sans-serif;color:#14224A">בדיקות מקצועיות עם אחריות ושירות אישי</h2>
+<p style="margin:0 0 28px;font:300 16px/1.75 'Assistant',sans-serif;color:#3d4a66;max-width:820px">כאשר מדובר בציוד הרמה המשמש עובדים מדי יום, חשוב לעבוד עם גורם מקצועי שמבין את התחום ויודע לתת מענה מהיר ומדויק. ארזי מיטב המהנדסים משלבת ניסיון הנדסי, עבודה מסודרת ושירות אישי מול כל לקוח.</p>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+<div style="border-top:3px solid #2E4B9B;padding-top:16px"><h3 style="margin:0 0 6px;font:700 20px/1.3 'Heebo',sans-serif;color:#14224A">ניסיון תעשייתי</h3><p style="margin:0;font:300 15px/1.7 'Assistant',sans-serif;color:#4a5a7a">היכרות עם סביבת עבודה של מפעלים, מחסנים וחברות.</p></div>
+<div style="border-top:3px solid #2E4B9B;padding-top:16px"><h3 style="margin:0 0 6px;font:700 20px/1.3 'Heebo',sans-serif;color:#14224A">זמינות גבוהה</h3><p style="margin:0;font:300 15px/1.7 'Assistant',sans-serif;color:#4a5a7a">מענה מהיר ותיאום בדיקות בצורה יעילה.</p></div>
+<div style="border-top:3px solid #E8620C;padding-top:16px"><h3 style="margin:0 0 6px;font:700 20px/1.3 'Heebo',sans-serif;color:#14224A">שירות לאורך זמן</h3><p style="margin:0;font:300 15px/1.7 'Assistant',sans-serif;color:#4a5a7a">מעקב ותזכורת לבדיקות עתידיות.</p></div>
+</div>
+</div>
+
+<div style="padding:52px 40px;background:#F7F8FB;border-top:1px solid rgba(20,34,74,.1)">
+<h2 style="margin:0 0 30px;font:800 30px/1.25 'Heebo',sans-serif;color:#14224A;text-align:center">איך עובדים איתנו</h2>
+<div style="display:flex;align-items:stretch;justify-content:center;gap:0">
+<div style="flex:1;max-width:200px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px"><span style="width:46px;height:46px;border-radius:50%;background:#2E4B9B;color:#fff;display:flex;align-items:center;justify-content:center;font:800 17px/1 'Heebo',sans-serif">1</span><strong style="font:700 16.5px/1.3 'Heebo',sans-serif;color:#14224A">פנייה אלינו</strong><span style="font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">טלפון או טופס קצר</span></div>
+<span style="align-self:flex-start;margin-top:20px;color:#2E4B9B;font:400 20px/1 'Heebo',sans-serif">←</span>
+<div style="flex:1;max-width:200px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px"><span style="width:46px;height:46px;border-radius:50%;background:#2E4B9B;color:#fff;display:flex;align-items:center;justify-content:center;font:800 17px/1 'Heebo',sans-serif">2</span><strong style="font:700 16.5px/1.3 'Heebo',sans-serif;color:#14224A">תיאום בדיקה</strong><span style="font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">מועד שמצמצם הפרעה לפעילות</span></div>
+<span style="align-self:flex-start;margin-top:20px;color:#2E4B9B;font:400 20px/1 'Heebo',sans-serif">←</span>
+<div style="flex:1;max-width:200px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px"><span style="width:46px;height:46px;border-radius:50%;background:#2E4B9B;color:#fff;display:flex;align-items:center;justify-content:center;font:800 17px/1 'Heebo',sans-serif">3</span><strong style="font:700 16.5px/1.3 'Heebo',sans-serif;color:#14224A">בדיקה בשטח</strong><span style="font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">בודק מוסמך אצלכם באתר</span></div>
+<span style="align-self:flex-start;margin-top:20px;color:#2E4B9B;font:400 20px/1 'Heebo',sans-serif">←</span>
+<div style="flex:1;max-width:200px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px"><span style="width:46px;height:46px;border-radius:50%;background:#2E4B9B;color:#fff;display:flex;align-items:center;justify-content:center;font:800 17px/1 'Heebo',sans-serif">4</span><strong style="font:700 16.5px/1.3 'Heebo',sans-serif;color:#14224A">הפקת תסקיר</strong><span style="font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">מסמך מקצועי ומסודר</span></div>
+<span style="align-self:flex-start;margin-top:20px;color:#E8620C;font:400 20px/1 'Heebo',sans-serif">←</span>
+<div style="flex:1;max-width:200px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px"><span style="width:46px;height:46px;border-radius:50%;background:#E8620C;color:#fff;display:flex;align-items:center;justify-content:center;font:800 17px/1 'Heebo',sans-serif">5</span><strong style="font:700 16.5px/1.3 'Heebo',sans-serif;color:#14224A">מעקב לבדיקה הבאה</strong><span style="font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">אנחנו נזכיר לכם מראש</span></div>
+</div>
+</div>
+
+<div style="padding:52px 40px;background:#fff;display:grid;grid-template-columns:1fr 1.5fr;gap:40px;align-items:start">
+<div><h2 style="margin:0 0 12px;font:800 30px/1.25 'Heebo',sans-serif;color:#14224A">שאלות נפוצות</h2><p style="margin:0 0 18px;font:300 15px/1.75 'Assistant',sans-serif;color:#4a5a7a">התשובות שמנהלי אחזקה וממוני בטיחות שואלים לפני שמזמינים בדיקה.</p><a href="tel:0500000000" style="display:inline-block;border:1.5px solid #14224A;color:#14224A;padding:13px 20px;font:700 15px/1 'Heebo',sans-serif;border-radius:6px" style-hover="background:#14224A;color:#fff">📞 שאלה אחרת? {{ phone }}</a><span style="display:block;margin-top:14px;font:400 11px/1.6 ui-monospace,Menlo,monospace;color:#8792ab">להטמיע FAQ Schema על אזור זה</span></div>
+<div>
+<dc-import name="Faq" open="true" hint-size="100%,60px" q="כל כמה זמן צריך לבצע בדיקה למתקני הרמה?" a="מכונות ומתקני הרמה חייבים לעבור בדיקה תקופתית על ידי בודק מוסמך בהתאם לדרישות החוק. ברוב המקרים הבדיקה מתבצעת אחת ל־14 חודשים, בהתאם לסוג הציוד ולדרישות הרלוונטיות. במקרים מסוימים נדרשת בדיקה נוספת, לדוגמה לאחר שינוי משמעותי, תיקון או אירוע חריג."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="כל כמה זמן צריך לבדוק אביזרי הרמה?" a="אביזרי הרמה כגון רצועות, שרשראות, שאקלים, אונקלים, קורות הרמה ואביזרי חיבור חייבים לעבור בדיקה יסודית אחת ל־6 חודשים על ידי בודק מוסמך. בנוסף, יש לבצע בדיקה חזותית לפני שימוש ולוודא שאין סימני נזק או בלאי."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="מי רשאי לבצע בדיקות למתקני הרמה?" a="רק בודק מוסמך בעל הסמכה מתאימה מטעם משרד העבודה רשאי לבצע בדיקות למתקני הרמה ולהפיק תסקיר בדיקה. תסקיר הבדיקה מהווה מסמך מקצועי המאשר את תוצאות הבדיקה בהתאם לדרישות החוק."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="מה קורה אם תוקף התסקיר פג?" a="חשוב להקפיד לבצע את הבדיקות במועד ולוודא שלציוד קיים תסקיר תקף בהתאם לדרישות. שימוש בציוד ללא בדיקה נדרשת עלול ליצור חשיפה בטיחותית, משפטית וביטוחית. בארזי מיטב המהנדסים אנו מנהלים מעקב אחר מועדי בדיקה ומסייעים ללקוחותינו להיערך מראש."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="האם ניתן לבצע בדיקה בזמן שהמפעל עובד?" a="ברוב המקרים כן. אנו מתאמים את הבדיקה מול הלקוח במטרה לצמצם הפרעה לפעילות השוטפת של המפעל. במידת הצורך מתאמים מראש עצירה זמנית של ציוד מסוים."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="מה צריך להכין לפני הגעת הבודק?" a="לפני הבדיקה יש להכין את תסקיר הבדיקה האחרון, לאפשר גישה לציוד ולהכין את התנאים הנדרשים לביצוע הבדיקה. בבדיקות ראשוניות לאחר התקנה ייתכן שיידרשו מסמכים נוספים או הכנות מיוחדות בהתאם לסוג הציוד."></dc-import>
+<a href="#" style="display:inline-block;margin-top:12px;font:700 15px/1 'Heebo',sans-serif;color:#2E4B9B">לכל השאלות הנפוצות ←</a>
+</div>
+</div>
+
+<dc-import name="CtaBand" hint-size="100%,150px" title="צריכים לבצע בדיקה לציוד ההרמה שלכם?" text="צרו קשר עם ארזי מיטב המהנדסים לקבלת זמינות, מחיר ותיאום בדיקה."></dc-import>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+
+<div class="mob">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;box-shadow:0 2px 10px rgba(20,34,74,.1)"><img src="uploads/logo-1785856153853.png" alt="לוגו" style="height:32px"><span style="display:flex;gap:8px;align-items:center"><a href="tel:0500000000" style="background:#E8620C;color:#fff;padding:9px 13px;border-radius:6px;font:700 14px/1 'Heebo',sans-serif">☎ חייגו</a><span style="font:700 20px/1 'Heebo',sans-serif;color:#14224A">☰</span></span></div>
+<div style="background:#EEF2FB;padding:22px 18px;display:flex;flex-direction:column;gap:14px">
+<h1 style="margin:0;font:800 27px/1.2 'Heebo',sans-serif;color:#14224A">בדיקות בודק מוסמך למתקני הרמה, אביזרי הרמה וקווי חיים</h1>
+<div style="height:150px;border-radius:8px;overflow:hidden;display:flex"><dc-import name="Photo" note="וידאו/תמונה: בודק ליד עגורן גשר" hint-size="100%,150px" style="flex:1"></dc-import></div>
+<p style="margin:0;font:300 14.5px/1.65 'Assistant',sans-serif;color:#3d4a66">מעל 15 שנות ניסיון · בודק מוסמך · תסקיר מסודר · מעקב מועדים · שירות בכל הארץ.</p>
+<div style="background:#2E4B9B;border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:9px">
+<strong style="font:800 19px/1.3 'Heebo',sans-serif;color:#fff">תיאום בדיקה — 30 שניות</strong>
+<span style="background:#fff;border-radius:6px;padding:13px;font:400 14.5px/1 'Heebo',sans-serif;color:#98a3b8">שם ושם החברה</span>
+<span style="background:#fff;border-radius:6px;padding:13px;font:400 14.5px/1 'Heebo',sans-serif;color:#98a3b8">טלפון</span>
+<span style="background:#fff;border-radius:6px;padding:13px;font:400 14.5px/1 'Heebo',sans-serif;color:#98a3b8">סוג הציוד</span>
+<a href="#" style="background:#E8620C;color:#fff;padding:15px;text-align:center;font:800 16.5px/1 'Heebo',sans-serif;border-radius:6px">שליחת בקשה</a>
+</div>
+</div>
+<div style="padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<span style="display:flex;gap:7px;font:500 13px/1.4 'Heebo',sans-serif;color:#14224A;border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:11px"><span style="color:#2E4B9B">✓</span>בודק מוסמך</span>
+<span style="display:flex;gap:7px;font:500 13px/1.4 'Heebo',sans-serif;color:#14224A;border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:11px"><span style="color:#2E4B9B">✓</span>15+ שנות ניסיון</span>
+<span style="display:flex;gap:7px;font:500 13px/1.4 'Heebo',sans-serif;color:#14224A;border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:11px"><span style="color:#2E4B9B">✓</span>מעקב מועדים</span>
+<span style="display:flex;gap:7px;font:500 13px/1.4 'Heebo',sans-serif;color:#14224A;border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:11px"><span style="color:#2E4B9B">✓</span>מענה מהיר</span>
+</div>
+<div style="padding:0 18px 18px;display:flex;flex-direction:column;gap:12px">
+<h2 style="margin:0;font:800 21px/1.25 'Heebo',sans-serif;color:#14224A">שירותי בדיקות ציוד הרמה</h2>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden"><div style="height:96px;display:flex"><dc-import name="Photo" note="עגורן גשר" hint-size="100%,96px" style="flex:1"></dc-import></div><div style="padding:14px"><strong style="display:block;font:700 17px/1.3 'Heebo',sans-serif;color:#14224A;margin-bottom:4px">בדיקות מתקני הרמה</strong><span style="font:300 13.5px/1.6 'Assistant',sans-serif;color:#3d4a66">מלגזות, עגורנים, במות הרמה ומתקנים נוספים.</span></div></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden"><div style="height:96px;display:flex"><dc-import name="Photo" note="רצועות ושאקלים" hint-size="100%,96px" style="flex:1"></dc-import></div><div style="padding:14px"><strong style="display:block;font:700 17px/1.3 'Heebo',sans-serif;color:#14224A;margin-bottom:4px">בדיקות אביזרי הרמה</strong><span style="font:300 13.5px/1.6 'Assistant',sans-serif;color:#3d4a66">בדיקה יסודית אחת ל־6 חודשים.</span></div></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden"><div style="height:96px;display:flex"><dc-import name="Photo" note="קו חיים על גג" hint-size="100%,96px" style="flex:1"></dc-import></div><div style="padding:14px"><strong style="display:block;font:700 17px/1.3 'Heebo',sans-serif;color:#14224A;margin-bottom:4px">בדיקות קווי חיים</strong><span style="font:300 13.5px/1.6 'Assistant',sans-serif;color:#3d4a66">נקודות עיגון ומערכות לעבודה בגובה.</span></div></div>
+</div>
+<div style="padding:0 18px 100px">
+<h2 style="margin:0 0 12px;font:800 21px/1.25 'Heebo',sans-serif;color:#14224A">שאלות נפוצות</h2>
+<dc-import name="Faq" open="true" hint-size="100%,60px" q="כל כמה זמן נדרשת בדיקה?" a="מתקני הרמה — ברוב המקרים אחת ל־14 חודשים. אביזרי הרמה — בדיקה יסודית אחת ל־6 חודשים."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="מי רשאי לבצע את הבדיקה?" a="רק בודק מוסמך בעל הסמכה מתאימה מטעם משרד העבודה, המפיק תסקיר בדיקה בסיום."></dc-import>
+</div>
+<div style="position:absolute;bottom:0;right:0;left:0;display:flex;gap:8px;background:#14224A;padding:10px"><a href="tel:0500000000" style="flex:1.4;background:#E8620C;color:#fff;padding:15px;text-align:center;font:800 16px/1 'Heebo',sans-serif;border-radius:6px">☎ התקשרו עכשיו</a><a href="#" style="flex:1;background:#fff;color:#14224A;padding:15px;text-align:center;font:700 16px/1 'Heebo',sans-serif;border-radius:6px">💬 WhatsApp</a></div>
+</div>
+
+</div>
+</section>
+
+<section class="pg" id="P2">
+<div class="pg-h"><a class="pg-id" href="#P2">P2</a><span class="pg-name">שירותים — עמוד רכזת</span></div>
+<div class="spec"><span><b>URL</b> /services</span><span><b>Title</b> שירותי בדיקות ציוד הרמה | בודק מוסמך | ארזי מיטב המהנדסים</span><span><b>Meta</b> בדיקות מתקני הרמה, אביזרי הרמה וקווי חיים על ידי בודק מוסמך — שירות למפעלים, חברות ומרכזים לוגיסטיים בכל הארץ.</span><span><b>H1</b> שירותי בדיקות ציוד הרמה</span><span><b>Schema</b> Service ×3</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+<dc-import name="PageHead" hint-size="100%,340px" crumb="שירותים" h1="שירותי בדיקות ציוד הרמה" lead="ארזי מיטב המהנדסים מבצעת בדיקות ותסקירים בשלושה תחומים מרכזיים: מתקני הרמה, אביזרי הרמה וקווי חיים. כל הבדיקות מבוצעות על ידי בודק מוסמך ובסיומן מופק תסקיר בדיקה מסודר." note="בודק מוסמך עם ציוד מדידה בסביבת מפעל"></dc-import>
+
+<div style="padding:52px 40px;background:#fff;display:flex;flex-direction:column;gap:22px">
+<a href="#" style="display:grid;grid-template-columns:300px 1fr auto;gap:26px;align-items:center;border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A" style-hover="border-color:#2E4B9B;box-shadow:0 10px 26px rgba(20,34,74,.12)">
+<span style="height:190px;display:flex"><dc-import name="Photo" note="עגורן גשר באולם ייצור / מלגזה במחסן" hint-size="100%,190px" style="flex:1"></dc-import></span>
+<span style="padding:20px 0"><strong style="display:block;font:800 25px/1.3 'Heebo',sans-serif;margin-bottom:8px">בדיקות מתקני הרמה</strong><span style="display:block;font:300 15.5px/1.75 'Assistant',sans-serif;color:#3d4a66;margin-bottom:10px">בדיקות למתקני הרמה במפעלים, חברות ומרכזים לוגיסטיים בהתאם לדרישות החוק, כולל מלגזות, עגורנים, במות הרמה ומתקני הרמה נוספים.</span><span style="display:flex;gap:8px;flex-wrap:wrap;font:600 12.5px/1 'Heebo',sans-serif;color:#2E4B9B"><span style="background:#EEF2FB;padding:7px 11px;border-radius:14px">מלגזות</span><span style="background:#EEF2FB;padding:7px 11px;border-radius:14px">עגורנים</span><span style="background:#EEF2FB;padding:7px 11px;border-radius:14px">במות הרמה</span><span style="background:#EEF2FB;padding:7px 11px;border-radius:14px">ליפטים וכננות</span></span></span>
+<span style="font:700 15px/1 'Heebo',sans-serif;color:#E8620C;padding-left:26px">לעמוד השירות ←</span></a>
+<a href="#" style="display:grid;grid-template-columns:300px 1fr auto;gap:26px;align-items:center;border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A" style-hover="border-color:#2E4B9B;box-shadow:0 10px 26px rgba(20,34,74,.12)">
+<span style="height:190px;display:flex"><dc-import name="Photo" note="קרוב: רצועות פוליאסטר, שרשראות, שאקלים" hint-size="100%,190px" style="flex:1"></dc-import></span>
+<span style="padding:20px 0"><strong style="display:block;font:800 25px/1.3 'Heebo',sans-serif;margin-bottom:8px">בדיקות אביזרי הרמה</strong><span style="display:block;font:300 15.5px/1.75 'Assistant',sans-serif;color:#3d4a66;margin-bottom:10px">בדיקות לאביזרים המשמשים להרמת מטענים — רצועות הרמה, שרשראות, חבלי פלדה, שאקלים, אונקלים, קורות הרמה ואביזרי חיבור. בדיקה יסודית אחת ל־6 חודשים.</span><span style="display:flex;gap:8px;flex-wrap:wrap;font:600 12.5px/1 'Heebo',sans-serif;color:#2E4B9B"><span style="background:#EEF2FB;padding:7px 11px;border-radius:14px">רצועות</span><span style="background:#EEF2FB;padding:7px 11px;border-radius:14px">שרשראות</span><span style="background:#EEF2FB;padding:7px 11px;border-radius:14px">שאקלים</span><span style="background:#EEF2FB;padding:7px 11px;border-radius:14px">קורות הרמה</span></span></span>
+<span style="font:700 15px/1 'Heebo',sans-serif;color:#E8620C;padding-left:26px">לעמוד השירות ←</span></a>
+<a href="#" style="display:grid;grid-template-columns:300px 1fr auto;gap:26px;align-items:center;border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A" style-hover="border-color:#2E4B9B;box-shadow:0 10px 26px rgba(20,34,74,.12)">
+<span style="height:190px;display:flex"><dc-import name="Photo" note="מערכת קו חיים על גג מבנה / נקודת עיגון" hint-size="100%,190px" style="flex:1"></dc-import></span>
+<span style="padding:20px 0"><strong style="display:block;font:800 25px/1.3 'Heebo',sans-serif;margin-bottom:8px">בדיקות קווי חיים</strong><span style="display:block;font:300 15.5px/1.75 'Assistant',sans-serif;color:#3d4a66;margin-bottom:10px">בדיקות למערכות הגנה לעבודה בגובה: קווי חיים אופקיים ואנכיים, נקודות עיגון, מסילות עיגון ומערכות בלימת נפילה.</span><span style="display:flex;gap:8px;flex-wrap:wrap;font:600 12.5px/1 'Heebo',sans-serif;color:#2E4B9B"><span style="background:#EEF2FB;padding:7px 11px;border-radius:14px">קו חיים אופקי</span><span style="background:#EEF2FB;padding:7px 11px;border-radius:14px">קו חיים אנכי</span><span style="background:#EEF2FB;padding:7px 11px;border-radius:14px">נקודות עיגון</span></span></span>
+<span style="font:700 15px/1 'Heebo',sans-serif;color:#E8620C;padding-left:26px">לעמוד השירות ←</span></a>
+</div>
+
+<div style="padding:48px 40px;background:#F7F8FB;border-top:1px solid rgba(20,34,74,.1)">
+<h2 style="margin:0 0 24px;font:800 28px/1.25 'Heebo',sans-serif;color:#14224A">מה משותף לכל הבדיקות שלנו</h2>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+<div style="background:#fff;border-radius:10px;padding:20px;border-top:3px solid #2E4B9B"><h3 style="margin:0 0 6px;font:700 18px/1.3 'Heebo',sans-serif;color:#14224A">בודק מוסמך</h3><p style="margin:0;font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">כל בדיקה מבוצעת על ידי בודק מוסמך בעל הסמכה מתאימה.</p></div>
+<div style="background:#fff;border-radius:10px;padding:20px;border-top:3px solid #2E4B9B"><h3 style="margin:0 0 6px;font:700 18px/1.3 'Heebo',sans-serif;color:#14224A">תסקיר בדיקה</h3><p style="margin:0;font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">בסיום מופק תסקיר מסודר המאשר את תוצאות הבדיקה.</p></div>
+<div style="background:#fff;border-radius:10px;padding:20px;border-top:3px solid #2E4B9B"><h3 style="margin:0 0 6px;font:700 18px/1.3 'Heebo',sans-serif;color:#14224A">תיאום נוח</h3><p style="margin:0;font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">מועד הבדיקה מתואם כדי לצמצם הפרעה לפעילות השוטפת.</p></div>
+<div style="background:#fff;border-radius:10px;padding:20px;border-top:3px solid #E8620C"><h3 style="margin:0 0 6px;font:700 18px/1.3 'Heebo',sans-serif;color:#14224A">מעקב מועדים</h3><p style="margin:0;font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">אנו יוצרים קשר לפני מועד הבדיקה הבאה.</p></div>
+</div>
+</div>
+
+<dc-import name="CtaBand" hint-size="100%,150px" title="לא בטוחים איזה שירות אתם צריכים?" text="ספרו לנו איזה ציוד יש אצלכם ונכוון אותך לבדיקה הנכונה."></dc-import>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+</div>
+</section>
+
+<section class="pg" id="P3">
+<div class="pg-h"><a class="pg-id" href="#P3">P3</a><span class="pg-name">בדיקות מתקני הרמה — עמוד שירות ראשי</span></div>
+<div class="spec"><span><b>URL</b> /lifting-equipment-inspection</span><span><b>Title</b> בדיקות מתקני הרמה | בודק מוסמך למתקני הרמה | ארזי מיטב המהנדסים</span><span><b>Meta</b> בדיקות מתקני הרמה על ידי בודק מוסמך — מלגזות, עגורנים, במות הרמה ומתקנים נוספים. תסקיר בדיקה מסודר. שירות למפעלים וחברות בכל הארץ.</span><span><b>H1</b> בדיקות מתקני הרמה על ידי בודק מוסמך</span><span><b>Schema</b> Service + FAQPage</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+<dc-import name="PageHead" hint-size="100%,340px" crumb="שירותים / בדיקות מתקני הרמה" h1="בדיקות מתקני הרמה על ידי בודק מוסמך" lead="ארזי מיטב המהנדסים מבצעת בדיקות ותסקירים למתקני הרמה במפעלים, חברות תעשייתיות ומרכזים לוגיסטיים בהתאם לדרישות החוק והתקנים הרלוונטיים. בדיקות אלו מבוצעות על ידי בודק מוסמך ונועדו לוודא כי ציוד ההרמה תקין, בטוח ומתאים להמשך שימוש." note="בודק מוסמך בודק עגורן גשר במפעל"></dc-import>
+
+<div style="padding:50px 40px;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:40px">
+<div><h2 style="margin:0 0 12px;font:800 26px/1.3 'Heebo',sans-serif;color:#14224A">למה נדרשת בדיקת מתקני הרמה?</h2><p style="margin:0 0 12px;font:300 16px/1.8 'Assistant',sans-serif;color:#3d4a66">ציוד הרמה נמצא בשימוש יומיומי בסביבות עבודה רבות ונדרש לעמוד בעומסים גבוהים.</p><p style="margin:0;font:300 16px/1.8 'Assistant',sans-serif;color:#3d4a66">בדיקה תקופתית מאפשרת לזהות בלאי, ליקויים ותקלות העלולות להשפיע על בטיחות העובדים ועל תקינות הציוד.</p></div>
+<div style="background:#EEF2FB;border-radius:10px;padding:26px"><h2 style="margin:0 0 12px;font:800 26px/1.3 'Heebo',sans-serif;color:#14224A">כל כמה זמן נדרשת בדיקה?</h2><p style="margin:0 0 14px;font:300 16px/1.8 'Assistant',sans-serif;color:#3d4a66">בהתאם לדרישות החוק בישראל, מתקני הרמה נדרשים לעבור בדיקה תקופתית על ידי בודק מוסמך בהתאם לסוג הציוד ולדרישות הרלוונטיות.</p><div style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:8px;padding:16px"><strong style="font:800 34px/1 'Heebo',sans-serif;color:#2E4B9B">14</strong><span style="font:500 15px/1.5 'Heebo',sans-serif;color:#14224A">חודשים — התדירות הנפוצה לבדיקה תקופתית של מתקני הרמה</span></div></div>
+</div>
+
+<div style="padding:50px 40px;background:#F7F8FB;border-top:1px solid rgba(20,34,74,.1)">
+<h2 style="margin:0 0 24px;font:800 28px/1.25 'Heebo',sans-serif;color:#14224A">איזה מתקני הרמה אנו בודקים?</h2>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+<a href="#" style="background:#fff;border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B"><span style="height:120px;display:flex"><dc-import name="Photo" note="מלגזה במחסן" hint-size="100%,120px" style="flex:1"></dc-import></span><span style="padding:16px"><strong style="display:block;font:700 19px/1.3 'Heebo',sans-serif;margin-bottom:5px">מלגזות</strong><span style="display:block;font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a;margin-bottom:9px">בדיקות לכל סוגי המלגזות וציוד השינוע.</span><span style="font:700 13.5px/1 'Heebo',sans-serif;color:#E8620C">בדיקות מלגזות ←</span></span></a>
+<a href="#" style="background:#fff;border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B"><span style="height:120px;display:flex"><dc-import name="Photo" note="עגורן גשר" hint-size="100%,120px" style="flex:1"></dc-import></span><span style="padding:16px"><strong style="display:block;font:700 19px/1.3 'Heebo',sans-serif;margin-bottom:5px">עגורנים</strong><span style="display:block;font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a;margin-bottom:9px">עגורני גשר, שער, זרוע ועגורנים עיליים.</span><span style="font:700 13.5px/1 'Heebo',sans-serif;color:#E8620C">בדיקות עגורנים ←</span></span></a>
+<a href="#" style="background:#fff;border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B"><span style="height:120px;display:flex"><dc-import name="Photo" note="במת הרמה באתר" hint-size="100%,120px" style="flex:1"></dc-import></span><span style="padding:16px"><strong style="display:block;font:700 19px/1.3 'Heebo',sans-serif;margin-bottom:5px">במות הרמה</strong><span style="display:block;font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a;margin-bottom:9px">בדיקות לבמות הרמה מסוגים שונים.</span><span style="font:700 13.5px/1 'Heebo',sans-serif;color:#E8620C">בדיקות במות הרמה ←</span></span></a>
+<a href="#" style="background:#fff;border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B"><span style="height:120px;display:flex"><dc-import name="Photo" note="ליפט לרכב / כננת" hint-size="100%,120px" style="flex:1"></dc-import></span><span style="padding:16px"><strong style="display:block;font:700 19px/1.3 'Heebo',sans-serif;margin-bottom:5px">מתקני הרמה נוספים</strong><span style="display:block;font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a;margin-bottom:9px">ליפטים לרכב, כננות ומתקנים ייעודיים במפעלים.</span><span style="font:700 13.5px/1 'Heebo',sans-serif;color:#E8620C">לעמוד הציוד ←</span></span></a>
+</div>
+</div>
+
+<div style="padding:50px 40px;background:#14224A">
+<h2 style="margin:0 0 28px;font:800 28px/1.25 'Heebo',sans-serif;color:#fff">מה כולל תהליך הבדיקה?</h2>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px">
+<div style="background:rgba(255,255,255,.07);border-radius:10px;padding:20px;border-top:3px solid #F2A20C"><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#F2A20C">01</span><h3 style="margin:8px 0 0;font:700 17px/1.35 'Heebo',sans-serif;color:#fff">בדיקת מסמכים וזיהוי הציוד</h3></div>
+<div style="background:rgba(255,255,255,.07);border-radius:10px;padding:20px;border-top:3px solid #F2A20C"><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#F2A20C">02</span><h3 style="margin:8px 0 0;font:700 17px/1.35 'Heebo',sans-serif;color:#fff">בדיקה חזותית ומכנית</h3></div>
+<div style="background:rgba(255,255,255,.07);border-radius:10px;padding:20px;border-top:3px solid #F2A20C"><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#F2A20C">03</span><h3 style="margin:8px 0 0;font:700 17px/1.35 'Heebo',sans-serif;color:#fff">בדיקת מערכות בטיחות</h3></div>
+<div style="background:rgba(255,255,255,.07);border-radius:10px;padding:20px;border-top:3px solid #F2A20C"><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#F2A20C">04</span><h3 style="margin:8px 0 0;font:700 17px/1.35 'Heebo',sans-serif;color:#fff">בדיקות תפקוד וניסוי לפי הצורך</h3></div>
+<div style="background:#E8620C;border-radius:10px;padding:20px"><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(255,255,255,.8)">05</span><h3 style="margin:8px 0 0;font:700 17px/1.35 'Heebo',sans-serif;color:#fff">הפקת תסקיר בדיקה</h3></div>
+</div>
+</div>
+
+<div style="padding:50px 40px;background:#fff;display:grid;grid-template-columns:1fr 1.5fr;gap:40px;align-items:start">
+<div><h2 style="margin:0 0 12px;font:800 26px/1.3 'Heebo',sans-serif;color:#14224A">שאלות על בדיקת מתקני הרמה</h2><p style="margin:0;font:300 15px/1.75 'Assistant',sans-serif;color:#4a5a7a">שאלות נוספות? התקשרו ונענה תוך זמן קצר.</p></div>
+<div>
+<dc-import name="Faq" open="true" hint-size="100%,60px" q="כל כמה זמן צריך לבצע בדיקה למתקני הרמה?" a="ברוב המקרים אחת ל־14 חודשים, בהתאם לסוג הציוד ולדרישות הרלוונטיות. במקרים מסוימים נדרשת בדיקה נוספת — לדוגמה לאחר שינוי משמעותי, תיקון או אירוע חריג."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="מה ההבדל בין בדיקה ראשונית לבדיקה תקופתית?" a="בדיקה ראשונית מתבצעת לציוד חדש או לאחר התקנה באתר, לפני תחילת השימוש. בדיקה תקופתית חוזרת במרווחי זמן קבועים לאורך חיי הציוד."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="האם ניתן לבצע בדיקה בזמן שהמפעל עובד?" a="ברוב המקרים כן. אנו מתאמים את הבדיקה מול הלקוח במטרה לצמצם הפרעה לפעילות השוטפת, ובמידת הצורך מתאמים מראש עצירה זמנית של ציוד מסוים."></dc-import>
+</div>
+</div>
+
+<dc-import name="CtaBand" hint-size="100%,150px" title="צריכים לבצע בדיקת מתקני הרמה?" text="צרו קשר לקבלת זמינות ותיאום בדיקה."></dc-import>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+
+<div class="mob">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;box-shadow:0 2px 10px rgba(20,34,74,.1)"><img src="uploads/logo-1785856153853.png" alt="לוגו" style="height:32px"><span style="font:700 20px/1 'Heebo',sans-serif;color:#14224A">☰</span></div>
+<div style="background:#EEF2FB;padding:20px 18px;display:flex;flex-direction:column;gap:12px">
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#6b7896">ראשי / שירותים / מתקני הרמה</span>
+<h1 style="margin:0;font:800 26px/1.2 'Heebo',sans-serif;color:#14224A">בדיקות מתקני הרמה על ידי בודק מוסמך</h1>
+<div style="height:140px;border-radius:8px;overflow:hidden;display:flex"><dc-import name="Photo" note="בודק ליד עגורן גשר" hint-size="100%,140px" style="flex:1"></dc-import></div>
+<p style="margin:0;font:300 14.5px/1.7 'Assistant',sans-serif;color:#3d4a66">בדיקות ותסקירים למתקני הרמה במפעלים ובמרכזים לוגיסטיים, בהתאם לדרישות החוק והתקנים.</p>
+<a href="#" style="background:#E8620C;color:#fff;padding:15px;text-align:center;font:800 16.5px/1 'Heebo',sans-serif;border-radius:6px">📋 תיאום בדיקה</a>
+</div>
+<div style="padding:18px;display:flex;flex-direction:column;gap:14px">
+<div style="background:#EEF2FB;border-radius:10px;padding:16px;display:flex;align-items:center;gap:12px"><strong style="font:800 28px/1 'Heebo',sans-serif;color:#2E4B9B">14</strong><span style="font:500 14px/1.5 'Heebo',sans-serif;color:#14224A">חודשים — תדירות נפוצה לבדיקה תקופתית</span></div>
+<h2 style="margin:0;font:800 20px/1.25 'Heebo',sans-serif;color:#14224A">איזה מתקנים אנו בודקים</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:13px;font:700 14.5px/1.3 'Heebo',sans-serif;color:#14224A">מלגזות</a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:13px;font:700 14.5px/1.3 'Heebo',sans-serif;color:#14224A">עגורנים</a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:13px;font:700 14.5px/1.3 'Heebo',sans-serif;color:#14224A">במות הרמה</a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:13px;font:700 14.5px/1.3 'Heebo',sans-serif;color:#14224A">מתקנים נוספים</a>
+</div>
+<h2 style="margin:6px 0 0;font:800 20px/1.25 'Heebo',sans-serif;color:#14224A">תהליך הבדיקה</h2>
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="display:flex;gap:10px;font:500 14px/1.45 'Heebo',sans-serif;color:#14224A;background:#F7F8FB;border-radius:8px;padding:12px"><span style="font:400 10.5px/1.6 ui-monospace,Menlo,monospace;color:#E8620C">01</span>בדיקת מסמכים וזיהוי הציוד</span>
+<span style="display:flex;gap:10px;font:500 14px/1.45 'Heebo',sans-serif;color:#14224A;background:#F7F8FB;border-radius:8px;padding:12px"><span style="font:400 10.5px/1.6 ui-monospace,Menlo,monospace;color:#E8620C">02</span>בדיקה חזותית ומכנית</span>
+<span style="display:flex;gap:10px;font:500 14px/1.45 'Heebo',sans-serif;color:#14224A;background:#F7F8FB;border-radius:8px;padding:12px"><span style="font:400 10.5px/1.6 ui-monospace,Menlo,monospace;color:#E8620C">03</span>בדיקת מערכות בטיחות</span>
+<span style="display:flex;gap:10px;font:500 14px/1.45 'Heebo',sans-serif;color:#14224A;background:#F7F8FB;border-radius:8px;padding:12px"><span style="font:400 10.5px/1.6 ui-monospace,Menlo,monospace;color:#E8620C">04</span>בדיקות תפקוד וניסוי לפי הצורך</span>
+<span style="display:flex;gap:10px;font:600 14px/1.45 'Heebo',sans-serif;color:#fff;background:#E8620C;border-radius:8px;padding:12px"><span style="font:400 10.5px/1.6 ui-monospace,Menlo,monospace;color:rgba(255,255,255,.85)">05</span>הפקת תסקיר בדיקה</span>
+</div>
+</div>
+<div style="padding:0 18px 100px"><dc-import name="Faq" open="true" hint-size="100%,60px" q="כל כמה זמן נדרשת בדיקה?" a="ברוב המקרים אחת ל־14 חודשים, בהתאם לסוג הציוד ולדרישות הרלוונטיות."></dc-import></div>
+<div style="position:absolute;bottom:0;right:0;left:0;display:flex;gap:8px;background:#14224A;padding:10px"><a href="tel:0500000000" style="flex:1.4;background:#E8620C;color:#fff;padding:15px;text-align:center;font:800 16px/1 'Heebo',sans-serif;border-radius:6px">☎ התקשרו עכשיו</a><a href="#" style="flex:1;background:#fff;color:#14224A;padding:15px;text-align:center;font:700 16px/1 'Heebo',sans-serif;border-radius:6px">💬 WhatsApp</a></div>
+</div>
+</div>
+</section>
+
+<section class="pg" id="P4">
+<div class="pg-h"><a class="pg-id" href="#P4">P4</a><span class="pg-name">בדיקות אביזרי הרמה — עמוד שירות</span></div>
+<div class="spec"><span><b>URL</b> /lifting-accessories</span><span><b>Title</b> בדיקות אביזרי הרמה | בדיקת רצועות ושרשראות הרמה | ארזי מיטב המהנדסים</span><span><b>Meta</b> בדיקות אביזרי הרמה על ידי בודק מוסמך — רצועות, שרשראות, חבלי פלדה, שאקלים, אונקלים וקורות הרמה. בדיקה יסודית אחת ל־6 חודשים.</span><span><b>H1</b> בדיקות אביזרי הרמה על ידי בודק מוסמך</span><span><b>Schema</b> Service</span><span><b>הערה</b> עמוד זה משמש גם כעמוד הציוד ״אביזרי הרמה״ — קישור אחד, בלי תוכן כפול</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+<dc-import name="PageHead" hint-size="100%,340px" crumb="שירותים / בדיקות אביזרי הרמה" h1="בדיקות אביזרי הרמה על ידי בודק מוסמך" lead="ארזי מיטב המהנדסים מבצעת בדיקות לאביזרי הרמה המשמשים להרמת מטענים במפעלים, מחסנים ואתרי עבודה. אביזרי הרמה הם החיבור הישיר בין המטען לציוד ההרמה — ולכן תקינותם קריטית לבטיחות העבודה." note="קרוב: רצועות הרמה ושאקלים עם סימון עומס"></dc-import>
+
+<div style="padding:50px 40px;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:40px">
+<div><h2 style="margin:0 0 12px;font:800 26px/1.3 'Heebo',sans-serif;color:#14224A">למה חשוב לבדוק אביזרי הרמה?</h2><p style="margin:0 0 12px;font:300 16px/1.8 'Assistant',sans-serif;color:#3d4a66">אביזרי הרמה הם החיבור הישיר בין המטען לציוד ההרמה, ולכן תקינותם קריטית לבטיחות העבודה.</p><p style="margin:0;font:300 16px/1.8 'Assistant',sans-serif;color:#3d4a66">בלאי, קרעים, עיוותים או פגיעה מכנית עלולים לגרום לפסילת האביזר — גם כאשר האביזר נראה תקין במבט שטחי.</p></div>
+<div style="background:#EEF2FB;border-radius:10px;padding:26px"><h2 style="margin:0 0 12px;font:800 26px/1.3 'Heebo',sans-serif;color:#14224A">תדירות בדיקה</h2><p style="margin:0 0 14px;font:300 16px/1.8 'Assistant',sans-serif;color:#3d4a66">אביזרי הרמה נדרשים לעבור בדיקה יסודית בהתאם לדרישות הרלוונטיות, בנוסף לבדיקה חזותית לפני כל שימוש.</p><div style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:8px;padding:16px"><strong style="font:800 34px/1 'Heebo',sans-serif;color:#2E4B9B">6</strong><span style="font:500 15px/1.5 'Heebo',sans-serif;color:#14224A">חודשים — בדיקה יסודית לאביזרי הרמה על ידי בודק מוסמך</span></div></div>
+</div>
+
+<div style="padding:50px 40px;background:#F7F8FB;border-top:1px solid rgba(20,34,74,.1)">
+<h2 style="margin:0 0 24px;font:800 28px/1.25 'Heebo',sans-serif;color:#14224A">סוגי אביזרים שנבדקים</h2>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+<div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid rgba(20,34,74,.12)"><div style="height:110px;display:flex"><dc-import name="Photo" note="רצועות פוליאסטר ורצועות עגולות" hint-size="100%,110px" style="flex:1"></dc-import></div><div style="padding:16px"><h3 style="margin:0 0 8px;font:700 18px/1.3 'Heebo',sans-serif;color:#14224A">אביזרים גמישים</h3><span style="display:flex;flex-direction:column;gap:5px;font:300 14px/1.55 'Assistant',sans-serif;color:#4a5a7a"><span>· רצועות פוליאסטר</span><span>· רצועות עגולות</span><span>· חבלי סיבים</span></span></div></div>
+<div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid rgba(20,34,74,.12)"><div style="height:110px;display:flex"><dc-import name="Photo" note="שרשראות הרמה ומכלולי שרשרת" hint-size="100%,110px" style="flex:1"></dc-import></div><div style="padding:16px"><h3 style="margin:0 0 8px;font:700 18px/1.3 'Heebo',sans-serif;color:#14224A">אביזרי פלדה</h3><span style="display:flex;flex-direction:column;gap:5px;font:300 14px/1.55 'Assistant',sans-serif;color:#4a5a7a"><span>· חבלי פלדה</span><span>· שרשראות הרמה</span><span>· מכלולי שרשרת</span></span></div></div>
+<div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid rgba(20,34,74,.12)"><div style="height:110px;display:flex"><dc-import name="Photo" note="שאקלים, טבעות ועיניות הרמה" hint-size="100%,110px" style="flex:1"></dc-import></div><div style="padding:16px"><h3 style="margin:0 0 8px;font:700 18px/1.3 'Heebo',sans-serif;color:#14224A">אביזרי חיבור</h3><span style="display:flex;flex-direction:column;gap:5px;font:300 14px/1.55 'Assistant',sans-serif;color:#4a5a7a"><span>· שאקלים, שאקל D, שאקל אומגה</span><span>· טבעות הרמה</span><span>· עיניות הרמה</span></span></div></div>
+<div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid rgba(20,34,74,.12)"><div style="height:110px;display:flex"><dc-import name="Photo" note="קורת הרמה / מגנט הרמה בעבודה" hint-size="100%,110px" style="flex:1"></dc-import></div><div style="padding:16px"><h3 style="margin:0 0 8px;font:700 18px/1.3 'Heebo',sans-serif;color:#14224A">אביזרים מיוחדים</h3><span style="display:flex;flex-direction:column;gap:5px;font:300 14px/1.55 'Assistant',sans-serif;color:#4a5a7a"><span>· קורות הרמה, פשינצוק</span><span>· מותחנים, מגנטים להרמה</span><span>· אביזרי ואקום ונטוזה</span></span></div></div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1.1fr .9fr;background:#14224A">
+<div style="padding:50px 40px"><h2 style="margin:0 0 20px;font:800 28px/1.25 'Heebo',sans-serif;color:#fff">מה בודקים באביזרי הרמה?</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>סימון עומס עבודה מותר</span>
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>שלמות פיזית</span>
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>שחיקה</span>
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>עיוותים</span>
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>סדקים</span>
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>סימני קורוזיה</span>
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#fff;display:flex;gap:9px;grid-column:span 2"><span style="color:#F2A20C">✓</span>תקינות חיבורים</span>
+</div></div>
+<div style="min-height:340px;display:flex"><dc-import name="Photo" note="קרוב מאוד: תג סימון עומס על רצועה + שחיקה בשרשרת" hint-size="100%,340px" style="flex:1"></dc-import></div>
+</div>
+
+<div style="padding:50px 40px;background:#fff;display:grid;grid-template-columns:1fr 1.5fr;gap:40px;align-items:start">
+<div><h2 style="margin:0 0 12px;font:800 26px/1.3 'Heebo',sans-serif;color:#14224A">שאלות על אביזרי הרמה</h2><p style="margin:0;font:300 15px/1.75 'Assistant',sans-serif;color:#4a5a7a">רוצים לדעת אם אביזר מסוים דורש בדיקה? שלחו תמונה בוואטסאפ ונענה.</p></div>
+<div>
+<dc-import name="Faq" open="true" hint-size="100%,60px" q="כל כמה זמן צריך לבדוק אביזרי הרמה?" a="בדיקה יסודית אחת ל־6 חודשים על ידי בודק מוסמך, בנוסף לבדיקה חזותית לפני שימוש לאיתור סימני נזק או בלאי."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="איך יודעים אם אביזר הרמה פסול?" a="בודקים בין היתר קרעים, שחיקה, עיוותים, סדקים, חוסר סימון ופגיעה מכנית. אביזר שאינו עומד בדרישות נפסל לשימוש."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="מה קורה עם אביזר שנפסל?" a="אביזר שנפסל אינו מתאים להמשך שימוש ויש להוציאו משימוש. בסיום הבדיקה תקבלו רשימה מסודרת של האביזרים שנבדקו ומצבם."></dc-import>
+</div>
+</div>
+
+<dc-import name="CtaBand" hint-size="100%,150px" title="צריכים בדיקה לאביזרי הרמה?" text="דברו איתנו לתיאום בדיקה — כולל בדיקה מרוכזת לכל האביזרים באתר."></dc-import>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+</div>
+</section>
+
+<section class="pg" id="P5">
+<div class="pg-h"><a class="pg-id" href="#P5">P5</a><span class="pg-name">בדיקות קווי חיים — עמוד שירות</span></div>
+<div class="spec"><span><b>URL</b> /lifeline-inspection</span><span><b>Title</b> בדיקות קווי חיים ונקודות עיגון | בודק מוסמך | ארזי מיטב המהנדסים</span><span><b>Meta</b> בדיקות קווי חיים אופקיים ואנכיים, נקודות עיגון ומערכות בלימת נפילה לעבודה בגובה, על ידי בודק מוסמך.</span><span><b>H1</b> בדיקות קווי חיים ומערכות עיגון</span><span><b>Schema</b> Service</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+<dc-import name="PageHead" hint-size="100%,340px" crumb="שירותים / בדיקות קווי חיים" h1="בדיקות קווי חיים ומערכות עיגון" lead="ארזי מיטב המהנדסים מבצעת בדיקות לקווי חיים ומערכות עיגון המשמשות להגנה בעבודה בגובה. מערכות הגנה לעבודה בגובה חייבות להיות תקינות ומתוחזקות כדי לספק הגנה במקרה הצורך." note="מערכת קו חיים על גג מבנה תעשייתי"></dc-import>
+
+<div style="padding:50px 40px;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:40px">
+<div><h2 style="margin:0 0 12px;font:800 26px/1.3 'Heebo',sans-serif;color:#14224A">למה צריך לבדוק קווי חיים?</h2><p style="margin:0 0 12px;font:300 16px/1.8 'Assistant',sans-serif;color:#3d4a66">מערכת עיגון היא קו ההגנה האחרון של העובד בגובה. בשונה מציוד שנמצא בשימוש יומיומי, תקלה במערכת עיגון מתגלה לרוב רק ברגע האמת.</p><p style="margin:0;font:300 16px/1.8 'Assistant',sans-serif;color:#3d4a66">בדיקה תקופתית מוודאת שהמערכת תקינה, מותקנת כנדרש ומתאימה לשימוש שנעשה בה בפועל.</p></div>
+<div style="background:#EEF2FB;border-radius:10px;padding:26px"><h2 style="margin:0 0 14px;font:800 26px/1.3 'Heebo',sans-serif;color:#14224A">סוגי מערכות</h2><div style="display:flex;flex-direction:column;gap:8px">
+<span style="background:#fff;border-radius:6px;padding:12px 14px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A">קווי חיים אופקיים</span>
+<span style="background:#fff;border-radius:6px;padding:12px 14px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A">קווי חיים אנכיים</span>
+<span style="background:#fff;border-radius:6px;padding:12px 14px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A">נקודות עיגון</span>
+<span style="background:#fff;border-radius:6px;padding:12px 14px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A">מסילות עיגון</span>
+<span style="background:#fff;border-radius:6px;padding:12px 14px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A">מערכות בלימת נפילה</span>
+</div></div>
+</div>
+
+<div style="padding:50px 40px;background:#14224A">
+<h2 style="margin:0 0 26px;font:800 28px/1.25 'Heebo',sans-serif;color:#fff">מה נבדק?</h2>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px">
+<div style="background:rgba(255,255,255,.08);border-radius:10px;padding:20px;border-top:3px solid #F2A20C"><h3 style="margin:0;font:700 17px/1.35 'Heebo',sans-serif;color:#fff">מצב המערכת</h3></div>
+<div style="background:rgba(255,255,255,.08);border-radius:10px;padding:20px;border-top:3px solid #F2A20C"><h3 style="margin:0;font:700 17px/1.35 'Heebo',sans-serif;color:#fff">חיבורים</h3></div>
+<div style="background:rgba(255,255,255,.08);border-radius:10px;padding:20px;border-top:3px solid #F2A20C"><h3 style="margin:0;font:700 17px/1.35 'Heebo',sans-serif;color:#fff">נקודות עיגון</h3></div>
+<div style="background:rgba(255,255,255,.08);border-radius:10px;padding:20px;border-top:3px solid #F2A20C"><h3 style="margin:0;font:700 17px/1.35 'Heebo',sans-serif;color:#fff">התאמה להתקנה</h3></div>
+<div style="background:rgba(255,255,255,.08);border-radius:10px;padding:20px;border-top:3px solid #F2A20C"><h3 style="margin:0;font:700 17px/1.35 'Heebo',sans-serif;color:#fff">סימונים ותיעוד</h3></div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:.9fr 1.1fr;background:#F7F8FB">
+<div style="min-height:320px;display:flex"><dc-import name="Photo" note="בדיקה על גג: נקודת עיגון, כבל, מחבר" hint-size="100%,320px" style="flex:1"></dc-import></div>
+<div style="padding:46px 40px;display:flex;flex-direction:column;gap:14px;justify-content:center"><h2 style="margin:0;font:800 26px/1.3 'Heebo',sans-serif;color:#14224A">מתי כדאי לתאם בדיקה?</h2>
+<span style="display:flex;gap:10px;font:400 15.5px/1.6 'Assistant',sans-serif;color:#3d4a66"><span style="color:#E8620C;font-weight:700">·</span>לפני תחילת עבודות תחזוקה על גגות</span>
+<span style="display:flex;gap:10px;font:400 15.5px/1.6 'Assistant',sans-serif;color:#3d4a66"><span style="color:#E8620C;font-weight:700">·</span>לאחר התקנת מערכת חדשה, לפני תחילת השימוש</span>
+<span style="display:flex;gap:10px;font:400 15.5px/1.6 'Assistant',sans-serif;color:#3d4a66"><span style="color:#E8620C;font-weight:700">·</span>במסגרת הבדיקות התקופתיות של האתר</span>
+<span style="display:flex;gap:10px;font:400 15.5px/1.6 'Assistant',sans-serif;color:#3d4a66"><span style="color:#E8620C;font-weight:700">·</span>לאחר אירוע נפילה או פגיעה במערכת</span>
+<a href="tel:0500000000" style="align-self:flex-start;margin-top:8px;background:#14224A;color:#fff;padding:15px 26px;font:700 16.5px/1 'Heebo',sans-serif;border-radius:6px" style-hover="background:#0F1E45">📞 לתיאום בדיקת קו חיים</a>
+</div>
+</div>
+
+<dc-import name="CtaBand" hint-size="100%,150px" title="לתיאום בדיקת קו חיים" text="התקשרו עכשיו ונחזור אליכם עם זמינות ומחיר."></dc-import>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+</div>
+</section>
+
+<section class="pg" id="P6">
+<div class="pg-h"><a class="pg-id" href="#P6">P6</a><span class="pg-name">ציוד שאנו בודקים — עמוד רכזת</span></div>
+<div class="spec"><span><b>URL</b> /equipment</span><span><b>Title</b> ציוד ומתקני הרמה שאנו בודקים | ארזי מיטב המהנדסים</span><span><b>Meta</b> בדיקות מלגזות, עגורנים, במות הרמה, ליפטים, כננות ואביזרי הרמה על ידי בודק מוסמך — שירות למפעלים וחברות בכל הארץ.</span><span><b>H1</b> ציוד ומתקני הרמה שאנו בודקים</span><span><b>Schema</b> CollectionPage + BreadcrumbList</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+<dc-import name="PageHead" hint-size="100%,340px" crumb="ציוד שאנו בודקים" h1="ציוד ומתקני הרמה שאנו בודקים" lead="מלגזות, עגורנים, במות הרמה, ליפטים וכננות, אביזרי הרמה וקווי חיים. בכל עמוד ציוד תמצאו את סוגי הכלים שאנו בודקים ואת מה שנבדק בפועל. לא מצאתם את הציוד שלכם? התקשרו ונבדוק יחד." note="קולאז׳/תמונה רחבה: מספר סוגי ציוד הרמה במפעל"></dc-import>
+
+<div style="padding:50px 40px;background:#fff">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B;box-shadow:0 10px 26px rgba(20,34,74,.12)"><span style="height:150px;display:flex"><dc-import name="Photo" note="מלגזה בתוך מחסן לוגיסטי" hint-size="100%,150px" style="flex:1"></dc-import></span><span style="padding:18px 20px 20px"><strong style="display:block;font:800 21px/1.3 'Heebo',sans-serif;margin-bottom:6px">בדיקות מלגזות</strong><span style="display:block;font:300 14.5px/1.7 'Assistant',sans-serif;color:#4a5a7a;margin-bottom:10px">מלגזות חשמליות, דיזל, Reach Truck, צריח, משקל נגדי, חצר, טלסקופיות, מלקטות הזמנות ועגלות משטחים.</span><span style="font:700 14px/1 'Heebo',sans-serif;color:#E8620C">לעמוד הציוד ←</span></span></a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B;box-shadow:0 10px 26px rgba(20,34,74,.12)"><span style="height:150px;display:flex"><dc-import name="Photo" note="עגורן גשר בתוך אולם ייצור" hint-size="100%,150px" style="flex:1"></dc-import></span><span style="padding:18px 20px 20px"><strong style="display:block;font:800 21px/1.3 'Heebo',sans-serif;margin-bottom:6px">בדיקות עגורנים</strong><span style="display:block;font:300 14.5px/1.7 'Assistant',sans-serif;color:#4a5a7a;margin-bottom:10px">עגורני גשר, שער, זרוע, קונזולה ועגורנים עיליים חד ודו־קורתיים.</span><span style="font:700 14px/1 'Heebo',sans-serif;color:#E8620C">לעמוד הציוד ←</span></span></a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B;box-shadow:0 10px 26px rgba(20,34,74,.12)"><span style="height:150px;display:flex"><dc-import name="Photo" note="במת מספריים / במת זרוע בעבודה" hint-size="100%,150px" style="flex:1"></dc-import></span><span style="padding:18px 20px 20px"><strong style="display:block;font:800 21px/1.3 'Heebo',sans-serif;margin-bottom:6px">בדיקות במות הרמה</strong><span style="display:block;font:300 14.5px/1.7 'Assistant',sans-serif;color:#4a5a7a;margin-bottom:10px">במות מספריים, זרוע, זרוע מפרקית, טלסקופיות, אנכיות ושולחנות הרמה.</span><span style="font:700 14px/1 'Heebo',sans-serif;color:#E8620C">לעמוד הציוד ←</span></span></a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B;box-shadow:0 10px 26px rgba(20,34,74,.12)"><span style="height:150px;display:flex"><dc-import name="Photo" note="ליפט לרכב במוסך / כננת" hint-size="100%,150px" style="flex:1"></dc-import></span><span style="padding:18px 20px 20px"><strong style="display:block;font:800 21px/1.3 'Heebo',sans-serif;margin-bottom:6px">ליפטים ומתקנים נוספים</strong><span style="display:block;font:300 14.5px/1.7 'Assistant',sans-serif;color:#4a5a7a;margin-bottom:10px">ליפטים לרכב במוסכים, כננות, מתקני הרמה ייעודיים, רמפות הידראוליות ורמפות אחוריות למשאיות.</span><span style="font:700 14px/1 'Heebo',sans-serif;color:#E8620C">לעמוד הציוד ←</span></span></a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B;box-shadow:0 10px 26px rgba(20,34,74,.12)"><span style="height:150px;display:flex"><dc-import name="Photo" note="רצועות, שרשראות ושאקלים" hint-size="100%,150px" style="flex:1"></dc-import></span><span style="padding:18px 20px 20px"><strong style="display:block;font:800 21px/1.3 'Heebo',sans-serif;margin-bottom:6px">אביזרי הרמה</strong><span style="display:block;font:300 14.5px/1.7 'Assistant',sans-serif;color:#4a5a7a;margin-bottom:10px">רצועות הרמה, שרשראות, חבלי פלדה, שאקלים, אונקלים וקורות הרמה — בדיקה יסודית אחת ל־6 חודשים.</span><span style="font:700 14px/1 'Heebo',sans-serif;color:#E8620C">לעמוד השירות ←</span></span></a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B;box-shadow:0 10px 26px rgba(20,34,74,.12)"><span style="height:150px;display:flex"><dc-import name="Photo" note="מערכת קו חיים על גג" hint-size="100%,150px" style="flex:1"></dc-import></span><span style="padding:18px 20px 20px"><strong style="display:block;font:800 21px/1.3 'Heebo',sans-serif;margin-bottom:6px">קווי חיים</strong><span style="display:block;font:300 14.5px/1.7 'Assistant',sans-serif;color:#4a5a7a;margin-bottom:10px">קווי חיים אופקיים ואנכיים, נקודות עיגון, מסילות עיגון ומערכות בלימת נפילה.</span><span style="font:700 14px/1 'Heebo',sans-serif;color:#E8620C">לעמוד השירות ←</span></span></a>
+</div>
+</div>
+
+<dc-import name="CtaBand" hint-size="100%,150px" title="לא מצאתם את הציוד שלכם?" text="התקשרו ונאמר לכם אם הציוד מחייב בדיקה ומה התדירות הנדרשת."></dc-import>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+</div>
+</section>
+
+<section class="pg" id="P7">
+<div class="pg-h"><a class="pg-id" href="#P7">P7</a><span class="pg-name">בדיקות מלגזות — עמוד ציוד (עמוד SEO מרכזי)</span></div>
+<div class="spec"><span><b>URL</b> /forklift-inspection</span><span><b>Title</b> בדיקות מלגזות | בדיקת מלגזה על ידי בודק מוסמך | ארזי מיטב המהנדסים</span><span><b>Meta</b> בדיקת מלגזה על ידי בודק מוסמך — מלגזות חשמליות, דיזל, Reach Truck, צריח וטלסקופיות. תסקיר בדיקה מסודר, שירות בכל הארץ.</span><span><b>H1</b> בדיקות מלגזות על ידי בודק מוסמך</span><span><b>Schema</b> Service + FAQPage</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+<dc-import name="PageHead" hint-size="100%,340px" crumb="ציוד שאנו בודקים / בדיקות מלגזות" h1="בדיקות מלגזות על ידי בודק מוסמך" lead="בדיקת מלגזה מבוצעת כדי לוודא את תקינות מערכות ההרמה, הבטיחות והתפעול של הכלי. ארזי מיטב המהנדסים מבצעת בדיקות מלגזות במפעלים, מחסנים ומרכזים לוגיסטיים, ומפיקה תסקיר בדיקה בסיום." note="בדיקת מלגזה במחסן — תורן, קלשונים, שילדה"></dc-import>
+
+<div style="padding:50px 40px;background:#fff">
+<h2 style="margin:0 0 22px;font:800 28px/1.25 'Heebo',sans-serif;color:#14224A">סוגי מלגזות וציוד שינוע שאנו בודקים</h2>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:14px 16px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A">מלגזות חשמליות</span>
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:14px 16px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A">מלגזות דיזל</span>
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:14px 16px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A">מלגזות Reach Truck</span>
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:14px 16px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A">מלגזות צריח</span>
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:14px 16px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A">מלגזות משקל נגדי</span>
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:14px 16px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A">מלגזות חצר</span>
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:14px 16px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A">מלגזות טלסקופיות</span>
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:14px 16px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A">מלקטות הזמנות</span>
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:8px;padding:14px 16px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A">עגלות משטחים חשמליות</span>
+</div>
+<h3 style="margin:26px 0 12px;font:700 20px/1.3 'Heebo',sans-serif;color:#14224A">ציוד נוסף שנבדק</h3>
+<div style="display:flex;flex-wrap:wrap;gap:10px">
+<span style="background:#EEF2FB;border-radius:20px;padding:10px 16px;font:600 14px/1 'Heebo',sans-serif;color:#2E4B9B">אשפתונים</span>
+<span style="background:#EEF2FB;border-radius:20px;padding:10px 16px;font:600 14px/1 'Heebo',sans-serif;color:#2E4B9B">מעריכי קלשון</span>
+<span style="background:#EEF2FB;border-radius:20px;padding:10px 16px;font:600 14px/1 'Heebo',sans-serif;color:#2E4B9B">סל להרמת אדם במלגזה</span>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1.1fr .9fr;background:#F7F8FB;border-top:1px solid rgba(20,34,74,.1)">
+<div style="padding:48px 40px"><h2 style="margin:0 0 18px;font:800 28px/1.25 'Heebo',sans-serif;color:#14224A">מה נבדק בבדיקת מלגזה?</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<span style="background:#fff;border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;display:flex;gap:9px"><span style="color:#2E4B9B">✓</span>מערכת ההרמה והתורן</span>
+<span style="background:#fff;border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;display:flex;gap:9px"><span style="color:#2E4B9B">✓</span>קלשונים ואביזרי קצה</span>
+<span style="background:#fff;border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;display:flex;gap:9px"><span style="color:#2E4B9B">✓</span>שילדה ומבנה הכלי</span>
+<span style="background:#fff;border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;display:flex;gap:9px"><span style="color:#2E4B9B">✓</span>מערכות הידראוליות</span>
+<span style="background:#fff;border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;display:flex;gap:9px"><span style="color:#2E4B9B">✓</span>מערכות בטיחות ובלימה</span>
+<span style="background:#fff;border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;display:flex;gap:9px"><span style="color:#2E4B9B">✓</span>סימון עומס ולוחיות זיהוי</span>
+<span style="background:#fff;border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;display:flex;gap:9px;grid-column:span 2"><span style="color:#2E4B9B">✓</span>בדיקות תפקוד וניסוי בהתאם לצורך</span>
+</div>
+<h3 style="margin:24px 0 10px;font:700 20px/1.3 'Heebo',sans-serif;color:#14224A">איך מתכוננים לבדיקה?</h3>
+<p style="margin:0;font:300 15.5px/1.8 'Assistant',sans-serif;color:#3d4a66;max-width:560px">לאפשר גישה לכלי, להכין את התסקיר הקודם ומסמכי הציוד, ולוודא שהמלגזה נקייה ובמצב שמאפשר ביצוע בדיקה בטוחה. במחסנים עם מספר כלים אנו מתאמים בדיקה מרוכזת כדי לצמצם השבתה.</p>
+</div>
+<div style="min-height:400px;display:flex"><dc-import name="Photo" note="בדיקת תורן מלגזה מקרוב + בדיקת שילדה" hint-size="100%,400px" style="flex:1"></dc-import></div>
+</div>
+
+<div style="padding:50px 40px;background:#fff;display:grid;grid-template-columns:1fr 1.5fr;gap:40px;align-items:start">
+<div><h2 style="margin:0 0 12px;font:800 26px/1.3 'Heebo',sans-serif;color:#14224A">שאלות על בדיקת מלגזה</h2><a href="#" style="font:700 15px/1 'Heebo',sans-serif;color:#2E4B9B">למאמר: בדיקת מלגזה — מה בודקים ומתי ←</a></div>
+<div>
+<dc-import name="Faq" open="true" hint-size="100%,60px" q="כל כמה זמן צריך לבדוק מלגזה?" a="מלגזות הן מתקני הרמה ולכן נדרשות לבדיקה תקופתית על ידי בודק מוסמך — ברוב המקרים אחת ל־14 חודשים, בהתאם לסוג הכלי ולדרישות הרלוונטיות."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="קיבלנו מלגזה חדשה — צריך בדיקה לפני שימוש?" a="לא תמיד. יש ציוד שמגיע לאחר בדיקה ואישור מתאים מהיצרן או הספק, וציוד אחר מחייב בדיקה לאחר התקנה או הרכבה באתר ולפני תחילת השימוש."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="אפשר לבדוק כמה מלגזות באותו יום?" a="כן. במחסנים ובמרכזים לוגיסטיים אנו מבצעים בדיקה מרוכזת לכל הצי באותו ביקור, בתיאום מראש עם מנהל המחסן."></dc-import>
+</div>
+</div>
+
+<dc-import name="CtaBand" hint-size="100%,150px" title="צריכים בדיקת מלגזה?" text="צרו קשר לתיאום בדיקה — כולל בדיקה מרוכזת לצי מלגזות."></dc-import>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+
+<div class="mob">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;box-shadow:0 2px 10px rgba(20,34,74,.1)"><img src="uploads/logo-1785856153853.png" alt="לוגו" style="height:32px"><span style="font:700 20px/1 'Heebo',sans-serif;color:#14224A">☰</span></div>
+<div style="background:#EEF2FB;padding:20px 18px;display:flex;flex-direction:column;gap:12px">
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#6b7896">ראשי / ציוד / מלגזות</span>
+<h1 style="margin:0;font:800 26px/1.2 'Heebo',sans-serif;color:#14224A">בדיקות מלגזות על ידי בודק מוסמך</h1>
+<div style="height:140px;border-radius:8px;overflow:hidden;display:flex"><dc-import name="Photo" note="בדיקת מלגזה במחסן" hint-size="100%,140px" style="flex:1"></dc-import></div>
+<p style="margin:0;font:300 14.5px/1.7 'Assistant',sans-serif;color:#3d4a66">בדיקת תקינות מערכות ההרמה, הבטיחות והתפעול — כולל תסקיר בדיקה בסיום.</p>
+<a href="#" style="background:#E8620C;color:#fff;padding:15px;text-align:center;font:800 16.5px/1 'Heebo',sans-serif;border-radius:6px">📋 תיאום בדיקה</a>
+</div>
+<div style="padding:18px;display:flex;flex-direction:column;gap:12px">
+<h2 style="margin:0;font:800 20px/1.25 'Heebo',sans-serif;color:#14224A">סוגי מלגזות שאנו בודקים</h2>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:18px;padding:9px 13px;font:500 13px/1 'Heebo',sans-serif;color:#14224A">חשמליות</span>
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:18px;padding:9px 13px;font:500 13px/1 'Heebo',sans-serif;color:#14224A">דיזל</span>
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:18px;padding:9px 13px;font:500 13px/1 'Heebo',sans-serif;color:#14224A">Reach Truck</span>
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:18px;padding:9px 13px;font:500 13px/1 'Heebo',sans-serif;color:#14224A">צריח</span>
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:18px;padding:9px 13px;font:500 13px/1 'Heebo',sans-serif;color:#14224A">משקל נגדי</span>
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:18px;padding:9px 13px;font:500 13px/1 'Heebo',sans-serif;color:#14224A">טלסקופיות</span>
+<span style="border:1px solid rgba(20,34,74,.14);border-radius:18px;padding:9px 13px;font:500 13px/1 'Heebo',sans-serif;color:#14224A">מלקטות</span>
+</div>
+<h2 style="margin:6px 0 0;font:800 20px/1.25 'Heebo',sans-serif;color:#14224A">מה נבדק</h2>
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="display:flex;gap:9px;font:500 14px/1.45 'Heebo',sans-serif;color:#14224A;background:#F7F8FB;border-radius:8px;padding:12px"><span style="color:#2E4B9B">✓</span>מערכת ההרמה והתורן</span>
+<span style="display:flex;gap:9px;font:500 14px/1.45 'Heebo',sans-serif;color:#14224A;background:#F7F8FB;border-radius:8px;padding:12px"><span style="color:#2E4B9B">✓</span>מערכות בטיחות ובלימה</span>
+<span style="display:flex;gap:9px;font:500 14px/1.45 'Heebo',sans-serif;color:#14224A;background:#F7F8FB;border-radius:8px;padding:12px"><span style="color:#2E4B9B">✓</span>סימון עומס ולוחיות זיהוי</span>
+</div>
+</div>
+<div style="padding:0 18px 100px"><dc-import name="Faq" open="true" hint-size="100%,60px" q="כל כמה זמן צריך לבדוק מלגזה?" a="ברוב המקרים אחת ל־14 חודשים על ידי בודק מוסמך, בהתאם לסוג הכלי ולדרישות."></dc-import></div>
+<div style="position:absolute;bottom:0;right:0;left:0;display:flex;gap:8px;background:#14224A;padding:10px"><a href="tel:0500000000" style="flex:1.4;background:#E8620C;color:#fff;padding:15px;text-align:center;font:800 16px/1 'Heebo',sans-serif;border-radius:6px">☎ התקשרו עכשיו</a><a href="#" style="flex:1;background:#fff;color:#14224A;padding:15px;text-align:center;font:700 16px/1 'Heebo',sans-serif;border-radius:6px">💬 WhatsApp</a></div>
+</div>
+</div>
+</section>
+
+<section class="pg" id="P8">
+<div class="pg-h"><a class="pg-id" href="#P8">P8</a><span class="pg-name">בדיקות עגורנים — עמוד ציוד</span></div>
+<div class="spec"><span><b>URL</b> /crane-inspection</span><span><b>Title</b> בדיקות עגורנים | בדיקת עגורן גשר ועגורן זרוע | ארזי מיטב המהנדסים</span><span><b>Meta</b> בדיקות עגורנים על ידי בודק מוסמך — עגורני גשר, שער, זרוע, קונזולה ועגורנים עיליים. תסקיר בדיקה מסודר למפעלים ולחברות.</span><span><b>H1</b> בדיקות עגורנים על ידי בודק מוסמך</span><span><b>Schema</b> Service</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+<dc-import name="PageHead" hint-size="100%,340px" crumb="ציוד שאנו בודקים / בדיקות עגורנים" h1="בדיקות עגורנים על ידי בודק מוסמך" lead="עגורנים הם מתקני הרמה מרכזיים באולמות ייצור ובמפעלים, ובדיקה תקופתית שלהם היא תנאי להמשך שימוש בטוח. ארזי מיטב המהנדסים מבצעת בדיקות לעגורנים מסוגים שונים ומפיקה תסקיר בדיקה בסיום." note="עגורן גשר באולם ייצור — בודק מול מערכת ההרמה"></dc-import>
+
+<div style="padding:50px 40px;background:#fff">
+<h2 style="margin:0 0 22px;font:800 28px/1.25 'Heebo',sans-serif;color:#14224A">סוגי עגורנים שאנו בודקים</h2>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;padding:18px 20px"><h3 style="margin:0 0 5px;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">עגורני גשר</h3><p style="margin:0;font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">עגורנים הנעים על מסילות באולמות ייצור ומחסנים.</p></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;padding:18px 20px"><h3 style="margin:0 0 5px;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">עגורני שער</h3><p style="margin:0;font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">עגורנים במבנה שער, לרוב בחצרות ובאזורי עבודה פתוחים.</p></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;padding:18px 20px"><h3 style="margin:0 0 5px;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">עגורני זרוע</h3><p style="margin:0;font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">עגורנים המותקנים על עמוד או קיר לעבודה בטווח מוגדר.</p></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;padding:18px 20px"><h3 style="margin:0 0 5px;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">עגורנים עיליים חד־קורתיים</h3><p style="margin:0;font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">מערכות הרמה עיליות בקורה אחת.</p></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;padding:18px 20px"><h3 style="margin:0 0 5px;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">עגורנים עיליים דו־קורתיים</h3><p style="margin:0;font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">מערכות עיליות לעומסים גבוהים יותר.</p></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;padding:18px 20px"><h3 style="margin:0 0 5px;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">עגורני קונזולה</h3><p style="margin:0;font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">עגורנים בקונזולה לעבודה בעמדה קבועה.</p></div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:.9fr 1.1fr;background:#F7F8FB;border-top:1px solid rgba(20,34,74,.1)">
+<div style="min-height:380px;display:flex"><dc-import name="Photo" note="קרוב: מערכת הרמה של עגורן — אונקל, כבל, גלגלת" hint-size="100%,380px" style="flex:1"></dc-import></div>
+<div style="padding:48px 40px"><h2 style="margin:0 0 18px;font:800 28px/1.25 'Heebo',sans-serif;color:#14224A">מה נבדק בעגורן?</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<span style="background:#fff;border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;display:flex;gap:9px"><span style="color:#2E4B9B">✓</span>מבנה העגורן והמסילות</span>
+<span style="background:#fff;border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;display:flex;gap:9px"><span style="color:#2E4B9B">✓</span>מערכת ההרמה והכבלים</span>
+<span style="background:#fff;border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;display:flex;gap:9px"><span style="color:#2E4B9B">✓</span>אונקל ואביזרי קצה</span>
+<span style="background:#fff;border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;display:flex;gap:9px"><span style="color:#2E4B9B">✓</span>בלמים ומגבילי תנועה</span>
+<span style="background:#fff;border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;display:flex;gap:9px"><span style="color:#2E4B9B">✓</span>מערכות חשמל ופיקוד</span>
+<span style="background:#fff;border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;display:flex;gap:9px"><span style="color:#2E4B9B">✓</span>מערכות בטיחות ומגבילי עומס</span>
+<span style="background:#fff;border-radius:8px;padding:13px 15px;font:500 15px/1.4 'Heebo',sans-serif;color:#14224A;display:flex;gap:9px;grid-column:span 2"><span style="color:#2E4B9B">✓</span>בדיקות תפקוד וניסוי עומס בהתאם לצורך</span>
+</div>
+<p style="margin:18px 0 0;font:300 15.5px/1.8 'Assistant',sans-serif;color:#3d4a66;max-width:540px">בדיקת עגורן דורשת תיאום מול הייצור. אנו מתאמים מועד שמצמצם השבתה, וכשנדרש מבצעים את הבדיקה בשעות שמתאימות למפעל.</p>
+</div>
+</div>
+
+<dc-import name="CtaBand" hint-size="100%,150px" title="צריכים בדיקת עגורן?" text="צרו קשר לתיאום בדיקה בתיאום עם לוח הייצור שלכם."></dc-import>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+</div>
+</section>
+
+<section class="pg" id="P9">
+<div class="pg-h"><a class="pg-id" href="#P9">P9</a><span class="pg-name">בדיקות במות הרמה — עמוד ציוד</span></div>
+<div class="spec"><span><b>URL</b> /lift-platform-inspection</span><span><b>Title</b> בדיקות במות הרמה | בדיקת במת מספריים ובמת זרוע | ארזי מיטב המהנדסים</span><span><b>Meta</b> בדיקות במות הרמה על ידי בודק מוסמך — במות מספריים, זרוע, מפרקיות, טלסקופיות, אנכיות ושולחנות הרמה.</span><span><b>H1</b> בדיקות במות הרמה על ידי בודק מוסמך</span><span><b>Schema</b> Service</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+<dc-import name="PageHead" hint-size="100%,340px" crumb="ציוד שאנו בודקים / בדיקות במות הרמה" h1="בדיקות במות הרמה על ידי בודק מוסמך" lead="במות הרמה מרימות אדם לגובה, ולכן הבדיקה שלהן מתמקדת במערכות ההרמה, ביציבות ובמערכות הבטיחות. ארזי מיטב המהנדסים מבצעת בדיקות לבמות הרמה מסוגים שונים באתרים ובמפעלים בכל הארץ." note="במת מספריים או במת זרוע מפרקית באתר עבודה"></dc-import>
+
+<div style="padding:50px 40px;background:#fff">
+<h2 style="margin:0 0 22px;font:800 28px/1.25 'Heebo',sans-serif;color:#14224A">סוגי במות הרמה שאנו בודקים</h2>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden"><div style="height:120px;display:flex"><dc-import name="Photo" note="במת מספריים" hint-size="100%,120px" style="flex:1"></dc-import></div><div style="padding:16px"><h3 style="margin:0;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">במות מספריים</h3></div></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden"><div style="height:120px;display:flex"><dc-import name="Photo" note="במת זרוע" hint-size="100%,120px" style="flex:1"></dc-import></div><div style="padding:16px"><h3 style="margin:0;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">במות זרוע</h3></div></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden"><div style="height:120px;display:flex"><dc-import name="Photo" note="במת זרוע מפרקית" hint-size="100%,120px" style="flex:1"></dc-import></div><div style="padding:16px"><h3 style="margin:0;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">במות זרוע מפרקית</h3></div></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden"><div style="height:120px;display:flex"><dc-import name="Photo" note="במה טלסקופית" hint-size="100%,120px" style="flex:1"></dc-import></div><div style="padding:16px"><h3 style="margin:0;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">במות טלסקופיות</h3></div></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden"><div style="height:120px;display:flex"><dc-import name="Photo" note="במה אנכית" hint-size="100%,120px" style="flex:1"></dc-import></div><div style="padding:16px"><h3 style="margin:0;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">במות אנכיות</h3></div></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden"><div style="height:120px;display:flex"><dc-import name="Photo" note="שולחן הרמה במפעל" hint-size="100%,120px" style="flex:1"></dc-import></div><div style="padding:16px"><h3 style="margin:0;font:700 19px/1.3 'Heebo',sans-serif;color:#14224A">שולחנות הרמה</h3></div></div>
+</div>
+</div>
+
+<div style="padding:48px 40px;background:#14224A">
+<h2 style="margin:0 0 20px;font:800 28px/1.25 'Heebo',sans-serif;color:#fff">מה נבדק בבמת הרמה?</h2>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;font:500 15px/1.4 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>מבנה הבמה והמעקות</span>
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;font:500 15px/1.4 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>מערכות הרמה והידראוליקה</span>
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;font:500 15px/1.4 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>יציבות ומערכות ייצוב</span>
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;font:500 15px/1.4 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>מערכות בטיחות ועצירת חירום</span>
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;font:500 15px/1.4 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>סימון עומס ונקודות עיגון</span>
+<span style="background:rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;font:500 15px/1.4 'Heebo',sans-serif;color:#fff;display:flex;gap:9px"><span style="color:#F2A20C">✓</span>בדיקות תפקוד וניסוי לפי הצורך</span>
+</div>
+</div>
+
+<dc-import name="CtaBand" hint-size="100%,150px" title="צריכים בדיקת במת הרמה?" text="צרו קשר לתיאום בדיקה באתר או במפעל."></dc-import>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+</div>
+</section>
+
+<section class="pg" id="P10">
+<div class="pg-h"><a class="pg-id" href="#P10">P10</a><span class="pg-name">ליפטים ומתקני הרמה נוספים — עמוד ציוד</span></div>
+<div class="spec"><span><b>URL</b> /additional-lifting-equipment</span><span><b>Title</b> בדיקות ליפטים לרכב, כננות ומתקני הרמה נוספים | ארזי מיטב המהנדסים</span><span><b>Meta</b> בדיקות ליפטים לרכב במוסכים, כננות, רמפות הידראוליות ומתקני הרמה ייעודיים על ידי בודק מוסמך.</span><span><b>H1</b> בדיקות ליפטים ומתקני הרמה נוספים</span><span><b>Schema</b> Service</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+<dc-import name="PageHead" hint-size="100%,340px" crumb="ציוד שאנו בודקים / ליפטים ומתקנים נוספים" h1="בדיקות ליפטים ומתקני הרמה נוספים" lead="מעבר לציוד ההרמה הנפוץ, במפעלים ובמוסכים קיימים מתקני הרמה ייעודיים הדורשים בדיקה תקופתית. ארזי מיטב המהנדסים בודקת גם מתקנים אלו ומפיקה תסקיר בדיקה בסיום." note="ליפט לרכב במוסך / כננת במפעל"></dc-import>
+
+<div style="padding:50px 40px;background:#fff">
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px">
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden"><div style="height:120px;display:flex"><dc-import name="Photo" note="ליפט לרכב במוסך" hint-size="100%,120px" style="flex:1"></dc-import></div><div style="padding:16px"><h3 style="margin:0 0 5px;font:700 18px/1.3 'Heebo',sans-serif;color:#14224A">ליפטים לרכב</h3><p style="margin:0;font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">מתקני הרמה לרכב במוסכים ובמרכזי שירות.</p></div></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden"><div style="height:120px;display:flex"><dc-import name="Photo" note="כננת חשמלית" hint-size="100%,120px" style="flex:1"></dc-import></div><div style="padding:16px"><h3 style="margin:0 0 5px;font:700 18px/1.3 'Heebo',sans-serif;color:#14224A">כננות</h3><p style="margin:0;font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">כננות חשמליות וידניות בשימוש תעשייתי.</p></div></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden"><div style="height:120px;display:flex"><dc-import name="Photo" note="מתקן הרמה ייעודי בקו ייצור" hint-size="100%,120px" style="flex:1"></dc-import></div><div style="padding:16px"><h3 style="margin:0 0 5px;font:700 18px/1.3 'Heebo',sans-serif;color:#14224A">מתקנים ייעודיים</h3><p style="margin:0;font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">מתקני הרמה שנבנו לצורך ספציפי בקו הייצור.</p></div></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden"><div style="height:120px;display:flex"><dc-import name="Photo" note="רמפה הידראולית במחסן" hint-size="100%,120px" style="flex:1"></dc-import></div><div style="padding:16px"><h3 style="margin:0 0 5px;font:700 18px/1.3 'Heebo',sans-serif;color:#14224A">רמפות הידראוליות</h3><p style="margin:0;font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">רמפות טעינה במחסנים ובמרכזים לוגיסטיים.</p></div></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden"><div style="height:120px;display:flex"><dc-import name="Photo" note="רמפה אחורית למשאית" hint-size="100%,120px" style="flex:1"></dc-import></div><div style="padding:16px"><h3 style="margin:0 0 5px;font:700 18px/1.3 'Heebo',sans-serif;color:#14224A">רמפות אחוריות למשאיות</h3><p style="margin:0;font:300 13.5px/1.6 'Assistant',sans-serif;color:#4a5a7a">מתקני הרמה על משאיות הפצה ושינוע.</p></div></div>
+</div>
+<div style="margin-top:26px;background:#EEF2FB;border-radius:10px;padding:22px 26px;display:flex;justify-content:space-between;align-items:center;gap:20px"><span style="font:500 16px/1.6 'Heebo',sans-serif;color:#14224A;max-width:700px">יש לכם מתקן הרמה שאינו מופיע כאן? שלחו תמונה בוואטסאפ ונאמר לכם אם הוא מחייב בדיקה ומה התדירות הנדרשת.</span><a href="#" style="background:#E8620C;color:#fff;padding:14px 24px;font:700 16px/1 'Heebo',sans-serif;border-radius:6px;flex:none" style-hover="background:#CF5309">💬 שליחת תמונה</a></div>
+</div>
+
+<dc-import name="CtaBand" hint-size="100%,150px" title="צריכים בדיקה למתקן הרמה ייעודי?" text="דברו איתנו — נבדוק אם המתקן מחייב בדיקה ונתאם מועד."></dc-import>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+</div>
+</section>
+
+<section class="pg" id="P11">
+<div class="pg-h"><a class="pg-id" href="#P11">P11</a><span class="pg-name">שאלות נפוצות — עמוד מלא</span></div>
+<div class="spec"><span><b>URL</b> /faq</span><span><b>Title</b> שאלות נפוצות על בדיקות ציוד הרמה | ארזי מיטב המהנדסים</span><span><b>Meta</b> כל כמה זמן צריך לבדוק מלגזה, מי רשאי לבצע בדיקות מתקני הרמה, מה קורה אם התסקיר פג — התשובות המקצועיות במקום אחד.</span><span><b>H1</b> שאלות נפוצות על בדיקות ציוד הרמה</span><span><b>Schema</b> FAQPage (חובה) · כל שאלה = H3</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+<dc-import name="PageHead" hint-size="100%,340px" crumb="שאלות נפוצות" h1="שאלות נפוצות על בדיקות ציוד הרמה" lead="ריכזנו כאן את השאלות שחוזרות אצל מנהלי אחזקה, ממוני בטיחות ומנהלי מחסנים — חובת הבדיקה, התדירות הנדרשת, מי רשאי לבצע בדיקה ומה משמעות התסקיר. לא מצאתם תשובה? התקשרו ונענה." note="בודק מוסמך עם תסקיר בדיקה ליד ציוד הרמה"></dc-import>
+
+<div style="padding:48px 40px;background:#fff;display:grid;grid-template-columns:250px 1fr;gap:40px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:8px;position:sticky;top:20px">
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#8792ab;margin-bottom:4px">נושאים</span>
+<a href="#" style="background:#EEF2FB;border-radius:6px;padding:11px 14px;font:600 14.5px/1 'Heebo',sans-serif;color:#2E4B9B">חובה חוקית ותדירות</a>
+<a href="#" style="border-radius:6px;padding:11px 14px;font:600 14.5px/1 'Heebo',sans-serif;color:#14224A" style-hover="background:#F7F8FB">מי מבצע את הבדיקה</a>
+<a href="#" style="border-radius:6px;padding:11px 14px;font:600 14.5px/1 'Heebo',sans-serif;color:#14224A" style-hover="background:#F7F8FB">ציוד חדש והתקנה</a>
+<a href="#" style="border-radius:6px;padding:11px 14px;font:600 14.5px/1 'Heebo',sans-serif;color:#14224A" style-hover="background:#F7F8FB">הכנה לבדיקה</a>
+<a href="#" style="border-radius:6px;padding:11px 14px;font:600 14.5px/1 'Heebo',sans-serif;color:#14224A" style-hover="background:#F7F8FB">אביזרי הרמה</a>
+<div style="margin-top:14px;background:#14224A;border-radius:10px;padding:18px"><strong style="display:block;font:700 16px/1.35 'Heebo',sans-serif;color:#fff;margin-bottom:8px">לא מצאתם תשובה?</strong><a href="tel:0500000000" style="display:block;background:#E8620C;color:#fff;padding:12px;text-align:center;font:700 15px/1 'Heebo',sans-serif;border-radius:6px">📞 {{ phone }}</a></div>
+</div>
+<div>
+<h2 style="margin:0 0 14px;font:800 24px/1.3 'Heebo',sans-serif;color:#14224A">חובה חוקית ותדירות בדיקה</h2>
+<dc-import name="Faq" open="true" hint-size="100%,60px" q="מה המקור החוקי לחובת בדיקת מתקני הרמה?" a="הדרישה לבדיקת מתקני הרמה נובעת מפקודת הבטיחות בעבודה ומהתקנות הרלוונטיות לציוד הרמה. התקנות מגדירות את חובת הבדיקה באמצעות בודק מוסמך ואת הצורך בביצוע בדיקות תקופתיות לציוד המשמש להרמה."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="כל כמה זמן צריך לבדוק מתקני הרמה?" a="תדירות הבדיקה תלויה בסוג הציוד ובדרישות הרלוונטיות. במקרים רבים מתקני הרמה נדרשים לבדיקה תקופתית אחת ל־14 חודשים על ידי בודק מוסמך."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="כל כמה זמן צריך לבדוק אביזרי הרמה?" a="אביזרי הרמה נדרשים לבדיקה יסודית אחת ל־6 חודשים. הבדיקה כוללת אביזרים כגון רצועות, שרשראות, שאקלים, אונקלים וקורות הרמה."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="האם מותר לעבוד עם ציוד הרמה ללא תסקיר בתוקף?" a="אין להשתמש בציוד המחייב בדיקה כאשר אין עבורו תסקיר תקף בהתאם לדרישות. לפני הפעלת ציוד יש לוודא כי הבדיקות הנדרשות בוצעו וקיים אישור מתאים."></dc-import>
+<h2 style="margin:28px 0 14px;font:800 24px/1.3 'Heebo',sans-serif;color:#14224A">מי מבצע את הבדיקה</h2>
+<dc-import name="Faq" hint-size="100%,60px" q="מי רשאי לבצע בדיקות למתקני הרמה?" a="רק בודק מוסמך בעל הסמכה מתאימה רשאי לבצע בדיקות ולהפיק תסקיר בדיקה. התסקיר מהווה מסמך מקצועי המאשר את תוצאות הבדיקה בהתאם לדרישות."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="האם אתם מבצעים בדיקות למפעלים גדולים?" a="כן. השירות מתאים למפעלים, חברות תעשייתיות ומרכזים לוגיסטיים עם מגוון גדול של ציוד הרמה, כולל תיאום בדיקות מרוכזות ומעקב מועדים."></dc-import>
+<h2 style="margin:28px 0 14px;font:800 24px/1.3 'Heebo',sans-serif;color:#14224A">ציוד חדש והתקנה</h2>
+<dc-import name="Faq" hint-size="100%,60px" q="רכשתי ציוד הרמה חדש. האם אפשר להתחיל לעבוד מיד?" a="לא תמיד. יש ציוד שמגיע לאחר בדיקה ואישור מתאים מהיצרן או הספק. לעומת זאת, ציוד אחר דורש בדיקה לאחר התקנה באתר ולפני תחילת שימוש. הדרישה תלויה בסוג הציוד ובאופן ההתקנה."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="מה ההבדל בין בדיקה ראשונית לבדיקה תקופתית?" a="בדיקה ראשונית מתבצעת לציוד חדש או לאחר התקנה באתר, לפני תחילת השימוש. בדיקה תקופתית חוזרת לאורך חיי הציוד במרווחי זמן בהתאם לדרישות."></dc-import>
+<h2 style="margin:28px 0 14px;font:800 24px/1.3 'Heebo',sans-serif;color:#14224A">הכנה לבדיקה ומהלך העבודה</h2>
+<dc-import name="Faq" hint-size="100%,60px" q="האם אפשר לבצע בדיקה בזמן שהמפעל עובד?" a="ברוב המקרים כן. הבדיקה מתואמת מראש כדי לצמצם הפרעה לפעילות השוטפת, ובמידת הצורך מתאמים עצירה זמנית של ציוד מסוים."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="מה צריך להכין לפני בדיקה?" a="יש להכין גישה לציוד, מסמכים קיימים, תסקיר קודם במידה ויש, ותנאים המאפשרים לבצע את הבדיקה בצורה בטוחה."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="איך אני לא מפספס את מועד הבדיקה הבא?" a="אנו מנהלים מעקב אחר מועדי הבדיקות של לקוחותינו. לפני מועד הבדיקה הבא אנו יוצרים קשר ומתאמים את המשך הטיפול, כך שאין צורך לנהל את המעקב לבד."></dc-import>
+<h2 style="margin:28px 0 14px;font:800 24px/1.3 'Heebo',sans-serif;color:#14224A">אביזרי הרמה</h2>
+<dc-import name="Faq" hint-size="100%,60px" q="איך יודעים אם אביזר הרמה פסול?" a="בודקים בין היתר קרעים, שחיקה, עיוותים, סדקים, חוסר סימון ופגיעה מכנית. אביזר שאינו עומד בדרישות אינו מתאים להמשך שימוש."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="צריך לבדוק גם אביזרים שכמעט לא בשימוש?" a="כן. חובת הבדיקה נגזרת מהיות האביזר בשימוש באתר, ולא ממספר ההרמות. גם אביזר שאוחסן זמן רב יכול להיפגע מקורוזיה או מנזק מכני."></dc-import>
+</div>
+</div>
+
+<dc-import name="CtaBand" hint-size="100%,150px" title="נשארה שאלה פתוחה?" text="התקשרו אלינו — מענה אנושי ומקצועי, גם לפני שהזמנתם בדיקה."></dc-import>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+
+<div class="mob">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;box-shadow:0 2px 10px rgba(20,34,74,.1)"><img src="uploads/logo-1785856153853.png" alt="לוגו" style="height:32px"><span style="font:700 20px/1 'Heebo',sans-serif;color:#14224A">☰</span></div>
+<div style="background:#EEF2FB;padding:20px 18px"><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#6b7896">ראשי / שאלות נפוצות</span><h1 style="margin:8px 0 0;font:800 25px/1.22 'Heebo',sans-serif;color:#14224A">שאלות נפוצות על בדיקות ציוד הרמה</h1></div>
+<div style="padding:18px 18px 100px">
+<dc-import name="Faq" open="true" hint-size="100%,60px" q="כל כמה זמן צריך לבדוק מתקני הרמה?" a="במקרים רבים אחת ל־14 חודשים על ידי בודק מוסמך, בהתאם לסוג הציוד ולדרישות."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="כל כמה זמן צריך לבדוק אביזרי הרמה?" a="בדיקה יסודית אחת ל־6 חודשים — רצועות, שרשראות, שאקלים, אונקלים וקורות הרמה."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="מי רשאי לבצע את הבדיקה?" a="רק בודק מוסמך בעל הסמכה מתאימה, המפיק תסקיר בדיקה בסיום."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="מותר לעבוד ללא תסקיר בתוקף?" a="אין להשתמש בציוד המחייב בדיקה ללא תסקיר תקף בהתאם לדרישות."></dc-import>
+<dc-import name="Faq" hint-size="100%,60px" q="מה צריך להכין לפני בדיקה?" a="גישה לציוד, מסמכים קיימים, תסקיר קודם ותנאים לביצוע בדיקה בטוחה."></dc-import>
+</div>
+<div style="position:absolute;bottom:0;right:0;left:0;display:flex;gap:8px;background:#14224A;padding:10px"><a href="tel:0500000000" style="flex:1.4;background:#E8620C;color:#fff;padding:15px;text-align:center;font:800 16px/1 'Heebo',sans-serif;border-radius:6px">☎ התקשרו עכשיו</a><a href="#" style="flex:1;background:#fff;color:#14224A;padding:15px;text-align:center;font:700 16px/1 'Heebo',sans-serif;border-radius:6px">💬 WhatsApp</a></div>
+</div>
+</div>
+</section>
+
+<section class="pg" id="P12">
+<div class="pg-h"><a class="pg-id" href="#P12">P12</a><span class="pg-name">מאמרים מקצועיים — עמוד רכזת</span></div>
+<div class="spec"><span><b>URL</b> /blog</span><span><b>Title</b> מידע מקצועי בתחום בדיקות ציוד הרמה | ארזי מיטב המהנדסים</span><span><b>Meta</b> מאמרים מקצועיים על בדיקות מתקני הרמה, בדיקת מלגזה, אביזרי הרמה וקווי חיים — מידע למנהלי אחזקה וממוני בטיחות.</span><span><b>H1</b> מידע מקצועי בתחום בדיקות ציוד הרמה</span><span><b>Schema</b> Blog + ItemList · CMS: הוספת מאמרים עצמאית</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+<dc-import name="PageHead" hint-size="100%,340px" crumb="מאמרים" h1="מידע מקצועי בתחום בדיקות ציוד הרמה" lead="ארזי מיטב המהנדסים מרכזת מידע מקצועי בנושא בדיקות מתקני הרמה, אביזרי הרמה, קווי חיים ודרישות הבטיחות הרלוונטיות למפעלים וחברות. המאמרים נכתבים מתוך עבודה בשטח ומיועדים למנהלי אחזקה, ממוני בטיחות ומנהלי מחסנים." note="בודק בשטח עם מסמכי בדיקה / סביבת מפעל"></dc-import>
+
+<div style="padding:48px 40px;background:#fff">
+<a href="#" style="display:grid;grid-template-columns:420px 1fr;gap:30px;align-items:center;border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;margin-bottom:26px;color:#14224A" style-hover="border-color:#2E4B9B;box-shadow:0 10px 26px rgba(20,34,74,.12)">
+<span style="height:240px;display:flex"><dc-import name="Photo" note="תמונת מאמר ראשי: בודק מול עגורן גשר" hint-size="100%,240px" style="flex:1"></dc-import></span>
+<span style="padding:24px 0"><span style="display:inline-block;background:#EEF2FB;color:#2E4B9B;border-radius:14px;padding:6px 12px;font:600 12px/1 'Heebo',sans-serif;margin-bottom:12px">מאמר מוביל · בדיקות מתקני הרמה</span><strong style="display:block;font:800 28px/1.28 'Heebo',sans-serif;margin-bottom:10px">כל כמה זמן צריך לבצע בדיקת מתקני הרמה?</strong><span style="display:block;font:300 15.5px/1.75 'Assistant',sans-serif;color:#3d4a66;margin-bottom:12px;max-width:560px">מהי בדיקה תקופתית, מי מבצע אותה, למה קיימת חובה חוקית, מה כולל תסקיר בדיקה ומה הסיכון בעבודה עם ציוד ללא בדיקה בתוקף.</span><span style="font:700 15px/1 'Heebo',sans-serif;color:#E8620C">קראו את המאמר ←</span></span></a>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B"><span style="height:140px;display:flex"><dc-import name="Photo" note="בדיקת תורן מלגזה" hint-size="100%,140px" style="flex:1"></dc-import></span><span style="padding:18px"><span style="display:block;font:400 11px/1 ui-monospace,Menlo,monospace;color:#8792ab;margin-bottom:8px">בדיקת מלגזה</span><strong style="display:block;font:700 20px/1.35 'Heebo',sans-serif;margin-bottom:8px">בדיקת מלגזה — מה בודקים ומתי צריך לבצע?</strong><span style="font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">סוגי מלגזות, המערכות שנבדקות, חשיבות הבדיקה במפעלים ובמחסנים והכנה לבדיקה.</span></span></a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B"><span style="height:140px;display:flex"><dc-import name="Photo" note="רצועות ושרשראות מקרוב" hint-size="100%,140px" style="flex:1"></dc-import></span><span style="padding:18px"><span style="display:block;font:400 11px/1 ui-monospace,Menlo,monospace;color:#8792ab;margin-bottom:8px">בדיקות אביזרי הרמה</span><strong style="display:block;font:700 20px/1.35 'Heebo',sans-serif;margin-bottom:8px">בדיקות אביזרי הרמה — רצועות, שרשראות ושאקלים</strong><span style="font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">סוגי אביזרים, סימני פסילה, תדירות בדיקה ואחריות המשתמש.</span></span></a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B"><span style="height:140px;display:flex"><dc-import name="Photo" note="תסקיר בדיקה על שולחן" hint-size="100%,140px" style="flex:1"></dc-import></span><span style="padding:18px"><span style="display:block;font:400 11px/1 ui-monospace,Menlo,monospace;color:#8792ab;margin-bottom:8px">בודק מוסמך</span><strong style="display:block;font:700 20px/1.35 'Heebo',sans-serif;margin-bottom:8px">מהו בודק מוסמך למתקני הרמה?</strong><span style="font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">מהי ההסמכה, מי רשאי לבצע בדיקות ומה משמעות התסקיר.</span></span></a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B"><span style="height:140px;display:flex"><dc-import name="Photo" note="מנהל אחזקה במחסן" hint-size="100%,140px" style="flex:1"></dc-import></span><span style="padding:18px"><span style="display:block;font:400 11px/1 ui-monospace,Menlo,monospace;color:#8792ab;margin-bottom:8px">מדריך למנהל אחזקה</span><strong style="display:block;font:700 20px/1.35 'Heebo',sans-serif;margin-bottom:8px">בדיקות ציוד הרמה במפעלים — מדריך למנהל אחזקה</strong><span style="font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">ניהול ציוד הרמה, מעקב בדיקות ושמירת רצף תסקירים.</span></span></a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B"><span style="height:140px;display:flex"><dc-import name="Photo" note="ציוד חדש לאחר התקנה" hint-size="100%,140px" style="flex:1"></dc-import></span><span style="padding:18px"><span style="display:block;font:400 11px/1 ui-monospace,Menlo,monospace;color:#8792ab;margin-bottom:8px">בדיקה ראשונית</span><strong style="display:block;font:700 20px/1.35 'Heebo',sans-serif;margin-bottom:8px">מה ההבדל בין בדיקה ראשונית לבדיקה תקופתית?</strong><span style="font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">ציוד חדש, התקנה באתר, מתי נדרש בודק ולפני תחילת עבודה.</span></span></a>
+<a href="#" style="border:1px solid rgba(20,34,74,.14);border-radius:10px;overflow:hidden;color:#14224A;display:flex;flex-direction:column" style-hover="border-color:#2E4B9B"><span style="height:140px;display:flex"><dc-import name="Photo" note="נקודת עיגון על גג" hint-size="100%,140px" style="flex:1"></dc-import></span><span style="padding:18px"><span style="display:block;font:400 11px/1 ui-monospace,Menlo,monospace;color:#8792ab;margin-bottom:8px">קווי חיים</span><strong style="display:block;font:700 20px/1.35 'Heebo',sans-serif;margin-bottom:8px">בדיקות קווי חיים ונקודות עיגון — מה חשוב לדעת?</strong><span style="font:300 14px/1.65 'Assistant',sans-serif;color:#4a5a7a">סוגי מערכות, חשיבות הבדיקה ותחזוקה שוטפת.</span></span></a>
+</div>
+<div style="margin-top:26px;display:flex;justify-content:center"><a href="#" style="border:1.5px solid #14224A;color:#14224A;padding:14px 28px;font:700 15.5px/1 'Heebo',sans-serif;border-radius:6px" style-hover="background:#14224A;color:#fff">טעינת מאמרים נוספים</a></div>
+</div>
+
+<dc-import name="CtaBand" hint-size="100%,150px" title="יש לכם שאלה מקצועית?" text="התקשרו — נשמח לענות גם לפני שהזמנתם בדיקה."></dc-import>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+</div>
+</section>
+
+<section class="pg" id="P13">
+<div class="pg-h"><a class="pg-id" href="#P13">P13</a><span class="pg-name">מאמר בודד — תבנית</span></div>
+<div class="spec"><span><b>URL</b> /blog/lifting-equipment-inspection-frequency</span><span><b>Title</b> כל כמה זמן צריך לבצע בדיקת מתקני הרמה? | ארזי מיטב המהנדסים</span><span><b>Meta</b> מהי בדיקה תקופתית למתקני הרמה, כל כמה זמן היא נדרשת, מי מבצע אותה ומה כולל תסקיר הבדיקה — הסבר מקצועי.</span><span><b>H1</b> כל כמה זמן צריך לבצע בדיקת מתקני הרמה?</span><span><b>Schema</b> Article + FAQPage · H2 לכל אזור, H3 לתתי נושאים</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+
+<div style="background:#EEF2FB;padding:36px 40px 32px"><span style="font:400 12px/1 ui-monospace,Menlo,monospace;color:#6b7896">ראשי / מאמרים / בדיקות מתקני הרמה</span>
+<h1 style="margin:12px 0 12px;font:800 38px/1.2 'Heebo',sans-serif;color:#14224A;max-width:820px">כל כמה זמן צריך לבצע בדיקת מתקני הרמה?</h1>
+<div style="display:flex;gap:18px;align-items:center;font:400 13px/1 'Assistant',sans-serif;color:#6b7896"><span>ארזי מיטב המהנדסים</span><span>·</span><span>עדכון: אוגוסט 2026</span><span>·</span><span>קריאה: 4 דקות</span></div>
+</div>
+
+<div style="padding:44px 40px;background:#fff;display:grid;grid-template-columns:1fr 300px;gap:44px;align-items:start">
+<article>
+<div style="height:300px;border-radius:10px;overflow:hidden;margin-bottom:24px;display:flex"><dc-import name="Photo" note="תמונת פתיחה למאמר: בודק מוסמך מול עגורן גשר" hint-size="100%,300px" style="flex:1"></dc-import></div>
+<p style="margin:0 0 20px;font:400 18px/1.85 'Assistant',sans-serif;color:#2b3550">מכונות ומתקני הרמה חייבים לעבור בדיקה תקופתית על ידי בודק מוסמך בהתאם לדרישות החוק. השאלה החוזרת אצל מנהלי אחזקה היא באיזו תדירות בדיוק — והתשובה תלויה בסוג הציוד ובדרישות הרלוונטיות אליו.</p>
+<h2 style="margin:0 0 10px;font:800 26px/1.3 'Heebo',sans-serif;color:#14224A">מהי בדיקה תקופתית?</h2>
+<p style="margin:0 0 20px;font:300 16.5px/1.9 'Assistant',sans-serif;color:#3d4a66">בדיקה תקופתית היא בדיקה חוזרת של מתקן ההרמה לאורך חיי הציוד, שמטרתה לוודא שהמתקן תקין, בטוח ומתאים להמשך שימוש. הבדיקה כוללת בדיקת מסמכים וזיהוי הציוד, בדיקה חזותית ומכנית, בדיקת מערכות הבטיחות ובדיקות תפקוד — ובסיומה מופק תסקיר בדיקה.</p>
+<h2 style="margin:0 0 10px;font:800 26px/1.3 'Heebo',sans-serif;color:#14224A">כל כמה זמן נדרשת הבדיקה?</h2>
+<p style="margin:0 0 16px;font:300 16.5px/1.9 'Assistant',sans-serif;color:#3d4a66">ברוב המקרים מתקני הרמה נדרשים לבדיקה תקופתית אחת ל־14 חודשים, בהתאם לסוג הציוד ולדרישות הרלוונטיות. אביזרי הרמה, לעומת זאת, נדרשים לבדיקה יסודית אחת ל־6 חודשים.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 22px">
+<div style="background:#EEF2FB;border-radius:10px;padding:20px;display:flex;align-items:center;gap:14px"><strong style="font:800 32px/1 'Heebo',sans-serif;color:#2E4B9B">14</strong><span style="font:500 14.5px/1.5 'Heebo',sans-serif;color:#14224A">חודשים — מתקני הרמה (תדירות נפוצה)</span></div>
+<div style="background:#EEF2FB;border-radius:10px;padding:20px;display:flex;align-items:center;gap:14px"><strong style="font:800 32px/1 'Heebo',sans-serif;color:#2E4B9B">6</strong><span style="font:500 14.5px/1.5 'Heebo',sans-serif;color:#14224A">חודשים — אביזרי הרמה (בדיקה יסודית)</span></div>
+</div>
+<h3 style="margin:0 0 8px;font:700 21px/1.35 'Heebo',sans-serif;color:#14224A">מתי נדרשת בדיקה נוספת?</h3>
+<p style="margin:0 0 20px;font:300 16.5px/1.9 'Assistant',sans-serif;color:#3d4a66">מעבר לבדיקה התקופתית, במקרים מסוימים נדרשת בדיקה נוספת — לדוגמה לאחר שינוי משמעותי במתקן, לאחר תיקון או לאחר אירוע חריג. גם ציוד שהועבר למקום חדש או הורכב מחדש עשוי לחייב בדיקה לפני חזרה לשימוש.</p>
+<h2 style="margin:0 0 10px;font:800 26px/1.3 'Heebo',sans-serif;color:#14224A">מי מבצע את הבדיקה?</h2>
+<p style="margin:0 0 20px;font:300 16.5px/1.9 'Assistant',sans-serif;color:#3d4a66">רק בודק מוסמך בעל הסמכה מתאימה מטעם משרד העבודה רשאי לבצע בדיקות למתקני הרמה ולהפיק תסקיר בדיקה. התסקיר מהווה מסמך מקצועי המאשר את תוצאות הבדיקה בהתאם לדרישות החוק, ויש לשמור עליו כחלק מתיק הציוד.</p>
+<h2 style="margin:0 0 10px;font:800 26px/1.3 'Heebo',sans-serif;color:#14224A">מה הסיכון בעבודה ללא בדיקה בתוקף?</h2>
+<p style="margin:0 0 20px;font:300 16.5px/1.9 'Assistant',sans-serif;color:#3d4a66">שימוש בציוד המחייב בדיקה כאשר אין עבורו תסקיר תקף עלול ליצור חשיפה בטיחותית, משפטית וביטוחית. לכן חשוב לנהל מעקב מסודר אחר מועדי הבדיקות ולהיערך מראש — לא לחכות לרגע שבו מתגלה שהתסקיר פג.</p>
+<div style="background:#14224A;border-radius:10px;padding:26px;display:flex;justify-content:space-between;align-items:center;gap:24px"><span><strong style="display:block;font:800 21px/1.3 'Heebo',sans-serif;color:#fff;margin-bottom:6px">לקריאה נוספת: בדיקות מתקני הרמה</strong><span style="font:300 14.5px/1.65 'Assistant',sans-serif;color:rgba(255,255,255,.7)">מה נבדק בפועל, אילו מתקנים אנו בודקים ואיך מתנהל תהליך הבדיקה.</span></span><a href="#" style="background:#E8620C;color:#fff;padding:14px 24px;font:700 15.5px/1 'Heebo',sans-serif;border-radius:6px;flex:none" style-hover="background:#CF5309">לעמוד השירות ←</a></div>
+</article>
+<aside style="display:flex;flex-direction:column;gap:20px">
+<div style="background:#F7F8FB;border-radius:10px;padding:20px"><strong style="display:block;font:700 16px/1.3 'Heebo',sans-serif;color:#14224A;margin-bottom:12px">בעמוד זה</strong><div style="display:flex;flex-direction:column;gap:8px;font:400 14px/1.4 'Assistant',sans-serif"><a href="#" style="color:#2E4B9B">מהי בדיקה תקופתית</a><a href="#" style="color:#2E4B9B">כל כמה זמן נדרשת הבדיקה</a><a href="#" style="color:#2E4B9B">מי מבצע את הבדיקה</a><a href="#" style="color:#2E4B9B">הסיכון בעבודה ללא בדיקה</a></div></div>
+<div style="background:#2E4B9B;border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:10px"><strong style="font:800 19px/1.3 'Heebo',sans-serif;color:#fff">צריכים בדיקה?</strong><span style="font:300 14px/1.6 'Assistant',sans-serif;color:rgba(255,255,255,.8)">נחזור אליכם עם זמינות ומחיר.</span><span style="background:#fff;border-radius:6px;padding:12px;font:400 14px/1 'Heebo',sans-serif;color:#98a3b8">טלפון</span><a href="#" style="background:#E8620C;color:#fff;padding:13px;text-align:center;font:700 15.5px/1 'Heebo',sans-serif;border-radius:6px">שליחת בקשה</a><a href="tel:0500000000" style="color:#fff;text-align:center;font:700 15px/1 'Heebo',sans-serif">📞 {{ phone }}</a></div>
+<div style="border:1px solid rgba(20,34,74,.14);border-radius:10px;padding:20px"><strong style="display:block;font:700 16px/1.3 'Heebo',sans-serif;color:#14224A;margin-bottom:12px">מאמרים נוספים</strong><div style="display:flex;flex-direction:column;gap:12px;font:600 14.5px/1.45 'Heebo',sans-serif"><a href="#" style="color:#14224A">בדיקת מלגזה — מה בודקים ומתי?</a><a href="#" style="color:#14224A">מהו בודק מוסמך למתקני הרמה?</a><a href="#" style="color:#14224A">בדיקות אביזרי הרמה — סימני פסילה</a></div></div>
+</aside>
+</div>
+
+<dc-import name="CtaBand" hint-size="100%,150px" title="צריכים לבצע בדיקה לציוד ההרמה שלכם?" text="צרו קשר לקבלת זמינות, מחיר ותיאום בדיקה."></dc-import>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+</div>
+</section>
+
+<section class="pg" id="P14">
+<div class="pg-h"><a class="pg-id" href="#P14">P14</a><span class="pg-name">אודות החברה</span></div>
+<div class="spec"><span><b>URL</b> /about</span><span><b>Title</b> אודות ארזי מיטב המהנדסים | בודק מוסמך למתקני הרמה</span><span><b>Meta</b> ארזי מיטב המהנדסים — מעל 15 שנות ניסיון בבדיקות מתקני הרמה, אביזרי הרמה וקווי חיים למפעלים וחברות תעשייתיות בכל הארץ.</span><span><b>H1</b> אודות ארזי מיטב המהנדסים</span><span><b>Schema</b> AboutPage + Organization</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+<dc-import name="PageHead" hint-size="100%,340px" crumb="אודות" h1="אודות ארזי מיטב המהנדסים" lead="ארזי מיטב המהנדסים היא חברה הנדסית המתמחה בבדיקות מתקני הרמה, אביזרי הרמה וקווי חיים. אנו עובדים מול מפעלים, חברות תעשייתיות ומרכזים לוגיסטיים בכל הארץ, ומספקים שירות מקצועי הכולל בדיקה, תסקיר ומעקב אחר מועדי הבדיקה הבאים." note="דיוקן עבודה: הבודק בסביבת מפעל עם ציוד מדידה"></dc-import>
+
+<div style="padding:48px 40px;background:#fff;display:grid;grid-template-columns:1.2fr .8fr;gap:44px">
+<div>
+<h2 style="margin:0 0 12px;font:800 27px/1.3 'Heebo',sans-serif;color:#14224A">מי אנחנו</h2>
+<p style="margin:0 0 16px;font:300 16.5px/1.85 'Assistant',sans-serif;color:#3d4a66">מעל 15 שנה שאנו עוסקים בבדיקות ציוד הרמה בסביבות תעשייתיות — מאולמות ייצור ועד מרכזים לוגיסטיים גדולים. הניסיון הזה מאפשר לנו להבין לא רק את הציוד, אלא גם את סביבת העבודה שבה הוא פועל ואת האילוצים של מנהל האחזקה.</p>
+<p style="margin:0 0 16px;font:300 16.5px/1.85 'Assistant',sans-serif;color:#3d4a66">כל הבדיקות מבוצעות על ידי בודק מוסמך בהתאם לדרישות החוק והתקנים הרלוונטיים, ובסיומן מופק תסקיר בדיקה מסודר. מעבר לבדיקה עצמה, אנו מנהלים מעקב אחר מועדי הבדיקות של לקוחותינו ויוצרים קשר לפני המועד הבא.</p>
+<h2 style="margin:26px 0 12px;font:800 27px/1.3 'Heebo',sans-serif;color:#14224A">איך אנחנו עובדים</h2>
+<p style="margin:0 0 16px;font:300 16.5px/1.85 'Assistant',sans-serif;color:#3d4a66">מאחורי הבדיקה עומד משרד פעיל: תיאום מועדים, מענה אנושי לשאלות, הכנת הצעות מחיר ומעקב על רצף התסקירים. המטרה היא שהלקוח יתמקד בעבודה השוטפת, כאשר ציוד ההרמה מנוהל בצורה מסודרת.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px">
+<span style="border-top:3px solid #2E4B9B;padding-top:12px;font:500 15px/1.55 'Heebo',sans-serif;color:#14224A">בדיקות למפעלים, חברות תעשייתיות ומרכזים לוגיסטיים</span>
+<span style="border-top:3px solid #2E4B9B;padding-top:12px;font:500 15px/1.55 'Heebo',sans-serif;color:#14224A">פריסת שירות בכל הארץ</span>
+<span style="border-top:3px solid #2E4B9B;padding-top:12px;font:500 15px/1.55 'Heebo',sans-serif;color:#14224A">תסקיר בדיקה מסודר לכל בדיקה</span>
+<span style="border-top:3px solid #E8620C;padding-top:12px;font:500 15px/1.55 'Heebo',sans-serif;color:#14224A">מעקב ותזכורת לבדיקה הבאה</span>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="height:260px;border-radius:10px;overflow:hidden;display:flex"><dc-import name="Photo" note="הבודק בשטח — בדיקה ליד ציוד הרמה גדול" hint-size="100%,260px" style="flex:1"></dc-import></div>
+<div style="height:180px;border-radius:10px;overflow:hidden;display:flex"><dc-import name="Photo" note="משרד פעיל: מערכת מעקב מועדי בדיקה" hint-size="100%,180px" style="flex:1"></dc-import></div>
+<div style="background:#EEF2FB;border-radius:10px;padding:20px"><strong style="display:block;font:800 30px/1 'Heebo',sans-serif;color:#2E4B9B;margin-bottom:8px">15+</strong><span style="font:500 15px/1.5 'Heebo',sans-serif;color:#14224A">שנות ניסיון בבדיקות ציוד הרמה בסביבות תעשייתיות</span></div>
+</div>
+</div>
+
+<div style="padding:46px 40px;background:#F7F8FB;border-top:1px solid rgba(20,34,74,.1)">
+<h2 style="margin:0 0 22px;font:800 27px/1.3 'Heebo',sans-serif;color:#14224A">התחומים שאנו בודקים</h2>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+<a href="#" style="background:#fff;border-radius:10px;padding:22px;color:#14224A;border:1px solid rgba(20,34,74,.12)" style-hover="border-color:#2E4B9B"><strong style="display:block;font:700 20px/1.3 'Heebo',sans-serif;margin-bottom:6px">בדיקות מתקני הרמה</strong><span style="font:300 14.5px/1.65 'Assistant',sans-serif;color:#4a5a7a">מלגזות, עגורנים, במות הרמה ומתקנים נוספים.</span></a>
+<a href="#" style="background:#fff;border-radius:10px;padding:22px;color:#14224A;border:1px solid rgba(20,34,74,.12)" style-hover="border-color:#2E4B9B"><strong style="display:block;font:700 20px/1.3 'Heebo',sans-serif;margin-bottom:6px">בדיקות אביזרי הרמה</strong><span style="font:300 14.5px/1.65 'Assistant',sans-serif;color:#4a5a7a">רצועות, שרשראות, שאקלים וקורות הרמה.</span></a>
+<a href="#" style="background:#fff;border-radius:10px;padding:22px;color:#14224A;border:1px solid rgba(20,34,74,.12)" style-hover="border-color:#2E4B9B"><strong style="display:block;font:700 20px/1.3 'Heebo',sans-serif;margin-bottom:6px">בדיקות קווי חיים</strong><span style="font:300 14.5px/1.65 'Assistant',sans-serif;color:#4a5a7a">קווי חיים, נקודות עיגון ומערכות לעבודה בגובה.</span></a>
+</div>
+</div>
+
+<dc-import name="CtaBand" hint-size="100%,150px" title="רוצים לעבוד איתנו?" text="צרו קשר לקבלת זמינות, מחיר ותיאום בדיקה."></dc-import>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+</div>
+</section>
+
+<section class="pg" id="P15">
+<div class="pg-h"><a class="pg-id" href="#P15">P15</a><span class="pg-name">צור קשר</span></div>
+<div class="spec"><span><b>URL</b> /contact</span><span><b>Title</b> צור קשר | תיאום בדיקת ציוד הרמה | ארזי מיטב המהנדסים</span><span><b>Meta</b> תיאום בדיקת מתקני הרמה, אביזרי הרמה וקווי חיים — טלפון, וואטסאפ וטופס קצר. מענה אנושי ומהיר, שירות בכל הארץ.</span><span><b>H1</b> צרו קשר לתיאום בדיקה</span><span><b>Schema</b> ContactPage + LocalBusiness · מעקב המרות: קליק לטלפון, שליחת טופס, וואטסאפ</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+
+<div style="background:#EEF2FB;padding:40px 40px 44px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:18px">
+<span style="font:400 12px/1 ui-monospace,Menlo,monospace;color:#6b7896">ראשי / צור קשר</span>
+<h1 style="margin:0;font:800 38px/1.18 'Heebo',sans-serif;color:#14224A">צרו קשר לתיאום בדיקה</h1>
+<p style="margin:0;font:300 17px/1.75 'Assistant',sans-serif;color:#3d4a66;max-width:500px">הדרך המהירה ביותר היא טלפון — נבין מה הציוד שלכם ונחזור אליכם עם זמינות ומחיר. אפשר גם וואטסאפ או טופס קצר; אנו חוזרים לכל פנייה בשעות העבודה.</p>
+<div style="display:flex;flex-direction:column;gap:10px">
+<a href="tel:0500000000" style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:10px;padding:18px 20px;color:#14224A" style-hover="box-shadow:0 8px 22px rgba(20,34,74,.12)"><span style="width:44px;height:44px;border-radius:8px;background:#E8620C;color:#fff;display:flex;align-items:center;justify-content:center;font:400 20px/1 'Heebo',sans-serif">☎</span><span><strong style="display:block;font:800 21px/1.2 'Heebo',sans-serif">{{ phone }}</strong><span style="font:300 13.5px/1.5 'Assistant',sans-serif;color:#4a5a7a">א׳–ה׳ 08:00–17:00 · מענה אנושי</span></span></a>
+<a href="#" style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:10px;padding:18px 20px;color:#14224A" style-hover="box-shadow:0 8px 22px rgba(20,34,74,.12)"><span style="width:44px;height:44px;border-radius:8px;background:#2E4B9B;color:#fff;display:flex;align-items:center;justify-content:center;font:400 20px/1 'Heebo',sans-serif">💬</span><span><strong style="display:block;font:700 18px/1.2 'Heebo',sans-serif">וואטסאפ</strong><span style="font:300 13.5px/1.5 'Assistant',sans-serif;color:#4a5a7a">הודעה מוכנה מראש: ״שלום, אני מעוניין לבצע בדיקה לציוד הרמה״</span></span></a>
+<a href="#" style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:10px;padding:18px 20px;color:#14224A" style-hover="box-shadow:0 8px 22px rgba(20,34,74,.12)"><span style="width:44px;height:44px;border-radius:8px;background:#14224A;color:#fff;display:flex;align-items:center;justify-content:center;font:400 18px/1 'Heebo',sans-serif">✉</span><span><strong style="display:block;font:700 18px/1.2 'Heebo',sans-serif">office@arzi-meitav.co.il</strong><span style="font:300 13.5px/1.5 'Assistant',sans-serif;color:#4a5a7a">לשליחת מסמכים ותסקירים קודמים</span></span></a>
+</div>
+<div style="background:#fff;border-radius:10px;padding:18px 20px"><strong style="display:block;font:700 16px/1.3 'Heebo',sans-serif;color:#14224A;margin-bottom:6px">אזורי פעילות</strong><span style="font:300 14.5px/1.7 'Assistant',sans-serif;color:#4a5a7a">שירות בכל הארץ — מרכז, שרון, שפלה, צפון ודרום. בדיקות במפעלים, מחסנים, מרכזים לוגיסטיים ואתרי עבודה.</span></div>
+</div>
+<div style="background:#2E4B9B;border-radius:10px;padding:30px 28px;display:flex;flex-direction:column;gap:12px">
+<h2 style="margin:0;font:800 25px/1.3 'Heebo',sans-serif;color:#fff">טופס תיאום בדיקה</h2>
+<p style="margin:0 0 4px;font:300 14.5px/1.65 'Assistant',sans-serif;color:rgba(255,255,255,.8)">חמישה שדות בלבד — נחזור אליכם עם זמינות ומחיר.</p>
+<span style="background:#fff;border-radius:6px;padding:14px;font:400 15px/1 'Heebo',sans-serif;color:#98a3b8">שם</span>
+<span style="background:#fff;border-radius:6px;padding:14px;font:400 15px/1 'Heebo',sans-serif;color:#98a3b8">חברה</span>
+<span style="background:#fff;border-radius:6px;padding:14px;font:400 15px/1 'Heebo',sans-serif;color:#98a3b8">טלפון</span>
+<span style="background:#fff;border-radius:6px;padding:14px;font:400 15px/1 'Heebo',sans-serif;color:#98a3b8">סוג ציוד</span>
+<span style="background:#fff;border-radius:6px;padding:14px 14px 44px;font:400 15px/1 'Heebo',sans-serif;color:#98a3b8">הודעה</span>
+<a href="#" style="background:#E8620C;color:#fff;padding:16px;text-align:center;font:800 17px/1 'Heebo',sans-serif;border-radius:6px" style-hover="background:#CF5309">שליחת בקשה</a>
+<span style="font:300 12px/1.6 'Assistant',sans-serif;color:rgba(255,255,255,.65);text-align:center">בשליחת הפרטים אני מאשר קבלת מענה בטלפון ובוואטסאפ · <a href="#" style="color:#fff">מדיניות פרטיות</a></span>
+</div>
+</div>
+
+<div style="padding:44px 40px;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center">
+<div><h2 style="margin:0 0 12px;font:800 25px/1.3 'Heebo',sans-serif;color:#14224A">מה כדאי להכין לפני השיחה?</h2><div style="display:flex;flex-direction:column;gap:9px">
+<span style="display:flex;gap:10px;font:400 15.5px/1.6 'Assistant',sans-serif;color:#3d4a66"><span style="color:#E8620C;font-weight:700">·</span>סוג הציוד וכמה יחידות יש באתר</span>
+<span style="display:flex;gap:10px;font:400 15.5px/1.6 'Assistant',sans-serif;color:#3d4a66"><span style="color:#E8620C;font-weight:700">·</span>מתי בוצעה הבדיקה האחרונה (אם ידוע)</span>
+<span style="display:flex;gap:10px;font:400 15.5px/1.6 'Assistant',sans-serif;color:#3d4a66"><span style="color:#E8620C;font-weight:700">·</span>מיקום האתר ושעות פעילות</span>
+<span style="display:flex;gap:10px;font:400 15.5px/1.6 'Assistant',sans-serif;color:#3d4a66"><span style="color:#E8620C;font-weight:700">·</span>אם יש דחיפות — נשמח לדעת</span>
+</div></div>
+<div style="height:240px;border-radius:10px;overflow:hidden;display:flex"><dc-import name="Photo" note="מפה או תמונת פריסה ארצית / משרד עם טלפון" hint-size="100%,240px" style="flex:1"></dc-import></div>
+</div>
+
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+
+<div class="mob">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;box-shadow:0 2px 10px rgba(20,34,74,.1)"><img src="uploads/logo-1785856153853.png" alt="לוגו" style="height:32px"><span style="font:700 20px/1 'Heebo',sans-serif;color:#14224A">☰</span></div>
+<div style="background:#EEF2FB;padding:20px 18px;display:flex;flex-direction:column;gap:12px">
+<h1 style="margin:0;font:800 26px/1.2 'Heebo',sans-serif;color:#14224A">צרו קשר לתיאום בדיקה</h1>
+<a href="tel:0500000000" style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:10px;padding:14px;color:#14224A"><span style="width:40px;height:40px;border-radius:8px;background:#E8620C;color:#fff;display:flex;align-items:center;justify-content:center;font:400 18px/1 'Heebo',sans-serif">☎</span><span><strong style="display:block;font:800 19px/1.2 'Heebo',sans-serif">{{ phone }}</strong><span style="font:300 12.5px/1.5 'Assistant',sans-serif;color:#4a5a7a">א׳–ה׳ 08:00–17:00</span></span></a>
+<a href="#" style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:10px;padding:14px;color:#14224A"><span style="width:40px;height:40px;border-radius:8px;background:#2E4B9B;color:#fff;display:flex;align-items:center;justify-content:center;font:400 18px/1 'Heebo',sans-serif">💬</span><strong style="font:700 17px/1.2 'Heebo',sans-serif">וואטסאפ</strong></a>
+</div>
+<div style="padding:18px 18px 100px;display:flex;flex-direction:column;gap:10px">
+<h2 style="margin:0;font:800 20px/1.25 'Heebo',sans-serif;color:#14224A">טופס תיאום בדיקה</h2>
+<span style="background:#F7F8FB;border:1px solid rgba(20,34,74,.14);border-radius:6px;padding:14px;font:400 15px/1 'Heebo',sans-serif;color:#98a3b8">שם</span>
+<span style="background:#F7F8FB;border:1px solid rgba(20,34,74,.14);border-radius:6px;padding:14px;font:400 15px/1 'Heebo',sans-serif;color:#98a3b8">חברה</span>
+<span style="background:#F7F8FB;border:1px solid rgba(20,34,74,.14);border-radius:6px;padding:14px;font:400 15px/1 'Heebo',sans-serif;color:#98a3b8">טלפון</span>
+<span style="background:#F7F8FB;border:1px solid rgba(20,34,74,.14);border-radius:6px;padding:14px;font:400 15px/1 'Heebo',sans-serif;color:#98a3b8">סוג ציוד</span>
+<a href="#" style="background:#E8620C;color:#fff;padding:16px;text-align:center;font:800 17px/1 'Heebo',sans-serif;border-radius:6px">שליחת בקשה</a>
+</div>
+<div style="position:absolute;bottom:0;right:0;left:0;display:flex;gap:8px;background:#14224A;padding:10px"><a href="tel:0500000000" style="flex:1.4;background:#E8620C;color:#fff;padding:15px;text-align:center;font:800 16px/1 'Heebo',sans-serif;border-radius:6px">☎ התקשרו עכשיו</a><a href="#" style="flex:1;background:#fff;color:#14224A;padding:15px;text-align:center;font:700 16px/1 'Heebo',sans-serif;border-radius:6px">💬 WhatsApp</a></div>
+</div>
+</div>
+</section>
+
+<section class="pg" id="P16">
+<div class="pg-h"><a class="pg-id" href="#P16">P16</a><span class="pg-name">מדיניות פרטיות</span></div>
+<div class="spec"><span><b>URL</b> /privacy</span><span><b>Title</b> מדיניות פרטיות | ארזי מיטב המהנדסים</span><span><b>Meta</b> מדיניות הפרטיות של אתר ארזי מיטב המהנדסים — שימוש בטפסים, שמירת פרטי קשר, עוגיות וכלי מדידה.</span><span><b>H1</b> מדיניות פרטיות</span><span><b>Schema</b> WebPage · noindex לא נדרש · קישור בפוטר ובטופס</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+<div style="background:#EEF2FB;padding:34px 40px"><span style="font:400 12px/1 ui-monospace,Menlo,monospace;color:#6b7896">ראשי / מדיניות פרטיות</span><h1 style="margin:10px 0 0;font:800 34px/1.2 'Heebo',sans-serif;color:#14224A">מדיניות פרטיות</h1></div>
+<div style="padding:40px;background:#fff;max-width:820px">
+<p style="margin:0 0 22px;font:300 16.5px/1.9 'Assistant',sans-serif;color:#3d4a66">אתר ארזי מיטב המהנדסים מכבד את פרטיות המשתמשים. מדיניות זו מסבירה איזה מידע נאסף באתר, לאיזו מטרה נעשה בו שימוש וכיצד ניתן לפנות אלינו בנושא.</p>
+<h2 style="margin:0 0 10px;font:800 23px/1.3 'Heebo',sans-serif;color:#14224A">שימוש בטפסים ופרטי קשר</h2>
+<p style="margin:0 0 22px;font:300 16px/1.9 'Assistant',sans-serif;color:#3d4a66">בעת מילוי טופס יצירת קשר באתר נאספים הפרטים שהוזנו — שם, שם החברה, טלפון, סוג הציוד ותוכן ההודעה. הפרטים נשמרים לצורך מענה לפנייה, תיאום בדיקה והכנת הצעת מחיר, ואינם מועברים לצדדים שלישיים שאינם נדרשים למתן השירות.</p>
+<h2 style="margin:0 0 10px;font:800 23px/1.3 'Heebo',sans-serif;color:#14224A">עוגיות וכלי מדידה</h2>
+<p style="margin:0 0 22px;font:300 16px/1.9 'Assistant',sans-serif;color:#3d4a66">האתר עושה שימוש בעוגיות (Cookies) ובכלי מדידה כגון Google Analytics לצורך הבנת אופן השימוש באתר ושיפורו. המידע הנאסף הוא מידע סטטיסטי ואינו כולל זיהוי אישי.</p>
+<h2 style="margin:0 0 10px;font:800 23px/1.3 'Heebo',sans-serif;color:#14224A">אבטחת מידע</h2>
+<p style="margin:0 0 22px;font:300 16px/1.9 'Assistant',sans-serif;color:#3d4a66">האתר מאובטח בתעודת SSL, ומופעלים בו אמצעי הגנה מקובלים לשמירה על המידע הנאסף. עם זאת, לא ניתן להבטיח חסימה מוחלטת של גישה בלתי מורשית.</p>
+<h2 style="margin:0 0 10px;font:800 23px/1.3 'Heebo',sans-serif;color:#14224A">פנייה בנושא פרטיות</h2>
+<p style="margin:0;font:300 16px/1.9 'Assistant',sans-serif;color:#3d4a66">לבקשת עיון, תיקון או מחיקת פרטים ניתן לפנות אלינו בטלפון {{ phone }} או בדוא״ל office@arzi-meitav.co.il.</p>
+</div>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+</div>
+</section>
+
+<section class="pg" id="P17">
+<div class="pg-h"><a class="pg-id" href="#P17">P17</a><span class="pg-name">עמוד אזורי — תבנית לעתיד</span></div>
+<div class="spec"><span><b>URL</b> /lifting-inspection-center · /lifting-inspection-south · /lifting-inspection-sharon</span><span><b>Title</b> בדיקות מתקני הרמה במרכז | בודק מוסמך | ארזי מיטב המהנדסים</span><span><b>Meta</b> בדיקות מתקני הרמה ואביזרי הרמה באזור המרכז — בודק מוסמך, תסקיר מסודר, תיאום מהיר.</span><span><b>H1</b> בדיקות מתקני הרמה באזור המרכז</span><span><b>Schema</b> Service + areaServed · לא לשכפל תוכן — לשנות פסקה ראשונה, אזורים ודוגמאות</span></div>
+<div class="row">
+<dc-import name="FloatCta" hint-size="190px,230px" style="margin-top:150px"></dc-import>
+<div class="card">
+<dc-import name="Header" phone="{{ phone }}" hint-size="100%,110px"></dc-import>
+<dc-import name="PageHead" hint-size="100%,340px" crumb="אזורי שירות / מרכז" h1="בדיקות מתקני הרמה באזור המרכז" lead="ארזי מיטב המהנדסים מבצעת בדיקות מתקני הרמה, אביזרי הרמה וקווי חיים במפעלים, מחסנים ומרכזים לוגיסטיים באזור המרכז. תיאום מהיר, בדיקה על ידי בודק מוסמך ותסקיר בדיקה מסודר בסיום." note="אזור תעשייה במרכז / מחסן לוגיסטי"></dc-import>
+<div style="padding:44px 40px;background:#fff;display:grid;grid-template-columns:1.2fr .8fr;gap:40px">
+<div><h2 style="margin:0 0 12px;font:800 25px/1.3 'Heebo',sans-serif;color:#14224A">אזורי שירות במרכז</h2><div style="display:flex;flex-wrap:wrap;gap:9px;margin-bottom:22px">
+<span style="background:#EEF2FB;border-radius:18px;padding:9px 15px;font:600 14px/1 'Heebo',sans-serif;color:#2E4B9B">תל אביב והמרכז</span>
+<span style="background:#EEF2FB;border-radius:18px;padding:9px 15px;font:600 14px/1 'Heebo',sans-serif;color:#2E4B9B">אזורי תעשייה בשפלה</span>
+<span style="background:#EEF2FB;border-radius:18px;padding:9px 15px;font:600 14px/1 'Heebo',sans-serif;color:#2E4B9B">פארקים לוגיסטיים</span>
+<span style="background:#EEF2FB;border-radius:18px;padding:9px 15px;font:600 14px/1 'Heebo',sans-serif;color:#2E4B9B">מוסכים ומרכזי שירות</span>
+</div>
+<h2 style="margin:0 0 12px;font:800 25px/1.3 'Heebo',sans-serif;color:#14224A">מה אנו בודקים באזור</h2><p style="margin:0;font:300 16px/1.85 'Assistant',sans-serif;color:#3d4a66">מלגזות במחסנים ובמרכזים לוגיסטיים, עגורני גשר וזרוע באולמות ייצור, במות הרמה באתרי עבודה, אביזרי הרמה וקווי חיים על גגות מבנים. בדיקה מרוכזת לכל הציוד באתר באותו ביקור מצמצמת השבתה ומאפשרת סדר מלא בתיק הציוד.</p></div>
+<div style="height:280px;border-radius:10px;overflow:hidden;display:flex"><dc-import name="Photo" note="מפת אזור פעילות או תמונה מאזור תעשייה" hint-size="100%,280px" style="flex:1"></dc-import></div>
+</div>
+<dc-import name="CtaBand" hint-size="100%,150px" title="צריכים בדיקה באזור המרכז?" text="התקשרו — נתאם מועד קרוב שמתאים לפעילות שלכם."></dc-import>
+<dc-import name="Footer" phone="{{ phone }}" hint-size="100%,260px"></dc-import>
+</div>
+</div>
+</section>
+
+<section style="padding:36px 44px 60px;background:#14224A">
+<h2 style="margin:0 0 16px;font:800 24px/1.3 'Heebo',sans-serif;color:#fff">הערות מסירה למפתח</h2>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1180px">
+<div style="background:rgba(255,255,255,.07);border-radius:10px;padding:20px"><strong style="display:block;font:700 17px/1.3 'Heebo',sans-serif;color:#F2A20C;margin-bottom:8px">רכיבים חוזרים</strong><span style="font:300 14px/1.75 'Assistant',sans-serif;color:rgba(255,255,255,.75)">Header, Footer, כפתור צף, כותרת עמוד פנימי, רצועת CTA ופריט FAQ בנויים כרכיבים אחידים בכל העמודים — לממש כרכיבים / תבניות ב־CMS, לא להעתיק לכל עמוד.</span></div>
+<div style="background:rgba(255,255,255,.07);border-radius:10px;padding:20px"><strong style="display:block;font:700 17px/1.3 'Heebo',sans-serif;color:#F2A20C;margin-bottom:8px">מסגרות התמונה</strong><span style="font:300 14px/1.75 'Assistant',sans-serif;color:rgba(255,255,255,.75)">כל מלבן מקווקו הוא מקום לתמונה אמיתית מיום הצילום, והכיתוב בתוכו הוא הוראת הצילום. ALT לכל תמונה, Lazy Load, ודחיסה לפני העלאה.</span></div>
+<div style="background:rgba(255,255,255,.07);border-radius:10px;padding:20px"><strong style="display:block;font:700 17px/1.3 'Heebo',sans-serif;color:#F2A20C;margin-bottom:8px">צבעים וטיפוגרפיה</strong><span style="font:300 14px/1.75 'Assistant',sans-serif;color:rgba(255,255,255,.75)">כחול כהה #14224A · כחול מותג #2E4B9B · כתום פעולה #E8620C · ענבר #F2A20C · תכלת רקע #EEF2FB · אפור רקע #F7F8FB. כותרות Heebo 700–800, גוף Assistant 300–400.</span></div>
+<div style="background:rgba(255,255,255,.07);border-radius:10px;padding:20px"><strong style="display:block;font:700 17px/1.3 'Heebo',sans-serif;color:#F2A20C;margin-bottom:8px">כפתור צף</strong><span style="font:300 14px/1.75 'Assistant',sans-serif;color:rgba(255,255,255,.75)">בדסקטופ: כרטיס קבוע בצד המסך עם טלפון, וואטסאפ ותיאום בדיקה, אנימציה עדינה בלבד. במובייל: סרגל תחתון קבוע — התקשרו + וואטסאפ. לחיצה = חיוג ישיר.</span></div>
+<div style="background:rgba(255,255,255,.07);border-radius:10px;padding:20px"><strong style="display:block;font:700 17px/1.3 'Heebo',sans-serif;color:#F2A20C;margin-bottom:8px">טפסים ומעקב</strong><span style="font:300 14px/1.75 'Assistant',sans-serif;color:rgba(255,255,255,.75)">טופס קצר בלבד (שם, חברה, טלפון, סוג ציוד, הודעה) → מייל + שמירה במערכת. למדוד: קליק לטלפון, שליחת טופס, קליק וואטסאפ ב־GA4. הגנת ספאם על הטופס.</span></div>
+<div style="background:rgba(255,255,255,.07);border-radius:10px;padding:20px"><strong style="display:block;font:700 17px/1.3 'Heebo',sans-serif;color:#F2A20C;margin-bottom:8px">CMS</strong><span style="font:300 14px/1.75 'Assistant',sans-serif;color:rgba(255,255,255,.75)">הוספת מאמרים, עריכת שאלות ותשובות, החלפת תמונות וטקסטים ויצירת עמודים חדשים (כולל עמודים אזוריים) — ללא מפתח. FAQ Schema נגזר אוטומטית מפריטי ה־FAQ.</span></div>
+</div>
+</section>
+
+<div id="END"></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;050-000-0000&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { picked: [] };
+  }
+  toggle(name) {
+    const cur = (this.state && this.state.picked) || [];
+    this.setState({ picked: cur.includes(name) ? cur.filter(n => n !== name) : cur.concat(name) });
+  }
+  renderVals() {
+    const names = ['מלגזות וציוד שינוע', 'עגורנים', 'במות הרמה', 'אביזרי הרמה', 'קווי חיים', 'מתקני הרמה נוספים'];
+    const picked = (this.state && this.state.picked) || [];
+    const chips = names.map(name => {
+      const on = picked.includes(name);
+      return {
+        name,
+        toggle: () => this.toggle(name),
+        style: 'cursor:pointer;font:600 15px/1 Heebo,sans-serif;padding:13px 20px;border-radius:24px;transition:all .15s;'
+          + (on ? 'background:#2E4B9B;color:#fff;border:1.5px solid #2E4B9B;box-shadow:0 4px 12px rgba(46,75,155,.25)'
+                : 'background:#fff;color:#14224A;border:1.5px solid rgba(20,34,74,.2)')
+      };
+    });
+    return {
+      chips,
+      pickedLabel: picked.length ? 'נבחר לבדיקה: ' + picked.join(' · ') : 'בחרו סוג ציוד אחד או יותר — או פשוט התקשרו ונעבור על זה יחד.',
+      phone: this.props.phone ?? '050-000-0000'
+    };
+  }
+}
+</script>
+</body>
+</html>

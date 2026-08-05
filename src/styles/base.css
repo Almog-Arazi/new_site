@@ -1,0 +1,137 @@
+/* Page-level chrome: body, layout primitives, section slabs, skip link. */
+
+body {
+  font-family: var(--ff-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-light);
+  color: var(--c-text);
+  background: var(--c-bg);
+  /* Hebrew shatters under positive tracking. Keep it at zero, everywhere. */
+  letter-spacing: 0;
+}
+
+/* ── container ─────────────────────────────────────────────── */
+.container {
+  inline-size: min(100%, var(--container));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.container--narrow {
+  inline-size: min(100%, var(--container-narrow));
+}
+
+.container--wide {
+  inline-size: min(100%, var(--container-wide));
+}
+
+/* ── section ───────────────────────────────────────────────────
+   Tinted and dark sections are inset rounded slabs floating on
+   white — not edge-to-edge stripes. This is the core layout move
+   that softens the whole page.
+   ───────────────────────────────────────────────────────────── */
+.section {
+  padding-block: var(--section-y);
+}
+
+.section--lg {
+  padding-block: var(--section-y-lg);
+}
+
+.section--flush {
+  padding-block-start: 0;
+}
+
+.section__slab {
+  inline-size: min(100%, var(--container-wide));
+  margin-inline: auto;
+  padding-block: var(--section-y);
+  padding-inline: var(--gutter);
+  border-radius: var(--r-6);
+}
+
+.section--tint .section__slab {
+  background: var(--c-bg-tint);
+}
+
+.section--soft .section__slab {
+  background: var(--c-bg-soft);
+}
+
+.section--dark .section__slab {
+  background: var(--c-bg-dark);
+  color: var(--c-on-dark);
+}
+
+.section--dark :is(h1, h2, h3, h4) {
+  color: var(--c-white);
+}
+
+.section--dark a:not([class]) {
+  color: var(--c-accent-dark);
+}
+
+/* Slabs sit edge-to-edge on small screens — a 26px radius against a
+   16px gutter reads as a mistake, not a decision. */
+@media (width <= 640px) {
+  .section__slab {
+    padding-inline: var(--s-5);
+  }
+}
+
+/* ── stacks & grids ────────────────────────────────────────── */
+.stack > * + * {
+  margin-block-start: var(--stack);
+}
+
+.stack--tight > * + * {
+  margin-block-start: var(--s-3);
+}
+
+.stack--loose > * + * {
+  margin-block-start: var(--s-8);
+}
+
+.grid {
+  display: grid;
+  gap: var(--grid-gap);
+}
+
+.grid--2 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+}
+
+.grid--3 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+
+.grid--4 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+}
+
+/* ── skip link ─────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  inset-block-start: var(--s-2);
+  inset-inline-start: var(--s-2);
+  z-index: var(--z-skip);
+  padding: var(--s-3) var(--s-5);
+  background: var(--c-bg-dark);
+  color: var(--c-white);
+  border-radius: var(--r-2);
+  font-family: var(--ff-head);
+  font-weight: var(--fw-bold);
+  transform: translateY(-200%);
+  transition: transform var(--dur) var(--ease);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* Reserve room for the fixed mobile CTA bar so nothing hides under it. */
+@media (width <= 900px) {
+  body {
+    padding-block-end: calc(var(--tap-lg) + var(--s-8) + env(safe-area-inset-bottom));
+  }
+}

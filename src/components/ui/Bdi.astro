@@ -1,0 +1,10 @@
+---
+/* Isolates a Latin run inside Hebrew flow. Without this a leading + or a
+   digit reorders and lands at the wrong end of the sentence. */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<bdi class:list={['ltr', className]}><slot /></bdi>

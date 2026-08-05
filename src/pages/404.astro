@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="הדף לא נמצא"
+  description="הדף שחיפשתם לא נמצא. אפשר לחזור לעמוד הבית או ליצור קשר."
+  path="/404"
+  noindex
+  showRail={false}
+>
+  <Section tone="tint">
+    <h1>הדף לא נמצא</h1>
+    <p class="t-lead">ייתכן שהכתובת השתנתה. אפשר לחזור לעמוד הבית או לפנות אלינו ישירות.</p>
+    <div class="cluster">
+      <Button href="/" variant="primary">לעמוד הבית</Button>
+      <Button href="/contact" variant="secondary">צור קשר</Button>
+    </div>
+  </Section>
+</BaseLayout>

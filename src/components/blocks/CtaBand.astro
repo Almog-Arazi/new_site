@@ -1,0 +1,55 @@
+---
+import Section from '../ui/Section.astro';
+import Button from '../ui/Button.astro';
+import TelLink from '../ui/TelLink.astro';
+import type { Section as Block } from '../../content.config';
+
+type Props = Extract<Block, { type: 'ctaBand' }>;
+const { heading, text, primary, secondary, tone } = Astro.props;
+---
+
+<Section tone={tone}>
+  <div class="ctaband">
+    <span class="ctaband__rule" aria-hidden="true"></span>
+    <div class="ctaband__text">
+      <h2>{heading}</h2>
+      {text && <p class="t-lead">{text}</p>}
+    </div>
+    <div class="cluster">
+      <Button href={primary?.href ?? '/contact'} variant="primary" size="lg">
+        {primary?.label ?? 'תיאום בדיקה'}
+      </Button>
+      {secondary ? (
+        <Button href={secondary.href} variant="on-dark" size="lg">{secondary.label}</Button>
+      ) : (
+        <TelLink variant="plain" label="דברו איתנו עכשיו" />
+      )}
+    </div>
+  </div>
+</Section>
+
+<style>
+  .ctaband {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-7);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* The single sanctioned accent rule on the whole site. */
+  .ctaband__rule {
+    position: absolute;
+    inset-block-start: calc(var(--s-6) * -1);
+    inset-inline-start: 0;
+    inline-size: 64px;
+    block-size: 4px;
+    border-radius: var(--r-pill);
+    background: var(--c-accent-dark);
+  }
+
+  .ctaband__text h2 {
+    margin-block-end: var(--s-2);
+  }
+</style>

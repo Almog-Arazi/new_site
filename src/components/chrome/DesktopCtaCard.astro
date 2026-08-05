@@ -1,0 +1,49 @@
+---
+import site from '../../site.config';
+import TelLink from '../ui/TelLink.astro';
+import WaLink from '../ui/WaLink.astro';
+import Button from '../ui/Button.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+
+/* PHASE 0 STUB — ownership passes to Stream A. */
+---
+
+<aside class="cta-rail hide-mobile" aria-label="יצירת קשר מהירה">
+  <Eyebrow>תיאום בדיקה</Eyebrow>
+  <p class="cta-rail__text">מענה אנושי ומהיר, {site.hours}</p>
+  <TelLink variant="row" />
+  <WaLink variant="row" />
+  <Button href="/contact" variant="primary" full>תיאום בדיקה</Button>
+</aside>
+
+<style>
+  /* The rail genuinely floats, so it is one of the few things allowed a
+     resting shadow. */
+  .cta-rail {
+    position: fixed;
+    inset-inline-end: var(--s-5);
+    inset-block-start: 50%;
+    transform: translateY(-50%);
+    z-index: var(--z-rail);
+    inline-size: 216px;
+    display: grid;
+    gap: var(--s-3);
+    padding: var(--s-5);
+    background: var(--c-surface);
+    border: var(--hairline);
+    border-radius: var(--r-5);
+    box-shadow: var(--e-3);
+  }
+
+  .cta-rail__text {
+    font-size: var(--fs-xs);
+    line-height: 1.6;
+    color: var(--c-text);
+  }
+
+  @media (width <= 1500px) {
+    .cta-rail {
+      display: none;
+    }
+  }
+</style>

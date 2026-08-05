@@ -1,0 +1,101 @@
+---
+import { PLACEHOLDER_ART, type PlaceholderVariant } from './index';
+
+interface Props {
+  variant: PlaceholderVariant;
+  /** Photography brief, shown as a small caption while this is a placeholder. */
+  note?: string;
+  tone?: 'tint' | 'dark';
+}
+
+const { variant, note, tone = 'tint' } = Astro.props;
+const art = PLACEHOLDER_ART[variant];
+---
+
+<div class:list={['pl', `pl--${tone}`]} aria-hidden="true">
+  <svg class="pl__grid" viewBox="0 0 160 100" preserveAspectRatio="none">
+    <defs>
+      <pattern id={`grid-${variant}`} width="10" height="10" patternUnits="userSpaceOnUse">
+        <path d="M10 0H0V10" fill="none" stroke="currentColor" stroke-width="0.4"></path>
+      </pattern>
+    </defs>
+    <rect width="160" height="100" fill={`url(#grid-${variant})`}></rect>
+  </svg>
+
+  <svg class="pl__icon" viewBox="0 0 64 64" fill="none" stroke="currentColor">
+    {art.paths.map((d) => <path d={d} stroke-linecap="round" stroke-linejoin="round" />)}
+  </svg>
+
+  <span class="pl__mark"></span>
+
+  {note && <p class="pl__note">{note}</p>}
+</div>
+
+<style>
+  .pl {
+    position: relative;
+    display: grid;
+    place-items: center;
+    block-size: 100%;
+    inline-size: 100%;
+    padding: var(--s-6);
+    overflow: hidden;
+  }
+
+  .pl--tint {
+    background: var(--c-bg-tint);
+    color: var(--c-link);
+  }
+
+  .pl--dark {
+    background: var(--c-bg-dark-deep);
+    color: var(--c-accent-dark);
+  }
+
+  .pl__grid {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    opacity: 0.35;
+  }
+
+  .pl__icon {
+    position: relative;
+    inline-size: clamp(56px, 22%, 104px);
+    block-size: auto;
+    aspect-ratio: 1;
+    stroke-width: 1.75;
+    opacity: 0.85;
+  }
+
+  /* The one amber mark — a small square in the inline-start corner,
+     the same accent used for checks on navy. Never a gradient. */
+  .pl__mark {
+    position: absolute;
+    inset-block-start: var(--s-4);
+    inset-inline-start: var(--s-4);
+    inline-size: var(--s-3);
+    block-size: var(--s-3);
+    border-radius: var(--r-1);
+    background: var(--c-accent-dark);
+  }
+
+  .pl__note {
+    position: absolute;
+    inset-block-end: var(--s-3);
+    inset-inline: var(--s-4);
+    margin: 0;
+    font-family: var(--ff-mono);
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+    text-align: center;
+    opacity: 0.7;
+  }
+
+  @media (width <= 640px) {
+    .pl__note {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,106 @@
+---
+interface Props {
+  /** `toggle` renders a real button with aria-pressed; `tag` is static. */
+  as?: 'toggle' | 'tag' | 'link';
+  href?: string;
+  value?: string;
+  pressed?: boolean;
+  class?: string;
+}
+
+const { as = 'tag', href, value, pressed = false, class: className } = Astro.props;
+---
+
+{
+  as === 'toggle' ? (
+    <button
+      type="button"
+      class:list={['chip', 'chip--toggle', className]}
+      data-chip={value}
+      aria-pressed={pressed ? 'true' : 'false'}
+    >
+      <span class="chip__check" aria-hidden="true">
+        ✓
+      </span>
+      <span class="chip__label">
+        <slot />
+      </span>
+    </button>
+  ) : as === 'link' ? (
+    <a href={href} class:list={['chip', 'chip--link', className]}>
+      <slot />
+    </a>
+  ) : (
+    <span class:list={['chip', className]}>
+      <slot />
+    </span>
+  )
+}
+
+<style>
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-block-size: var(--tap);
+    padding-inline: var(--s-5);
+    padding-block: var(--s-2);
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-med);
+    color: var(--c-heading);
+    background: var(--c-bg-tint);
+    border: 1.5px solid transparent;
+    border-radius: var(--r-pill);
+    transition:
+      background-color var(--dur) var(--ease),
+      color var(--dur) var(--ease),
+      border-color var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease),
+      transform var(--dur-fast) var(--ease);
+  }
+
+  .chip--toggle,
+  .chip--link {
+    cursor: pointer;
+    background: var(--c-surface);
+    border-color: var(--c-border-strong);
+  }
+
+  .chip--toggle:hover,
+  .chip--link:hover {
+    border-color: var(--c-link);
+    background: var(--c-bg-tint);
+  }
+
+  .chip__check {
+    inline-size: 0;
+    overflow: hidden;
+    opacity: 0;
+    font-weight: var(--fw-black);
+    transition:
+      inline-size var(--dur) var(--ease),
+      opacity var(--dur) var(--ease);
+  }
+
+  /* Selection is never colour-only: the check mark appears too. */
+  .chip--toggle[aria-pressed='true'] {
+    background: var(--c-link);
+    border-color: var(--c-link);
+    color: var(--c-white);
+  }
+
+  .chip--toggle[aria-pressed='true'] .chip__check {
+    inline-size: 1em;
+    opacity: 1;
+  }
+
+  .chip--toggle:active {
+    transform: scale(0.97);
+  }
+
+  .chip:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+  }
+</style>

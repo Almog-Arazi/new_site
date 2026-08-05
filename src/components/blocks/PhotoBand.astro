@@ -1,0 +1,53 @@
+---
+import Section from '../ui/Section.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+import PhotoFrame from '../media/PhotoFrame.astro';
+import Button from '../ui/Button.astro';
+import type { Section as Block } from '../../content.config';
+
+type Props = Extract<Block, { type: 'photoBand' }>;
+const { eyebrow, heading, body, bullets, placeholder, alt, note, flip, cta, tone } = Astro.props;
+---
+
+<Section tone={tone}>
+  <div class:list={['band', flip && 'band--flip']}>
+    <div class="band__text">
+      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+      {heading && <h2>{heading}</h2>}
+      {body && <p class="t-lead">{body}</p>}
+      {bullets.length > 0 && (
+        <ul role="list" class="checks">
+          {bullets.map((item) => <li>{item}</li>)}
+        </ul>
+      )}
+      {cta && <Button href={cta.href} variant={cta.style === 'primary' ? 'primary' : 'secondary'}>{cta.label}</Button>}
+    </div>
+    <PhotoFrame
+      variant={placeholder}
+      alt={alt}
+      note={note}
+      ratio="card"
+      tone={tone === 'dark' ? 'dark' : 'tint'}
+      class="band__media"
+    />
+  </div>
+</Section>
+
+<style>
+  .band {
+    display: grid;
+    gap: var(--s-9);
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  }
+
+  .band--flip .band__media {
+    order: -1;
+  }
+
+  .band__text {
+    display: grid;
+    gap: var(--s-4);
+    align-content: start;
+  }
+</style>

@@ -1,0 +1,27 @@
+{
+  "name": "ardi-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "verify": "node scripts/check-rtl.mjs src && node scripts/check-html.mjs dist && node scripts/check-links.mjs dist",
+    "verify:all": "npm run build && npm run verify"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.6.0",
+    "@fontsource-variable/assistant": "^5.2.5",
+    "@fontsource-variable/heebo": "^5.2.5",
+    "astro": "^5.14.1",
+    "markdown-it": "^14.1.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "prettier": "^3.6.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^5.9.2"
+  }
+}

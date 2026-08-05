@@ -1,0 +1,60 @@
+---
+import site from '../../site.config';
+
+interface Props {
+  /** `img` for light surfaces; `mask` recolours to currentColor for dark ones. */
+  variant?: 'img' | 'mask';
+  width?: number;
+  class?: string;
+  eager?: boolean;
+}
+
+const { variant = 'img', width = 200, class: className, eager = false } = Astro.props;
+
+/* viewBox 3591×1479 → 2.4278:1. Explicit dimensions are mandatory: at this
+   aspect ratio an unsized logo dominates CLS. The file is served from
+   /logo (cached once) and never inlined — it is 87KB of path data. */
+const RATIO = 1479 / 3591;
+const height = Math.round(width * RATIO);
+const label = site.businessName;
+---
+
+{
+  variant === 'img' ? (
+    <img
+      src="/logo/ardi-logo.svg"
+      width={width}
+      height={height}
+      alt={label}
+      class:list={['logo', className]}
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+      fetchpriority={eager ? 'high' : 'auto'}
+    />
+  ) : (
+    <span
+      class:list={['logo logo--mask', className]}
+      role="img"
+      aria-label={label}
+      style={`--logo-w:${width}px;--logo-h:${height}px`}
+    />
+  )
+}
+
+<style>
+  .logo {
+    inline-size: auto;
+    block-size: auto;
+  }
+
+  .logo--mask {
+    display: block;
+    inline-size: var(--logo-w);
+    block-size: var(--logo-h);
+    background-color: currentcolor;
+    mask-image: url('/logo/ardi-logo-currentcolor.svg');
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    mask-position: center;
+  }
+</style>

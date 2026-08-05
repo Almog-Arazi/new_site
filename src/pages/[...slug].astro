@@ -1,0 +1,84 @@
+---
+import { getCollection, render } from 'astro:content';
+import PageLayout from '../layouts/PageLayout.astro';
+import Prose from '../components/ui/Prose.astro';
+import Section from '../components/ui/Section.astro';
+import {
+  aboutPage,
+  collectionPage,
+  faqPage as faqPageSchema,
+  service,
+  webPage,
+} from '../lib/schema';
+import { getFaqByPage } from '../lib/faq';
+import { pathForSlug } from '../lib/routes';
+
+/* Generates 15 of the 18 routes. A new page — including a future regional
+   page — is created by adding one entry to the `pages` collection from the
+   CMS. No developer, no new route file. */
+export async function getStaticPaths() {
+  const pages = await getCollection('pages', ({ data }) => !data.draft);
+  return pages.map((page) => ({ params: { slug: page.data.slug }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const data = page.data;
+const path = pathForSlug(data.slug);
+const { Content } = await render(page);
+
+const schemas: unknown[] = [];
+const kind = data.schema?.kind ?? 'WebPage';
+
+if (kind === 'Service') {
+  schemas.push(
+    service({
+      name: data.schema?.serviceName ?? data.h1,
+      description: data.seo.description,
+      path,
+      serviceType: data.schema?.serviceType,
+      areaServed: data.schema?.areaServed,
+    })
+  );
+} else if (kind === 'CollectionPage') {
+  schemas.push(collectionPage({ name: data.h1, description: data.seo.description, path }));
+} else if (kind === 'AboutPage') {
+  schemas.push(aboutPage({ name: data.h1, description: data.seo.description, path }));
+} else if (kind === 'WebPage') {
+  schemas.push(webPage({ name: data.h1, description: data.seo.description, path }));
+}
+
+/* A page whose own `sections` already contain a faq block gets its FAQPage
+   schema from FaqSection. This covers dedicated FAQ pages that pull items
+   by `showOn` instead. */
+const hasFaqBlock = data.sections.some((section) => section.type === 'faq');
+if (!hasFaqBlock) {
+  const items = await getFaqByPage(data.slug);
+  if (items.length > 0) schemas.push(faqPageSchema(items, path));
+}
+---
+
+<PageLayout
+  title={data.seo.title}
+  description={data.seo.description}
+  path={path}
+  noindex={data.seo.noindex}
+  eyebrow={data.eyebrow}
+  h1={data.h1}
+  lead={data.lead}
+  breadcrumb={data.breadcrumb}
+  breadcrumbLabel={data.breadcrumbLabel}
+  hero={data.hero}
+  sections={data.sections}
+  schemas={schemas}
+  cta={data.cta}
+>
+  {
+    page.body?.trim() && (
+      <Section width="narrow">
+        <Prose>
+          <Content />
+        </Prose>
+      </Section>
+    )
+  }
+</PageLayout>

@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import Button from '../components/ui/Button.astro';
+import TelLink from '../components/ui/TelLink.astro';
+---
+
+<BaseLayout
+  title="תודה על פנייתכם"
+  description="קיבלנו את הפנייה ונחזור אליכם עם זמינות ומחיר."
+  path="/toda"
+  noindex
+  showRail={false}
+>
+  <Section tone="tint">
+    <h1>תודה, קיבלנו את הפנייה</h1>
+    <p class="t-lead">נחזור אליכם עם זמינות ומחיר. אם זה דחוף — אפשר פשוט להתקשר.</p>
+    <div class="cluster">
+      <TelLink variant="button" />
+      <Button href="/" variant="secondary">חזרה לעמוד הבית</Button>
+    </div>
+  </Section>
+</BaseLayout>

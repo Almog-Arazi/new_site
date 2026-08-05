@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.tmp/
+.astro/
+.DS_Store
+.env
+.env.production
+*.log
+npm-debug.log*

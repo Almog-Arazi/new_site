@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import site from '../site.config';
+
+/* PHASE 0 STUB — ownership passes to Stream C, which builds the full
+   homepage (hero, chip picker, trust strip, services, equipment, process,
+   FAQ) per the design sketch. */
+---
+
+<BaseLayout
+  title={`בדיקות מתקני הרמה ואביזרי הרמה | בודק מוסמך | ${site.shortName}`}
+  description="ארזי מיטב המהנדסים מבצעת בדיקות מתקני הרמה, אביזרי הרמה וקווי חיים על ידי בודק מוסמך. שירות למפעלים וחברות בכל הארץ."
+  path="/"
+  withBusiness
+>
+  <Section>
+    <h1>{site.tagline}</h1>
+    <p class="t-lead">{site.shortName} — עמוד הבית בבנייה.</p>
+  </Section>
+</BaseLayout>

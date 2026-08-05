@@ -1,0 +1,75 @@
+---
+import { waHref } from '../../site.config';
+import Icon from './Icon.astro';
+
+interface Props {
+  variant?: 'plain' | 'button' | 'row';
+  label?: string;
+  class?: string;
+}
+
+const { variant = 'plain', label = 'וואטסאפ', class: className } = Astro.props;
+---
+
+<a
+  href={waHref}
+  class:list={['wa', `wa--${variant}`, className]}
+  data-track="whatsapp_click"
+  target="_blank"
+  rel="noopener"
+>
+  <Icon name="whatsapp" size={20} />
+  <span>{label}</span>
+</a>
+
+<style>
+  .wa {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-block-size: var(--tap);
+    color: inherit;
+    font-family: var(--ff-head);
+    font-weight: var(--fw-bold);
+    text-decoration: none;
+    transition:
+      color var(--dur) var(--ease),
+      background-color var(--dur) var(--ease);
+  }
+
+  .wa--plain:hover {
+    color: var(--c-link);
+  }
+
+  .wa--button {
+    padding-inline: var(--s-6);
+    background: var(--c-surface);
+    color: var(--c-heading);
+    border: 1.5px solid var(--c-border-strong);
+    border-radius: var(--r-pill);
+    font-size: var(--fs-btn);
+  }
+
+  .wa--button:hover {
+    border-color: var(--c-link);
+    background: var(--c-bg-tint);
+  }
+
+  .wa--row {
+    inline-size: 100%;
+    justify-content: flex-start;
+    gap: var(--s-3);
+    padding: var(--s-3);
+    border-radius: var(--r-3);
+  }
+
+  .wa--row:hover {
+    background: var(--c-bg-tint);
+  }
+
+  .wa:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+    border-radius: var(--r-pill);
+  }
+</style>

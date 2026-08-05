@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import { contactPage } from '../lib/schema';
+import site from '../site.config';
+
+/* PHASE 0 STUB — ownership passes to Stream A. */
+const path = '/contact';
+const title = `צור קשר | תיאום בדיקת ציוד הרמה | ${site.shortName}`;
+const description =
+  'תיאום בדיקת מתקני הרמה, אביזרי הרמה וקווי חיים — טלפון, וואטסאפ וטופס קצר. מענה אנושי ומהיר, שירות בכל הארץ.';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  withBusiness
+  schemas={[contactPage({ name: 'צרו קשר לתיאום בדיקה', description, path })]}
+>
+  <Section>
+    <h1>צרו קשר לתיאום בדיקה</h1>
+    <p class="t-lead">עמוד צור קשר בבנייה.</p>
+  </Section>
+</BaseLayout>

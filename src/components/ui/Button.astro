@@ -1,0 +1,140 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost' | 'on-dark';
+  size?: 'md' | 'lg';
+  type?: 'button' | 'submit';
+  track?: string;
+  full?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  track,
+  full = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+const classes = ['btn', `btn--${variant}`, `btn--${size}`, full && 'btn--full', className];
+---
+
+<Tag
+  class:list={classes}
+  href={href}
+  type={href ? undefined : type}
+  data-track={track}
+  {...rest}
+>
+  <slot />
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s-2);
+    min-block-size: var(--tap);
+    padding-inline: var(--s-6);
+    padding-block: var(--s-3);
+    font-family: var(--ff-head);
+    font-size: var(--fs-btn);
+    font-weight: var(--fw-bold);
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    /* Pill, not a rectangle. The single loudest softening move. */
+    border-radius: var(--r-pill);
+    border: 1.5px solid transparent;
+    transition:
+      background-color var(--dur) var(--ease),
+      border-color var(--dur) var(--ease),
+      color var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
+  }
+
+  .btn--lg {
+    min-block-size: var(--tap-lg);
+    padding-inline: var(--s-7);
+  }
+
+  .btn--full {
+    inline-size: 100%;
+  }
+
+  /* Orange is a SURFACE colour only — #E8620C on white is 3.40:1 and fails
+     AA for normal text. White 700 at --fs-btn clears AA-Large. */
+  .btn--primary {
+    background: var(--c-action);
+    color: var(--c-on-action);
+    box-shadow: var(--e-action);
+  }
+
+  .btn--primary:hover {
+    background: var(--c-action-hover);
+    box-shadow: var(--e-action-hover);
+    transform: translateY(var(--lift));
+  }
+
+  .btn--secondary {
+    background: transparent;
+    color: var(--c-link);
+    border-color: var(--c-link);
+  }
+
+  .btn--secondary:hover {
+    background: var(--c-bg-tint);
+    transform: translateY(var(--lift));
+  }
+
+  .btn--ghost {
+    background: var(--c-surface);
+    color: var(--c-heading);
+    border-color: var(--c-border-strong);
+  }
+
+  .btn--ghost:hover {
+    background: var(--c-bg-soft);
+    border-color: var(--c-link);
+  }
+
+  .btn--on-dark {
+    background: var(--c-on-dark-surface);
+    color: var(--c-white);
+    border-color: var(--c-border-dark);
+  }
+
+  .btn--on-dark:hover {
+    background: var(--c-on-dark-surface-hover);
+    border-color: var(--c-accent-dark);
+  }
+
+  .btn:active {
+    transform: translateY(var(--press));
+  }
+
+  .btn:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+  }
+
+  .btn--on-dark:focus-visible {
+    box-shadow: var(--ring-on-dark);
+  }
+
+  .btn[disabled],
+  .btn[aria-disabled='true'] {
+    opacity: 0.55;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+</style>
