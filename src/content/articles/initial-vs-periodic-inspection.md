@@ -18,6 +18,7 @@ readingMinutes: 5
 hero:
   placeholder: crane
   alt: עגורן גשר חדש לאחר התקנה באולם ייצור, לפני הפעלה ראשונה
+  image: /uploads/img-07-crane-new-installed.webp
   note: 'צילום: ציוד הרמה חדש לאחר התקנה באתר, לפני תחילת שימוש'
 faqGroups:
   - new-equipment

@@ -23,7 +23,7 @@ const hasMedia = cards.some((card) => Boolean(card.placeholder));
                announced as an unlabelled image. */
             <PhotoFrame
               variant={card.placeholder}
-              alt={card.alt ?? card.title}
+              alt={card.alt ?? card.title} image={card.image}
               ratio="wide"
               class="lc__media"
             />

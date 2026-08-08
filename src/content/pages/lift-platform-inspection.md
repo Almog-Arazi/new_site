@@ -14,6 +14,7 @@ lead: >-
 hero:
   placeholder: platform
   alt: במת הרמה מסוג מספריים פרושה באתר עבודה לקראת בדיקה
+  image: /uploads/img-13-scissor-lift.webp
   note: 'צילום: במת מספריים פרושה לגובה באתר עבודה או במפעל'
 seo:
   title: בדיקות במות הרמה | בדיקת במת מספריים ובמת זרוע | ארזי מיטב המהנדסים
@@ -74,6 +75,7 @@ sections:
       בוחנים אותם בפריסה מלאה ובתנאי העבודה שבהם הבמה משמשת בפועל.
     placeholder: platform
     alt: רגלי ייצוב ומעקות בטיחות של במת הרמה בפריסה מלאה
+    image: /uploads/img-14-platform-outrigger.webp
     note: 'צילום: במת הרמה בפריסה מלאה — רגלי ייצוב, מעקות ולוח הפעלה'
     flip: true
     bullets:

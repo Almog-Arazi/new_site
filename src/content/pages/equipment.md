@@ -12,6 +12,7 @@ lead: >-
 hero:
   placeholder: factory
   alt: אולם ייצור עם עגורן גשר, מלגזה ובמת הרמה בשימוש
+  image: /uploads/img-23-production-hall-wide.webp
   note: 'צילום רחב: אולם ייצור פעיל שבו נראים כמה סוגי ציוד הרמה יחד'
 seo:
   title: ציוד ומתקני הרמה שאנו בודקים | ארזי מיטב המהנדסים

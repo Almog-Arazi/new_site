@@ -11,6 +11,7 @@ lead: >-
 hero:
   placeholder: document
   alt: תסקיר בדיקה ומסמכי ציוד מונחים על שולחן במשרד
+  image: /uploads/img-25-inspection-report.webp
   note: 'צילום: תיק ציוד פתוח על שולחן — תסקיר בדיקה, לוחית זיהוי ומחשב ברקע'
 seo:
   title: שאלות נפוצות על בדיקות ציוד הרמה | ארזי מיטב המהנדסים
@@ -79,16 +80,19 @@ sections:
         href: /lifting-equipment-inspection
         placeholder: crane
         alt: עגורן גשר באולם ייצור
+        image: /uploads/img-04-crane-hall.webp
       - title: בדיקות אביזרי הרמה
         text: סוגי אביזרים, סימני פסילה ובדיקה יסודית אחת ל־6 חודשים.
         href: /lifting-accessories
         placeholder: accessory
         alt: רצועות ושרשראות הרמה
+        image: /uploads/img-16-accessories-flatlay.webp
       - title: בדיקות קווי חיים
         text: קווי חיים, נקודות עיגון ומערכות לעבודה בגובה.
         href: /lifeline-inspection
         placeholder: lifeline
         alt: מערכת קו חיים על גג מבנה
+        image: /uploads/img-18-lifeline-roof.webp
 cta:
   heading: שאלה שלא מופיעה כאן?
   text: התקשרו אלינו — מענה אנושי, בלי מוקד ובלי המתנה.

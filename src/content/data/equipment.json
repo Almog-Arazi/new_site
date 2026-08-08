@@ -8,7 +8,8 @@
       "placeholder": "forklift",
       "alt": "מלגזה במחסן לוגיסטי במהלך בדיקת בודק מוסמך",
       "note": "צילום: מלגזה בתוך מפעל או מחסן לוגיסטי",
-      "order": 10
+      "order": 10,
+      "image": "/uploads/img-09-forklift-warehouse.webp"
     },
     {
       "id": "cranes",
@@ -18,7 +19,8 @@
       "placeholder": "crane",
       "alt": "עגורן גשר באולם ייצור",
       "note": "צילום: עגורן גשר בתוך אולם ייצור",
-      "order": 20
+      "order": 20,
+      "image": "/uploads/img-04-crane-hall.webp"
     },
     {
       "id": "platforms",
@@ -28,7 +30,8 @@
       "placeholder": "platform",
       "alt": "במת הרמה מסוג מספריים באתר עבודה",
       "note": "צילום: במת הרמה באתר עבודה או מפעל",
-      "order": 30
+      "order": 30,
+      "image": "/uploads/img-13-scissor-lift.webp"
     },
     {
       "id": "additional",
@@ -38,7 +41,8 @@
       "placeholder": "generic",
       "alt": "מתקן הרמה ייעודי במפעל",
       "note": "צילום: מתקן הרמה ייעודי במפעל",
-      "order": 40
+      "order": 40,
+      "image": "/uploads/img-22-jib-crane-line.webp"
     },
     {
       "id": "accessories",
@@ -48,7 +52,8 @@
       "placeholder": "accessory",
       "alt": "רצועות הרמה, שרשראות ושאקלים לבדיקה",
       "note": "צילום מקרוב: רצועות, שרשראות ושאקלים",
-      "order": 50
+      "order": 50,
+      "image": "/uploads/img-16-accessories-flatlay.webp"
     },
     {
       "id": "lifelines",
@@ -58,7 +63,8 @@
       "placeholder": "lifeline",
       "alt": "מערכת קו חיים על גג מבנה",
       "note": "צילום: מערכת קו חיים על גג או מבנה",
-      "order": 60
+      "order": 60,
+      "image": "/uploads/img-18-lifeline-roof.webp"
     }
   ]
 }

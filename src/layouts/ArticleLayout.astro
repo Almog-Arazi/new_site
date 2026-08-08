@@ -20,7 +20,7 @@ interface Props {
   category: string;
   keywords?: string[];
   readingMinutes: number;
-  hero: { placeholder: PlaceholderVariant; alt: string; note?: string };
+  hero: { placeholder: PlaceholderVariant; alt: string; note?: string; image?: string };
   schemas?: unknown[];
 }
 
@@ -91,6 +91,7 @@ const allSchemas = [
         variant={hero.placeholder}
         alt={hero.alt}
         note={hero.note}
+        image={hero.image}
         ratio="wide"
         eager
       />

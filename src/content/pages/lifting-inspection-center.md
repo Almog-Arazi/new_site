@@ -15,6 +15,7 @@ lead: >-
 hero:
   placeholder: factory
   alt: אזור תעשייה במרכז הארץ עם מחסנים לוגיסטיים ומלגזות בפעילות
+  image: /uploads/img-26-industrial-estate-center.webp
   note: 'צילום: אזור תעשייה במרכז — מחסן לוגיסטי, רמפות טעינה ומלגזות בפעילות'
 seo:
   title: בדיקות מתקני הרמה במרכז | בודק מוסמך | ארזי מיטב המהנדסים
@@ -82,6 +83,7 @@ sections:
       - תזכורת לפני הבדיקה הבאה
     placeholder: forklift
     alt: בדיקת צי מלגזות במרכז הפצה באזור המרכז
+    image: /uploads/img-12-forklift-fleet.webp
     note: 'צילום: שורת מלגזות חונות במרכז הפצה, הבודק עובר ביניהן עם טופס'
     flip: true
   - type: faq

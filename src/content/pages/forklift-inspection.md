@@ -15,6 +15,7 @@ lead: >-
 hero:
   placeholder: forklift
   alt: מלגזה חשמלית במחסן לוגיסטי במהלך בדיקת בודק מוסמך
+  image: /uploads/img-10-forklift-inspection.webp
   note: 'צילום: מלגזה במחסן לוגיסטי, הבודק בוחן את התורן, מדפים ברקע'
 seo:
   title: בדיקות מלגזות | בדיקת מלגזה על ידי בודק מוסמך | ארזי מיטב המהנדסים
@@ -152,6 +153,7 @@ sections:
       במחסן פעיל אנו מתאמים מראש את סדר הכלים כדי שהעבודה השוטפת תמשיך במקביל.
     placeholder: forklift
     alt: בדיקת תורן מלגזה מקרוב, לצד בדיקת שילדת הכלי
+    image: /uploads/img-11-forklift-mast-detail.webp
     note: 'צילום: מקרוב על תורן המלגזה ועל השילדה — שרשרת ההרמה, הגלגלות והקלשונים'
     flip: true
     bullets:
@@ -177,16 +179,19 @@ sections:
         href: /crane-inspection
         placeholder: crane
         alt: עגורן גשר באולם ייצור
+        image: /uploads/img-04-crane-hall.webp
       - title: בדיקות במות הרמה
         text: במות מספריים, זרוע, טלסקופיות ושולחנות הרמה.
         href: /lift-platform-inspection
         placeholder: platform
         alt: במת מספריים באתר עבודה
+        image: /uploads/img-13-scissor-lift.webp
       - title: בדיקות אביזרי הרמה
         text: רצועות, שרשראות, שאקלים וקורות הרמה — אחת ל־6 חודשים.
         href: /lifting-accessories
         placeholder: accessory
         alt: רצועות ושרשראות הרמה
+        image: /uploads/img-16-accessories-flatlay.webp
   - type: faq
     heading: שאלות על בדיקת מלגזה
     intro: השאלות שמנהלי מחסן ומנהלי אחזקה שואלים לפני שהם מזמינים בדיקה.

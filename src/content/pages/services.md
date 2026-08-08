@@ -11,6 +11,7 @@ lead: >-
 hero:
   placeholder: factory
   alt: בודק מוסמך בסביבת מפעל לצד ציוד הרמה
+  image: /uploads/img-24-factory-inspector-walking.webp
   note: 'צילום: בודק מוסמך בסביבת מפעל, ציוד גדול ברקע'
 seo:
   title: שירותי בדיקות ציוד הרמה | בודק מוסמך | ארזי מיטב המהנדסים
@@ -28,16 +29,19 @@ sections:
         href: /lifting-equipment-inspection
         placeholder: crane
         alt: עגורן גשר באולם ייצור
+        image: /uploads/img-04-crane-hall.webp
       - title: בדיקות אביזרי הרמה
         text: רצועות, שרשראות, חבלי פלדה, שאקלים, אונקלים וקורות הרמה.
         href: /lifting-accessories
         placeholder: accessory
         alt: רצועות הרמה ושאקלים
+        image: /uploads/img-16-accessories-flatlay.webp
       - title: בדיקות קווי חיים
         text: קווי חיים אופקיים ואנכיים, נקודות עיגון ומערכות בלימת נפילה.
         href: /lifeline-inspection
         placeholder: lifeline
         alt: מערכת קו חיים על גג מבנה
+        image: /uploads/img-18-lifeline-roof.webp
   - type: featureGrid
     heading: מה משותף לכל הבדיקות שלנו
     items:

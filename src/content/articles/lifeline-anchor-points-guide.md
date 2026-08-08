@@ -18,6 +18,7 @@ readingMinutes: 5
 hero:
   placeholder: lifeline
   alt: מערכת קו חיים אופקי מותקנת על גג מבנה תעשייתי
+  image: /uploads/img-18-lifeline-roof.webp
   note: 'צילום: קו חיים על גג, נקודות עיגון וחיבורי מערכת בפריים'
 faqGroups:
   - preparation

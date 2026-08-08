@@ -17,6 +17,7 @@ readingMinutes: 4
 hero:
   placeholder: document
   alt: תסקיר בדיקה חתום על שולחן לצד מסמכי ציוד הרמה
+  image: /uploads/img-25-inspection-report.webp
   note: 'צילום: תסקיר בדיקה מודפס וחתום על שולחן, לצד תיק ציוד ולוחית זיהוי'
 faqGroups:
   - inspector

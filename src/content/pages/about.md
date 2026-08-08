@@ -11,6 +11,7 @@ lead: >-
 hero:
   placeholder: portrait
   alt: בודק מוסמך בשטח לצד ציוד הרמה גדול במפעל
+  image: /uploads/img-02-inspector-portrait.webp
   note: 'צילום: פורטרט של הבודק בשטח, ציוד הרמה גדול ברקע, אור טבעי'
 seo:
   title: אודות ארזי מיטב המהנדסים | בודק מוסמך למתקני הרמה
@@ -45,6 +46,7 @@ sections:
       - מעקב ותזכורת לבדיקה הבאה
     placeholder: document
     alt: משרד פעיל עם מערכת מעקב אחר מועדי בדיקה ותסקירים
+    image: /uploads/img-03-office-tracking.webp
     note: 'צילום: שולחן משרד — מסך עם מערכת מעקב מועדי בדיקה, תיקיות תסקירים'
     flip: true
   - type: statRow
@@ -65,16 +67,19 @@ sections:
         href: /lifting-equipment-inspection
         placeholder: crane
         alt: עגורן גשר באולם ייצור
+        image: /uploads/img-04-crane-hall.webp
       - title: בדיקות אביזרי הרמה
         text: רצועות, שרשראות, שאקלים וקורות הרמה.
         href: /lifting-accessories
         placeholder: accessory
         alt: רצועות ושרשראות הרמה
+        image: /uploads/img-16-accessories-flatlay.webp
       - title: בדיקות קווי חיים
         text: קווי חיים, נקודות עיגון ומערכות לעבודה בגובה.
         href: /lifeline-inspection
         placeholder: lifeline
         alt: מערכת קו חיים על גג מבנה
+        image: /uploads/img-18-lifeline-roof.webp
   - type: processSteps
     heading: איך עובדים איתנו
     tone: dark

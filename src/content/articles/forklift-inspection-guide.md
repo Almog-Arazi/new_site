@@ -18,6 +18,7 @@ readingMinutes: 5
 hero:
   placeholder: forklift
   alt: בדיקת תורן מלגזה במחסן לוגיסטי על ידי בודק מוסמך
+  image: /uploads/img-11-forklift-mast-detail.webp
   note: 'צילום: מקרוב על תורן מלגזה — שרשרת הרמה, גלגלות וקלשונים'
 faqGroups:
   - general

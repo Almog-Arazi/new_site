@@ -14,7 +14,7 @@ interface Props {
   lead: string;
   breadcrumb?: { label: string; href: string }[];
   breadcrumbLabel: string;
-  hero?: { placeholder: PlaceholderVariant; alt: string; note?: string };
+  hero?: { placeholder: PlaceholderVariant; alt: string; note?: string; image?: string };
   /**
    * Legal pages: no tinted slab, no hero, no CTA cluster. A privacy policy
    * that opens with a "תיאום בדיקה" button reads as a sales page.
@@ -61,6 +61,7 @@ const showHero = Boolean(hero) && !compact;
             variant={hero.placeholder}
             alt={hero.alt}
             note={hero.note}
+            image={hero.image}
             ratio="card"
             eager
             class="pagehead__media"

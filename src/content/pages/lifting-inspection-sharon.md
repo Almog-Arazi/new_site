@@ -15,6 +15,7 @@ lead: >-
 hero:
   placeholder: platform
   alt: במת הרמה אנכית בתוך מבנה תעסוקה באזור השרון
+  image: /uploads/img-15-vertical-lift-sharon.webp
   note: 'צילום: במה אנכית או שולחן הרמה בתוך מבנה מודרני בשרון, תאורה נקייה'
 seo:
   title: בדיקות מתקני הרמה בשרון | בודק מוסמך | ארזי מיטב המהנדסים
@@ -96,6 +97,7 @@ sections:
       - התאמה לשימוש שנעשה בגג בפועל
     placeholder: lifeline
     alt: קו חיים ונקודות עיגון על גג מבנה משרדים בשרון
+    image: /uploads/img-20-lifeline-office-roof.webp
     note: 'צילום: גג מבנה משרדים עם קו חיים, מזגנים ברקע, שעת אור רכה'
     flip: true
   - type: faq

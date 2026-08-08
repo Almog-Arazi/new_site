@@ -14,6 +14,7 @@ lead: >-
 hero:
   placeholder: lifeline
   alt: מערכת קו חיים אופקי מותקנת על גג מבנה תעשייתי
+  image: /uploads/img-18-lifeline-roof.webp
   note: 'צילום: קו חיים על גג מבנה — כבל, עמודי עיגון ומחבר, רצוי בשעת אור נמוכה'
 seo:
   title: בדיקות קווי חיים ונקודות עיגון | בודק מוסמך | ארזי מיטב המהנדסים
@@ -86,6 +87,7 @@ sections:
       - לאחר אירוע נפילה או פגיעה במערכת
     placeholder: lifeline
     alt: בדיקת נקודת עיגון על גג — כבל, מחבר ואמצעי הידוק
+    image: /uploads/img-19-anchor-point-hand.webp
     note: 'צילום: בדיקה על גג — יד עם כפפה אוחזת מחבר, נקודת עיגון בפוקוס'
     flip: true
     cta:

@@ -18,6 +18,7 @@ readingMinutes: 5
 hero:
   placeholder: accessory
   alt: רצועות פוליאסטר, שרשראות הרמה ושאקלים מונחים לקראת בדיקה יסודית
+  image: /uploads/img-16-accessories-flatlay.webp
   note: 'צילום: פריסה מסודרת של רצועות, שרשראות ושאקלים על משטח עבודה נקי'
 faqGroups:
   - accessories

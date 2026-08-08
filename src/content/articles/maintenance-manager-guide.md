@@ -18,6 +18,7 @@ readingMinutes: 6
 hero:
   placeholder: factory
   alt: אולם ייצור פעיל עם עגורן גשר ומלגזות בשימוש יומיומי
+  image: /uploads/img-23-production-hall-wide.webp
   note: 'צילום: אולם ייצור פעיל, מספר סוגי ציוד הרמה בפריים אחד'
 faqGroups:
   - general

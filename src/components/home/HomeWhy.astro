@@ -8,7 +8,7 @@ interface Props {
   heading?: string;
   body?: string;
   bullets?: string[];
-  media?: { placeholder: PlaceholderVariant; alt: string; note?: string };
+  media?: { placeholder: PlaceholderVariant; alt: string; note?: string; image?: string };
 }
 
 const {
@@ -24,6 +24,7 @@ const {
   media = {
     placeholder: 'factory' as PlaceholderVariant,
     alt: 'סביבת מפעל פעיל שבה מתבצעות בדיקות ציוד הרמה',
+    image: '/uploads/img-23-production-hall-wide.webp',
     note: 'צילום: משרד פעיל / מפעל — מעקב מועדי בדיקה והכנת תסקיר',
   },
 } = Astro.props;
@@ -35,6 +36,7 @@ const {
       variant={media.placeholder}
       alt={media.alt}
       note={media.note}
+      image={media.image}
       ratio="card"
       tone="dark"
       class="why__media"

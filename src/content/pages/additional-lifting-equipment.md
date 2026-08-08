@@ -14,6 +14,7 @@ lead: >-
 hero:
   placeholder: generic
   alt: ליפט לרכב במוסך ומתקן הרמה ייעודי בקו ייצור
+  image: /uploads/img-21-vehicle-lift.webp
   note: 'צילום: ליפט לרכב במוסך עם רכב מורם, או מתקן הרמה ייעודי בקו ייצור'
 seo:
   title: בדיקות ליפטים לרכב, כננות ומתקני הרמה נוספים | ארזי מיטב המהנדסים
@@ -80,6 +81,7 @@ sections:
       העומסים שהוא נושא ומול סביבת העבודה שבה הוא פועל.
     placeholder: factory
     alt: מתקן הרמה ייעודי המותקן בקו ייצור במפעל
+    image: /uploads/img-22-jib-crane-line.webp
     note: 'צילום: מתקן הרמה ייעודי בקו ייצור — זווית שמראה את החיבור למבנה'
     flip: true
   - type: calloutBand

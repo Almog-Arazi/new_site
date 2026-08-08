@@ -154,6 +154,7 @@ const linkCards = z.object({
         href: z.string(),
         placeholder: placeholder.optional(),
         alt: z.string().optional(),
+        image: z.string().optional(),
       })
     )
     .min(1),
@@ -180,6 +181,7 @@ const photoBand = z.object({
   alt: z.string(),
   /** Photography brief shown inside the placeholder while it is a placeholder. */
   note: z.string().optional(),
+  image: z.string().optional(),
   /** Puts the image on the inline-end side instead of inline-start. */
   flip: z.boolean().default(false),
   cta: cta.optional(),
@@ -249,6 +251,8 @@ const pages = defineCollection({
         placeholder,
         alt: z.string(),
         note: z.string().optional(),
+        /** Real photo under /uploads. When present PhotoFrame drops the placeholder. */
+        image: z.string().optional(),
       })
       .optional(),
     seo,
@@ -289,6 +293,7 @@ const articles = defineCollection({
       placeholder,
       alt: z.string(),
       note: z.string().optional(),
+      image: z.string().optional(),
     }),
     faqGroups: z.array(z.string()).default([]),
     relatedPages: z.array(z.string()).default([]),
@@ -335,6 +340,7 @@ const equipment = defineCollection({
     placeholder,
     alt: z.string(),
     note: z.string().optional(),
+    image: z.string().optional(),
     order: z.number().default(100),
   }),
 });

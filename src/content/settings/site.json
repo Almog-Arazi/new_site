@@ -3,22 +3,35 @@
   "shortName": "ארזי מיטב המהנדסים",
   "tagline": "בדיקות בודק מוסמך למתקני הרמה, אביזרי הרמה וקווי חיים",
   "yearsExperience": 15,
-  "phone": "050-000-0000",
-  "phoneE164": "+972500000000",
-  "whatsapp": "+972500000000",
+  "phone": "050-591-2660",
+  "phoneE164": "+972505912660",
+  "whatsapp": "+972505912660",
   "whatsappMessage": "שלום, אני מעוניין לבצע בדיקה לציוד הרמה",
   "email": "info@example.co.il",
   "hours": "ימים א׳–ה׳, 08:00–17:00",
   "hoursSchema": [
     {
-      "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Sunday"],
+      "days": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Sunday"
+      ],
       "opens": "08:00",
       "closes": "17:00"
     }
   ],
   "addressLocality": "ישראל",
   "addressCountry": "IL",
-  "areasServed": ["מרכז", "שרון", "שפלה", "דרום", "צפון", "ירושלים והסביבה"],
+  "areasServed": [
+    "מרכז",
+    "שרון",
+    "שפלה",
+    "דרום",
+    "צפון",
+    "ירושלים והסביבה"
+  ],
   "areaServedLabel": "שירות בכל הארץ",
   "ga4Id": "G-XXXXXXXXXX",
   "domain": "https://ardi-engineers.co.il",

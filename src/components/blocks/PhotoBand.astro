@@ -6,7 +6,8 @@ import Button from '../ui/Button.astro';
 import type { Section as Block } from '../../content.config';
 
 type Props = Extract<Block, { type: 'photoBand' }>;
-const { eyebrow, heading, body, bullets, placeholder, alt, note, flip, cta, tone } = Astro.props;
+const { eyebrow, heading, body, bullets, placeholder, alt, note, image, flip, cta, tone } =
+  Astro.props;
 
 const variant = cta?.style === 'ghost' ? 'ghost' : cta?.style === 'secondary' ? 'secondary' : 'primary';
 ---
@@ -43,6 +44,7 @@ const variant = cta?.style === 'ghost' ? 'ghost' : cta?.style === 'secondary' ? 
       variant={placeholder}
       alt={alt}
       note={note}
+      image={image}
       ratio="card"
       tone={tone === 'dark' ? 'dark' : 'tint'}
       class="band__media"

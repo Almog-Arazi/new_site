@@ -11,6 +11,7 @@ interface ServiceCard {
   text: string;
   href: string;
   placeholder: PlaceholderVariant;
+  image?: string;
   alt: string;
   note?: string;
 }
@@ -28,6 +29,7 @@ const DEFAULT_SERVICES: ServiceCard[] = [
     href: '/lifting-equipment-inspection',
     placeholder: 'crane',
     alt: 'עגורן גשר באולם ייצור לפני בדיקת בודק מוסמך',
+    image: '/uploads/img-04-crane-hall.webp',
     note: 'צילום: עגורן גשר או מלגזה באולם ייצור',
   },
   {
@@ -36,6 +38,7 @@ const DEFAULT_SERVICES: ServiceCard[] = [
     href: '/lifting-accessories',
     placeholder: 'accessory',
     alt: 'רצועות הרמה, שרשראות ושאקלים מונחים לבדיקה',
+    image: '/uploads/img-16-accessories-flatlay.webp',
     note: 'צילום מקרוב: רצועות, שרשראות ושאקלים',
   },
   {
@@ -44,6 +47,7 @@ const DEFAULT_SERVICES: ServiceCard[] = [
     href: '/lifeline-inspection',
     placeholder: 'lifeline',
     alt: 'מערכת קו חיים על גג מבנה תעשייתי',
+    image: '/uploads/img-18-lifeline-roof.webp',
     note: 'צילום: מערכת קו חיים על גג מבנה',
   },
 ];
@@ -65,6 +69,7 @@ const {
             variant={service.placeholder}
             alt={service.alt}
             note={service.note}
+            image={service.image}
             ratio="wide"
             class="svc__media"
           />

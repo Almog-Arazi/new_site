@@ -15,6 +15,7 @@ lead: >-
 hero:
   placeholder: crane
   alt: בודק מוסמך לצד עגורן גשר באולם ייצור לפני בדיקה תקופתית
+  image: /uploads/img-01-hero-inspector-factory.webp
   note: 'צילום: בודק ליד עגורן גשר באולם ייצור, ציוד מדידה ביד'
 seo:
   title: בדיקות מתקני הרמה | בודק מוסמך למתקני הרמה | ארזי מיטב המהנדסים
@@ -63,21 +64,25 @@ sections:
         href: /forklift-inspection
         placeholder: forklift
         alt: מלגזה במחסן לוגיסטי לפני בדיקה
+        image: /uploads/img-09-forklift-warehouse.webp
       - title: עגורנים
         text: עגורני גשר, שער, זרוע ועגורנים עיליים.
         href: /crane-inspection
         placeholder: crane
         alt: עגורן גשר באולם ייצור
+        image: /uploads/img-04-crane-hall.webp
       - title: במות הרמה
         text: בדיקות לבמות הרמה מסוגים שונים.
         href: /lift-platform-inspection
         placeholder: platform
         alt: במת הרמה מסוג מספריים באתר עבודה
+        image: /uploads/img-13-scissor-lift.webp
       - title: מתקני הרמה נוספים
         text: ליפטים לרכב, כננות ומתקנים ייעודיים במפעלים.
         href: /additional-lifting-equipment
         placeholder: generic
         alt: מתקן הרמה ייעודי בקו ייצור
+        image: /uploads/img-22-jib-crane-line.webp
   - type: processSteps
     heading: מה כולל תהליך הבדיקה?
     tone: dark
@@ -100,6 +105,7 @@ sections:
       וביטוח.
     placeholder: document
     alt: תסקיר בדיקה חתום על שולחן במשרד
+    image: /uploads/img-25-inspection-report.webp
     note: 'צילום: תסקיר בדיקה מודפס על שולחן, לצד מחשב עם מערכת מעקב מועדים'
     flip: true
     bullets:

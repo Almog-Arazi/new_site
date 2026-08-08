@@ -151,6 +151,7 @@ collections:
                 options:
                   [forklift, crane, platform, lifeline, accessory, generic, portrait, document, factory]
               - { name: alt, label: 'תיאור התמונה (ALT)', widget: string }
+              - { name: image, label: תמונה אמיתית, widget: image, required: false, hint: 'מחליפה את האיור. להקטין לרוחב 1600px לפני העלאה.' }
               - { name: note, label: הנחיית צילום, widget: string, required: false }
               - { name: order, label: סדר, widget: number, value_type: int, default: 100 }
 
@@ -273,6 +274,7 @@ collections:
             options:
               [forklift, crane, platform, lifeline, accessory, generic, portrait, document, factory]
           - { name: alt, label: 'תיאור התמונה (ALT)', widget: string }
+          - { name: image, label: תמונה אמיתית, widget: image, required: false, hint: 'מחליפה את האיור. להקטין לרוחב 1600px לפני העלאה.' }
           - { name: note, label: הנחיית צילום, widget: string, required: false }
       - { name: faqGroups, label: קבוצות שאלות להצגה, widget: list, required: false }
       - { name: relatedPages, label: עמודי שירות קשורים, widget: list, required: false }
@@ -338,6 +340,7 @@ collections:
             options:
               [forklift, crane, platform, lifeline, accessory, generic, portrait, document, factory]
           - { name: alt, label: 'תיאור התמונה (ALT)', widget: string }
+          - { name: image, label: תמונה אמיתית, widget: image, required: false, hint: 'מחליפה את האיור. להקטין לרוחב 1600px לפני העלאה.' }
           - { name: note, label: הנחיית צילום, widget: string, required: false }
       - name: seo
         label: SEO
@@ -486,6 +489,7 @@ collections:
                     options:
                       [forklift, crane, platform, lifeline, accessory, generic, portrait, document, factory]
                   - { name: alt, label: 'תיאור התמונה (ALT)', widget: string, required: false }
+                  - { name: image, label: תמונה אמיתית, widget: image, required: false, hint: 'מחליפה את האיור. להקטין לרוחב 1600px לפני העלאה.' }
               - { name: columns, label: מספר עמודות, widget: number, value_type: int, default: 3, min: 2, max: 3 }
               - { name: tone, label: רקע, widget: select, options: [light, soft, tint, dark], default: light }
 
@@ -516,6 +520,7 @@ collections:
                 options:
                   [forklift, crane, platform, lifeline, accessory, generic, portrait, document, factory]
               - { name: alt, label: 'תיאור התמונה (ALT)', widget: string }
+              - { name: image, label: תמונה אמיתית, widget: image, required: false, hint: 'מחליפה את האיור. להקטין לרוחב 1600px לפני העלאה.' }
               - { name: note, label: הנחיית צילום, widget: string, required: false }
               - { name: flip, label: תמונה בצד השני, widget: boolean, default: false }
               - name: cta

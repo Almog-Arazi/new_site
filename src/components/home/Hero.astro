@@ -14,7 +14,7 @@ interface Props {
   h1: string;
   lead: string;
   trust: string[];
-  media: { placeholder: PlaceholderVariant; alt: string; note?: string };
+  media: { placeholder: PlaceholderVariant; alt: string; note?: string; image?: string };
   formEyebrow?: string;
   formHeading?: string;
   formIntro?: string;
@@ -45,6 +45,7 @@ const {
           variant={media.placeholder}
           alt={media.alt}
           note={media.note}
+          image={media.image}
           ratio="wide"
           eager
           class="hero__media"

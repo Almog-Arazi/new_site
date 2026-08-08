@@ -16,6 +16,7 @@ readingMinutes: 5
 hero:
   placeholder: crane
   alt: עגורן גשר במפעל לפני בדיקה תקופתית
+  image: /uploads/img-04-crane-hall.webp
   note: 'צילום: בודק ליד עגורן גשר באולם ייצור'
 faqGroups:
   - general

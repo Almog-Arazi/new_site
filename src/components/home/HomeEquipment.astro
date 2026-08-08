@@ -39,6 +39,7 @@ const items = (await getCollection('equipment')).sort((a, b) => a.data.order - b
             variant={item.data.placeholder}
             alt={item.data.alt}
             note={item.data.note}
+            image={item.data.image}
             ratio="wide"
             class="heq__media"
           />
