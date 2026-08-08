@@ -41,14 +41,21 @@ any amount of prompt wording.
 
 ## The prompt
 
-Paste as one block.
+Paste as one block, and **attach `docs/logo-mark-reference.png`** as the
+reference image. Attach that file, not the full logo — the full logo carries
+the Hebrew wordmark, and any model given Hebrew type will try to draw it.
 
 ```
+Use the ATTACHED REFERENCE IMAGE as the exact source for the company emblem
+that appears in this shot. Reproduce that emblem faithfully — its proportions,
+its geometry and its single flat blue colour. Do not redesign it, do not add
+lettering to it, do not invent any other logo.
+
 A single continuous 16-second orbital camera move around an overhead bridge
 crane inside a working industrial production hall. Shot on a full-frame cinema
 camera with a 35mm prime at T2.8, mounted on a slow-moving dolly circling the
 subject at a constant, unvarying speed — roughly 150 degrees of arc across the
-whole shot, never accelerating, never stopping.
+whole shot, never accelerating, never stopping, never cutting.
 
 SUBJECT: The crane's hoist trolley and hook block, hanging at chest height in
 the centre of the frame, remain the anchor of the composition throughout the
@@ -92,7 +99,8 @@ element is symmetrical, nothing is perfectly clean, no surface is pristine.
 FINAL 4 SECONDS: The orbit brings a large flat section of dark grey concrete
 wall into the right two-thirds of the frame, free of machinery and pipework.
 Stencilled onto that wall in flat industrial blue paint, roughly a metre and a
-half across, is a single geometric emblem: a circular gear ring with square
+half across, is the emblem from the attached reference image: a circular gear
+ring with square
 teeth around its rim; inside the ring, a drafting compass with two straight
 legs meeting at a pivot at the top; below the compass, a lifting hook curving
 downward. Flat single-colour paint, slightly worn and faded at the edges, with
@@ -115,7 +123,8 @@ cuts, jump cuts, dissolves, transitions, speed ramps, slow motion, time-lapse,
 camera stopping, accelerating or decelerating, orbiting more than once,
 text, letters, words, lettering, Hebrew characters, Arabic characters,
 typography, subtitles, watermarks, brand names, company names,
-glowing logo, floating logo, animated logo, logo overlay, decal, sticker,
+redesigned logo, different logo, glowing logo, floating logo, animated logo,
+logo overlay, decal, sticker,
 people looking at camera, smiling, posing, waving, stock-footage styling,
 CGI, 3D render, video game look, unreal engine, perfect symmetry, glossy
 surfaces, showroom cleanliness, malformed machinery, impossible mechanics,
