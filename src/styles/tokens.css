@@ -58,6 +58,12 @@
   --c-on-dark-surface-soft: rgb(255 255 255 / 6%);
   --c-on-dark-surface: rgb(255 255 255 / 10%);
   --c-on-dark-surface-hover: rgb(255 255 255 / 16%);
+  /* Contrast floor for text over the hero footage — the grade shifts as the
+     camera orbits, so the scrim cannot be left to the video. */
+  --c-video-scrim-top: rgb(20 34 74 / 72%);
+  --c-video-scrim-mid: rgb(20 34 74 / 55%);
+  --c-video-scrim-bottom: rgb(20 34 74 / 88%);
+  --c-video-vignette: rgb(14 24 52 / 70%);
   --c-danger: #b3261e;
   --c-success: #1e6b45;
 

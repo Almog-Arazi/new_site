@@ -1,20 +1,33 @@
 ---
 import LeadForm from '../form/LeadForm.astro';
-import PhotoFrame from '../media/PhotoFrame.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
 import TelLink from '../ui/TelLink.astro';
-import type { PlaceholderVariant } from '../placeholders/index';
+import Icon from '../ui/Icon.astro';
 
 /* Homepage hero (sketch P1). This is the one page whose <h1> does not come
    from PageHead — the homepage has no breadcrumb and pairs the heading with
    a lead-capture panel, so it uses a bespoke head, exactly as the frozen
-   ArticleLayout does. Still exactly one <h1> in the document. */
+   ArticleLayout does. Still exactly one <h1> in the document.
+
+   The backdrop is a mouse-scrubbed video: cursor position across the viewport
+   maps to a position on the timeline, so the crane orbits as the visitor moves.
+   Three deliberate departures from the stock technique:
+
+   1. The video is scoped to this section, not fixed behind the whole page.
+      Every section below it is opaque anyway, so a page-wide fixed backdrop
+      would just be 6MB of pixels nobody sees.
+   2. It loads only on `pointer: fine` — a device with a mouse. Touch devices
+      cannot scrub at all, and this audience is on 4G in a factory; they get
+      the poster frame and none of the download.
+   3. It loads after `load`, never before. The poster is the LCP element.
+*/
 
 interface Props {
   h1: string;
   lead: string;
   trust: string[];
-  media: { placeholder: PlaceholderVariant; alt: string; note?: string; image?: string };
+  poster?: string;
+  video?: string;
   formEyebrow?: string;
   formHeading?: string;
   formIntro?: string;
@@ -24,82 +37,112 @@ const {
   h1,
   lead,
   trust,
-  media,
+  poster = '/uploads/hero-poster-mid.webp',
+  video = '/hero.mp4',
   formEyebrow = 'תיאום בדיקה · 30 שניות',
   formHeading = 'נחזור אליכם עם זמינות ומחיר',
   formIntro = 'חמישה שדות בלבד. נחזור אליכם עם זמינות ומחיר לבדיקה.',
 } = Astro.props;
-
-/* LeadForm brings its own navy panel — the hero places it, it does not
-   wrap it. */
 ---
 
-<section class="hero">
-  <div class="section__slab hero__slab">
-    <div class="container hero__grid">
-      <div class="hero__main">
-        <h1 class="hero__title">{h1}</h1>
-        <p class="t-lead hero__lead">{lead}</p>
+<section class="hero" data-hero data-video={video}>
+  <div class="hero__bg" style={`background-image:url(${poster})`} aria-hidden="true">
+    <canvas class="hero__canvas" data-hero-canvas></canvas>
+  </div>
+  <div class="hero__scrim" aria-hidden="true"></div>
 
-        <PhotoFrame
-          variant={media.placeholder}
-          alt={media.alt}
-          note={media.note}
-          image={media.image}
-          ratio="wide"
-          eager
-          class="hero__media"
-        />
+  <div class="container hero__grid">
+    <div class="hero__main">
+      <h1 class="hero__title">{h1}</h1>
+      <p class="hero__lead">{lead}</p>
 
-        <ul role="list" class="hero__trust">
-          {
-            trust.map((item) => (
-              <li class="hero__trust-item">
-                <span class="hero__tick" aria-hidden="true">
-                  ✓
-                </span>
-                {item}
-              </li>
-            ))
-          }
-        </ul>
-      </div>
+      <ul role="list" class="hero__trust">
+        {
+          trust.map((item) => (
+            <li class="hero__trust-item">
+              <span class="hero__tick" aria-hidden="true">
+                ✓
+              </span>
+              {item}
+            </li>
+          ))
+        }
+      </ul>
 
-      <div class="hero__aside" id="lead">
-        <Eyebrow>{formEyebrow}</Eyebrow>
+      <p class="hero__cue" data-hero-cue hidden>
+        <Icon name="arrow" size={18} />
+        <span>הזיזו את העכבר — העגורן מסתובב</span>
+      </p>
+    </div>
 
-        <LeadForm heading={formHeading} intro={formIntro} headingLevel={2} />
-
-        <p class="hero__tel">
-          <span>או התקשרו ישירות:</span>
-          <TelLink variant="plain" showIcon={false} />
-        </p>
-      </div>
+    <div class="hero__aside" id="lead">
+      <Eyebrow>{formEyebrow}</Eyebrow>
+      <LeadForm heading={formHeading} intro={formIntro} headingLevel={2} />
+      <p class="hero__tel">
+        <span>או התקשרו ישירות:</span>
+        <TelLink variant="plain" showIcon={false} />
+      </p>
     </div>
   </div>
 </section>
 
+<script>
+  import '../../scripts/hero-scrub';
+</script>
+
 <style>
   .hero {
-    padding-block: var(--s-5) 0;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: var(--s-9) var(--s-10);
+    border-end-start-radius: var(--r-6);
+    border-end-end-radius: var(--r-6);
+    background: var(--c-bg-dark);
   }
 
-  .hero__slab {
-    background: var(--c-bg-tint);
+  .hero__bg,
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .hero__bg {
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero__canvas {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity var(--dur-slower) var(--ease);
+  }
+
+  .hero[data-scrub-ready] .hero__canvas {
+    opacity: 1;
+  }
+
+  /* Text over footage needs its own contrast floor — the video is not a
+     controlled background and the grade shifts as the camera orbits. */
+  .hero__scrim {
+    background:
+      linear-gradient(
+          to bottom,
+          var(--c-video-scrim-top),
+          var(--c-video-scrim-mid) 45%,
+          var(--c-video-scrim-bottom)
+        ),
+      radial-gradient(120% 90% at 80% 40%, transparent, var(--c-video-vignette));
   }
 
   .hero__grid {
     display: grid;
-    gap: var(--s-8);
+    gap: var(--s-9);
     align-items: center;
-    grid-template-columns: 1fr;
-  }
-
-  @media (width >= 900px) {
-    .hero__grid {
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: var(--s-9);
-    }
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
   }
 
   .hero__main {
@@ -108,97 +151,80 @@ const {
     align-content: start;
   }
 
+  .hero__title {
+    font-size: var(--fs-hero);
+    line-height: var(--lh-hero);
+    letter-spacing: var(--ls-hero);
+    color: var(--c-white);
+    text-wrap: balance;
+  }
+
   .hero__lead {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    color: var(--c-on-dark);
     max-inline-size: 52ch;
   }
 
-  /* A class handed to a child component lands on that component's root,
-     which never carries this file's scope id — hence :global here only. */
-  :global(.hero__media) {
-    margin-block-start: var(--s-1);
-  }
-
-  /* 2×2 white trust pills on the tinted slab. */
   .hero__trust {
     display: grid;
     gap: var(--s-3);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
     margin: 0;
     padding: 0;
   }
 
   .hero__trust-item {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--s-3);
-    align-items: start;
-    padding: var(--s-3) var(--s-4);
-    background: var(--c-surface);
-    border-radius: var(--r-3);
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-block-size: var(--tap);
+    padding: var(--s-2) var(--s-4);
     font-family: var(--ff-head);
     font-size: var(--fs-sm);
     font-weight: var(--fw-med);
-    line-height: var(--lh-h3);
-    color: var(--c-heading);
+    color: var(--c-white);
+    background: var(--c-on-dark-surface);
+    border: 1px solid var(--c-border-dark);
+    border-radius: var(--r-pill);
   }
 
   .hero__tick {
-    color: var(--c-link);
+    color: var(--c-accent-dark);
     font-weight: var(--fw-black);
   }
 
-  /* The lead column. LeadForm supplies its own navy panel; nesting a second
-     one behind it would stack two dark surfaces. */
+  .hero__cue {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    inline-size: fit-content;
+    padding: var(--s-2) var(--s-4);
+    font-family: var(--ff-mono);
+    font-size: var(--fs-xs);
+    color: var(--c-accent-dark);
+    background: var(--c-on-dark-surface-soft);
+    border: 1px solid var(--c-border-dark);
+    border-radius: var(--r-pill);
+  }
+
   .hero__aside {
     display: grid;
     gap: var(--s-4);
-    align-content: center;
   }
 
   .hero__tel {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
     gap: var(--s-2);
     font-size: var(--fs-sm);
-    color: var(--c-text-strong);
+    color: var(--c-on-dark);
   }
 
-
-
-
-  /* Mobile (sketch P1, 390px): heading, media, lead, form, then the ticks —
-     the form stays inside the first screenful. */
-  @media (width <= 899px) {
-    .hero__grid {
-      display: flex;
-      flex-direction: column;
-      gap: var(--s-6);
-    }
-
-    .hero__main {
-      display: contents;
-    }
-
-    .hero__title {
-      order: 1;
-    }
-
-    :global(.hero__media) {
-      order: 2;
-    }
-
-    .hero__lead {
-      order: 3;
-    }
-
-    .hero__aside {
-      order: 4;
-    }
-
-    .hero__trust {
-      order: 5;
+  @media (width <= 900px) {
+    .hero {
+      padding-block: var(--s-7) var(--s-8);
     }
   }
 </style>

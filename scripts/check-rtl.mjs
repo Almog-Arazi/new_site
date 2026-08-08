@@ -58,8 +58,19 @@ for (const file of files) {
 
   lines.forEach((line, index) => {
     if (line.includes('check-rtl-ignore')) return;
-    const code = line.replace(/\/\*[\s\S]*?\*\//g, '').trim();
+    let code = line.replace(/\/\*[\s\S]*?\*\//g, '').trim();
     if (!code || code.startsWith('*') || code.startsWith('//')) return;
+
+    /* A declaration whose value wraps onto later lines used to escape every
+       check — only the `prop:` fragment was ever examined. Pull the rest of
+       the value in before testing it. */
+    if (/[a-z-]+\s*:/.test(code) && !code.includes(';') && !code.endsWith('{')) {
+      for (let j = index + 1; j < lines.length && j < index + 8; j += 1) {
+        const cont = lines[j].replace(/\/\*[\s\S]*?\*\//g, '').trim();
+        code += ' ' + cont;
+        if (cont.includes(';') || cont.includes('}')) break;
+      }
+    }
 
     DECLARATION.lastIndex = 0;
     let match;
