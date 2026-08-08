@@ -21,9 +21,21 @@ the hero is muted.
 **Aspect: 21:9** if the generator supports it, otherwise 16:9 (the hero frame
 crops to 21:9 and there is enough headroom).
 
-**No logo in the video.** A generative model will render the mark as moving
-gibberish, which reads far worse than no logo at all. The prompt below reserves
-a clean dark wall in the closing seconds; the real SVG is composited over it.
+**The logo is in the shot — as a painted mark on a wall, not as graphics.**
+Two rules make this work. First: **the emblem only, never the Hebrew wordmark.**
+A gear ring with a drafting compass and a hook is a shape a model can draw;
+Hebrew letterforms come back as gibberish every time. Second: describe it as
+something physically present in the space — stencilled paint on concrete, lit
+by the same lamps as everything else. Models render industrial signage far
+better than they render "an overlaid logo".
+
+The wordmark `ארזי מיטב המהנדסים בע"מ` is composited afterwards from the real
+SVG, beside the painted emblem. That keeps the type crisp and correct while the
+emblem is genuinely part of the scene.
+
+If your generator accepts a reference image, feed it `docs/logo-mark-reference.png`
+— the emblem alone, flat brand blue on white. That raises fidelity more than
+any amount of prompt wording.
 
 ---
 
@@ -77,13 +89,23 @@ of sensor grain. Slight lens softness at the extreme corners. The orbit path is
 not a mathematically perfect circle; the radius varies by a hand's width. No
 element is symmetrical, nothing is perfectly clean, no surface is pristine.
 
-FINAL 3 SECONDS: The orbit brings a large, flat, unlit section of dark grey
-concrete wall into the right two-thirds of the frame, uncluttered and free of
-machinery, pipes or signage. The hook remains in the left third. The camera
+FINAL 4 SECONDS: The orbit brings a large flat section of dark grey concrete
+wall into the right two-thirds of the frame, free of machinery and pipework.
+Stencilled onto that wall in flat industrial blue paint, roughly a metre and a
+half across, is a single geometric emblem: a circular gear ring with square
+teeth around its rim; inside the ring, a drafting compass with two straight
+legs meeting at a pivot at the top; below the compass, a lifting hook curving
+downward. Flat single-colour paint, slightly worn and faded at the edges, with
+a little dust and a paint drip — signage that has been on that wall for years,
+not a decal applied yesterday. It is lit by the same overhead lamps as the rest
+of the hall and sits flat on the surface, following the wall's texture and
+perspective as the camera moves past. No lettering, no words, no characters of
+any kind beside it. The hook of the crane remains in the left third. The camera
 keeps moving at the same speed through to the last frame — it does not slow,
 settle or stop.
 
-Israeli industrial setting. No signage or text of any kind anywhere in frame.
+Israeli industrial setting. Apart from the painted emblem described above,
+there is no signage, lettering or text of any kind anywhere in frame.
 ```
 
 ## Negative prompt
@@ -91,7 +113,9 @@ Israeli industrial setting. No signage or text of any kind anywhere in frame.
 ```
 cuts, jump cuts, dissolves, transitions, speed ramps, slow motion, time-lapse,
 camera stopping, accelerating or decelerating, orbiting more than once,
-text, letters, signage, watermarks, logos, brand names, subtitles,
+text, letters, words, lettering, Hebrew characters, Arabic characters,
+typography, subtitles, watermarks, brand names, company names,
+glowing logo, floating logo, animated logo, logo overlay, decal, sticker,
 people looking at camera, smiling, posing, waving, stock-footage styling,
 CGI, 3D render, video game look, unreal engine, perfect symmetry, glossy
 surfaces, showroom cleanliness, malformed machinery, impossible mechanics,
@@ -119,20 +143,27 @@ leaks, bokeh balls, drone footage, handheld shake, whip pans, zoom
    pan and the effect collapses.
 3. **Is the safety latch on the hook?** A hook without one is a defect a
    certified inspector spots in the first second.
-4. **Is the closing wall actually clear?** The logo needs somewhere to land.
-5. **Any text anywhere?** Even blurred signage in the background is a problem —
-   generated lettering is never real language.
+4. **Is the painted emblem readable as the mark?** Gear ring, compass inside,
+   hook below. If the model invented a different shape, reject the take — a
+   wrong emblem is worse than none, and it is the one thing you cannot fix in
+   post without covering it up.
+5. **Any lettering anywhere?** Including beside the emblem. Generated text is
+   never real language, and Hebrew least of all.
 
 Generate four takes and pick on these five points, not on which is prettiest.
 
-## Then the logo
+## Then the wordmark
 
-Composite `public/logo/ardi-logo.svg` over the final 2–3 seconds, on the dark
-wall, fading up over about 500ms and holding to the last frame. It is a vector,
-so it stays crisp at any resolution and can be repositioned or restyled later
-without touching the footage.
+The painted emblem is in the footage. The Hebrew wordmark goes over it
+afterwards from `public/logo/ardi-logo.svg`, set beside or beneath the painted
+mark on the same wall, fading up across about 500ms in the last two seconds.
 
-An animated variant is available at no download cost, since the mark is an SVG:
-the gear rotates a few degrees into place, the compass legs close, the hook
-settles. That can be done in CSS over the video rather than baked into it —
-which also means it survives a re-cut of the footage.
+Do this as an SVG layer over the video, not baked into the frames: it stays
+crisp at any resolution, it survives a re-cut, and the same layer can animate
+at no download cost — the gear turning a few degrees into place as the wordmark
+arrives.
+
+**If the emblem in the footage comes out wrong** and you do not want to
+regenerate, the fallback is to keep the clear wall and composite the whole
+logo — emblem and wordmark together — onto it. The shot still works; you just
+lose the "it was always painted there" effect.
