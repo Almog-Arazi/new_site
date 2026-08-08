@@ -11,15 +11,12 @@ is a Google penalty.
 
 | Item | Where | Current placeholder |
 |---|---|---|
-| Phone (display) | `src/content/settings/site.json` → `phone` | `050-000-0000` |
-| Phone (dial) | `site.json` → `phoneE164` | `+972500000000` |
-| WhatsApp number | `site.json` → `whatsapp` | `+972500000000` |
+| ~~Phone (display)~~ | `site.json` → `phone` | ✅ `050-591-2660` |
+| ~~Phone (dial)~~ | `site.json` → `phoneE164` | ✅ `+972505912660` |
+| ~~WhatsApp number~~ | `site.json` → `whatsapp` | ✅ `+972505912660` |
 | Email | `site.json` → `email` | `info@example.co.il` |
 | Production domain | `site.json` → `domain` **and** `astro.config.mjs` → `site` | `https://ardi-engineers.co.il` |
 | Sitemap URL | `public/robots.txt` | same domain |
-
-> The number supplied during the build — `050912660` — is **9 digits**. An
-> Israeli mobile number is 10 (`05X` + 7). Get the full number before launch.
 
 `phoneE164` must be bare international format, no spaces and no dashes. A single
 dash breaks dialling on some Android handsets. The schema enforces the shape but
@@ -67,21 +64,29 @@ Also connect Google Search Console and submit `/sitemap-index.xml`.
 
 ## 5. Photography
 
-Every image on the site is a branded geometric placeholder. Each one carries a
-photography brief in its `note` field — that is the shot list for the photo day.
-Required shots:
+**Status: 27 generated photographs are live across all 60 image slots.**
+Generated with `nano_banana_pro` against the prompts in `docs/image-brief.md`,
+which also carries the shoot list if these are ever replaced with real photos.
 
-1. Inspector working on a forklift (mast, lifting system).
-2. Inspection beside an overhead bridge crane.
-3. Close-up of lifting accessories — slings, chains, shackles, markings.
-4. Lifeline / anchor point on a roof.
-5. General factory environment, large equipment in frame.
-6. Office: computer with the tracking system, phone, preparing a quote.
-7. An inspection report / documents (no sensitive details visible).
+Any photo can be swapped without a developer: **עמודים ← בחרו עמוד ← בלוק ←
+תמונה אמיתית** in the CMS. Compress to 1600px wide first — CMS uploads bypass
+Astro's image pipeline by design.
 
-Replace by adding an `image` path to the block; `PhotoFrame` switches from the
-placeholder to a real `<img>` with no other change. Compress before uploading —
-CMS uploads bypass Astro's image pipeline by design.
+Which frames are worth reshooting with a camera, in priority order — these are
+the ones a maintenance manager judges hardest, and where generated imagery is
+least reliable:
+
+1. `img-10-forklift-inspection` — an inspector actually working on a machine
+2. `img-02-inspector-portrait` — the face of the business
+3. `img-17-accessory-macro` — sits beside the text explaining how a sling is
+   condemned; the wear pattern has to be truthful
+4. `img-11-forklift-mast-detail` — lift chain geometry
+5. `img-06-crane-hook-detail` — hook, latch and rope lay
+6. `img-19-anchor-point-hand` — hand plus safety hardware
+7. `img-01-hero-inspector-factory` — the frame the whole site rests on
+
+Everything else (halls, yards, roofs, environments) reads convincingly and can
+stay as generated.
 
 ## 6. Legal and business details
 
