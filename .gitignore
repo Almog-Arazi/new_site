@@ -7,3 +7,4 @@ dist/
 .env.production
 *.log
 npm-debug.log*
+.superpowers/
