@@ -62,12 +62,15 @@
      camera orbits, so this cannot be left to the video — but it is now
      directional rather than a flat wash: heavy under the headline column,
      clearing across the middle so the crane is actually visible. */
-  --c-video-scrim-text: rgb(20 34 74 / 82%);
-  --c-video-scrim-mid: rgb(20 34 74 / 34%);
-  --c-video-scrim-open: rgb(20 34 74 / 12%);
-  --c-video-scrim-floor: rgb(20 34 74 / 26%);
-  --c-video-scrim-bottom: rgb(20 34 74 / 62%);
-  --c-video-vignette: rgb(14 24 52 / 45%);
+  --c-video-scrim-text: rgb(20 34 74 / 74%);
+  --c-video-scrim-mid: rgb(20 34 74 / 18%);
+  --c-video-scrim-open: rgb(20 34 74 / 0%);
+  /* The floor, the vignette and the bottom fade darken without tinting:
+     a near-neutral ink rather than navy. Same protection, far less blue
+     cast across the footage. */
+  --c-video-scrim-floor: rgb(18 20 26 / 10%);
+  --c-video-scrim-bottom: rgb(18 20 26 / 46%);
+  --c-video-vignette: rgb(18 20 26 / 26%);
   --c-danger: #b3261e;
   --c-success: #1e6b45;
 

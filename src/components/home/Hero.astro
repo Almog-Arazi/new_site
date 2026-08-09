@@ -2,24 +2,23 @@
 import LeadForm from '../form/LeadForm.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
 import TelLink from '../ui/TelLink.astro';
-import Icon from '../ui/Icon.astro';
 
 /* Homepage hero (sketch P1). This is the one page whose <h1> does not come
    from PageHead — the homepage has no breadcrumb and pairs the heading with
    a lead-capture panel, so it uses a bespoke head, exactly as the frozen
    ArticleLayout does. Still exactly one <h1> in the document.
 
-   The backdrop is a mouse-scrubbed video: cursor position across the viewport
-   maps to a position on the timeline, so the crane orbits as the visitor moves.
-   Three deliberate departures from the stock technique:
+   The backdrop is a seamless ping-pong loop: the camera orbits the crane, then
+   returns, forever. The palindrome lives in the encode — forward frames plus
+   the reversed frames with the duplicated seam frames dropped — so the browser
+   only has to `loop` a normal video. A negative playbackRate is not supported
+   anywhere, so reversing in script would stutter.
 
-   1. The video is scoped to this section, not fixed behind the whole page.
-      Every section below it is opaque anyway, so a page-wide fixed backdrop
-      would just be 6MB of pixels nobody sees.
-   2. It loads only on `pointer: fine` — a device with a mouse. Touch devices
-      cannot scrub at all, and this audience is on 4G in a factory; they get
-      the poster frame and none of the download.
-   3. It loads after `load`, never before. The poster is the LCP element.
+   The video is scoped to this section rather than fixed behind the page: every
+   section below is opaque, so a page-wide backdrop would be megabytes of
+   pixels nobody sees. It is fetched only when the visitor is on a wide screen,
+   has not asked for reduced motion, and is not on Save-Data. Everyone else
+   gets the poster, which is also the LCP element either way.
 */
 
 interface Props {
@@ -38,18 +37,32 @@ const {
   lead,
   trust,
   poster = '/uploads/hero-poster-mid.webp',
-  video = '/hero.mp4',
+  video = '/hero-loop.mp4',
   formEyebrow = 'תיאום בדיקה · 30 שניות',
   formHeading = 'נחזור אליכם עם זמינות ומחיר',
   formIntro = 'חמישה שדות בלבד. נחזור אליכם עם זמינות ומחיר לבדיקה.',
 } = Astro.props;
 ---
 
-<section class="hero" data-hero data-video={video}>
+<section class="hero" data-hero>
   <div class="hero__bg" style={`background-image:url(${poster})`} aria-hidden="true">
-    <canvas class="hero__canvas" data-hero-canvas></canvas>
+    <video
+      class="hero__video"
+      data-hero-video
+      data-src={video}
+      poster={poster}
+      muted
+      loop
+      playsinline
+      preload="none"
+      aria-hidden="true"
+      tabindex="-1"></video>
   </div>
   <div class="hero__scrim" aria-hidden="true"></div>
+
+  <button type="button" class="hero__toggle" data-hero-toggle hidden aria-pressed="false">
+    <span class="hero__toggle-icon" aria-hidden="true"></span>
+  </button>
 
   <div class="container hero__grid">
     <div class="hero__main">
@@ -69,10 +82,6 @@ const {
         }
       </ul>
 
-      <p class="hero__cue" data-hero-cue hidden>
-        <Icon name="arrow" size={18} />
-        <span>הזיזו את העכבר — העגורן מסתובב</span>
-      </p>
     </div>
 
     <div class="hero__aside" id="lead">
@@ -87,7 +96,7 @@ const {
 </section>
 
 <script>
-  import '../../scripts/hero-scrub';
+  import '../../scripts/hero-loop';
 </script>
 
 <style>
@@ -113,7 +122,7 @@ const {
     background-position: center;
   }
 
-  .hero__canvas {
+  .hero__video {
     inline-size: 100%;
     block-size: 100%;
     object-fit: cover;
@@ -121,8 +130,44 @@ const {
     transition: opacity var(--dur-slower) var(--ease);
   }
 
-  .hero[data-scrub-ready] .hero__canvas {
+  .hero[data-loop-ready] .hero__video {
     opacity: 1;
+  }
+
+  /* WCAG 2.2.2 — motion that starts on its own and never ends needs a stop. */
+  .hero__toggle {
+    position: absolute;
+    inset-block-end: var(--s-5);
+    inset-inline-end: var(--s-5);
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    inline-size: var(--tap);
+    block-size: var(--tap);
+    border-radius: var(--r-pill);
+    background: var(--c-on-dark-surface);
+    border: 1px solid var(--c-border-dark);
+    backdrop-filter: blur(6px);
+  }
+
+  .hero__toggle:hover {
+    background: var(--c-on-dark-surface-hover);
+  }
+
+  .hero__toggle:focus-visible {
+    outline: none;
+    box-shadow: var(--ring-on-dark);
+  }
+
+  .hero__toggle-icon {
+    inline-size: 12px;
+    block-size: 14px;
+    background: var(--c-white);
+    clip-path: polygon(0 0, 35% 0, 35% 100%, 0 100%, 0 0, 65% 0, 100% 0, 100% 100%, 65% 100%, 65% 0);
+  }
+
+  .hero__toggle[data-playing='false'] .hero__toggle-icon {
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
   }
 
   /* Contrast where the words are, clear glass everywhere else.
@@ -135,8 +180,9 @@ const {
       linear-gradient(
           to left,
           var(--c-video-scrim-text) 0%,
-          var(--c-video-scrim-mid) 38%,
-          var(--c-video-scrim-open) 62%
+          var(--c-video-scrim-text) 22%,
+          var(--c-video-scrim-mid) 46%,
+          var(--c-video-scrim-open) 68%
         ),
       linear-gradient(to bottom, transparent 55%, var(--c-video-scrim-bottom)),
       radial-gradient(140% 100% at 92% 45%, transparent 30%, var(--c-video-vignette)),
@@ -208,19 +254,6 @@ const {
     font-weight: var(--fw-black);
   }
 
-  .hero__cue {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--s-2);
-    inline-size: fit-content;
-    padding: var(--s-2) var(--s-4);
-    font-family: var(--ff-mono);
-    font-size: var(--fs-xs);
-    color: var(--c-accent-dark);
-    background: var(--c-on-dark-surface-soft);
-    border: 1px solid var(--c-border-dark);
-    border-radius: var(--r-pill);
-  }
 
   .hero__aside {
     display: grid;
