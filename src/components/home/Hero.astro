@@ -205,6 +205,27 @@ const {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
   }
 
+  /* One screen, no scrolling to reach the bottom of the form. The section is
+     sized to the viewport and the content is centred inside it; the form was
+     the tall part and is paired into two columns to fit. */
+  @media (width >= 900px) {
+    .hero {
+      display: grid;
+      align-content: center;
+      min-block-size: 100svh;
+      padding-block: var(--s-7);
+    }
+
+    .hero__grid {
+      gap: var(--s-8);
+    }
+
+    .hero__main {
+      gap: var(--s-4);
+    }
+  }
+
+
   .hero__main {
     display: grid;
     gap: var(--s-5);
@@ -227,15 +248,15 @@ const {
   }
 
   .hero__trust {
-    display: grid;
-    gap: var(--s-3);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
     margin: 0;
     padding: 0;
   }
 
   .hero__trust-item {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: var(--s-2);
     min-block-size: var(--tap);

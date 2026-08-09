@@ -8,6 +8,7 @@
    consumer) so Field / Select / Textarea do not triplicate it. */
 
 interface Props {
+  class?: string;
   id: string;
   name: string;
   label: string;
@@ -33,6 +34,7 @@ const {
   dir,
   placeholder,
   maxlength,
+  class: className,
 } = Astro.props;
 
 const hintId = hint ? `${id}-hint` : undefined;
@@ -40,7 +42,7 @@ const errorId = `${id}-error`;
 const describedBy = [hintId, errorId].filter(Boolean).join(' ');
 ---
 
-<div class="field">
+<div class:list={['field', className]}>
   <label class="field__label" for={id}>
     <span>{label}</span>
     {
