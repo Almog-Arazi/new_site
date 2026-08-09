@@ -125,17 +125,31 @@ const {
     opacity: 1;
   }
 
-  /* Text over footage needs its own contrast floor — the video is not a
-     controlled background and the grade shifts as the camera orbits. */
+  /* Contrast where the words are, clear glass everywhere else.
+     The page is RTL-only, so these gradients are authored right-to-left on
+     purpose: the headline column sits on the inline-start (right) edge and
+     needs cover, while the middle and left open up onto the footage.
+     A flat wash would have been simpler and would have hidden the crane. */
   .hero__scrim {
     background:
       linear-gradient(
-          to bottom,
-          var(--c-video-scrim-top),
-          var(--c-video-scrim-mid) 45%,
-          var(--c-video-scrim-bottom)
+          to left,
+          var(--c-video-scrim-text) 0%,
+          var(--c-video-scrim-mid) 38%,
+          var(--c-video-scrim-open) 62%
         ),
-      radial-gradient(120% 90% at 80% 40%, transparent, var(--c-video-vignette));
+      linear-gradient(to bottom, transparent 55%, var(--c-video-scrim-bottom)),
+      radial-gradient(140% 100% at 92% 45%, transparent 30%, var(--c-video-vignette)),
+      linear-gradient(var(--c-video-scrim-floor), var(--c-video-scrim-floor));
+  }
+
+  @media (width <= 900px) {
+    /* One column: the text sits over the whole frame, so the directional
+       gradient has nothing to clear toward. */
+    .hero__scrim {
+      background:
+        linear-gradient(to bottom, var(--c-video-scrim-text), var(--c-video-scrim-bottom));
+    }
   }
 
   .hero__grid {

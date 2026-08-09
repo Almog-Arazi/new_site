@@ -58,12 +58,16 @@
   --c-on-dark-surface-soft: rgb(255 255 255 / 6%);
   --c-on-dark-surface: rgb(255 255 255 / 10%);
   --c-on-dark-surface-hover: rgb(255 255 255 / 16%);
-  /* Contrast floor for text over the hero footage — the grade shifts as the
-     camera orbits, so the scrim cannot be left to the video. */
-  --c-video-scrim-top: rgb(20 34 74 / 72%);
-  --c-video-scrim-mid: rgb(20 34 74 / 55%);
-  --c-video-scrim-bottom: rgb(20 34 74 / 88%);
-  --c-video-vignette: rgb(14 24 52 / 70%);
+  /* Contrast floor for text over the hero footage. The grade shifts as the
+     camera orbits, so this cannot be left to the video — but it is now
+     directional rather than a flat wash: heavy under the headline column,
+     clearing across the middle so the crane is actually visible. */
+  --c-video-scrim-text: rgb(20 34 74 / 82%);
+  --c-video-scrim-mid: rgb(20 34 74 / 34%);
+  --c-video-scrim-open: rgb(20 34 74 / 12%);
+  --c-video-scrim-floor: rgb(20 34 74 / 26%);
+  --c-video-scrim-bottom: rgb(20 34 74 / 62%);
+  --c-video-vignette: rgb(14 24 52 / 45%);
   --c-danger: #b3261e;
   --c-success: #1e6b45;
 
