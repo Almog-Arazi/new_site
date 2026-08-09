@@ -14,13 +14,16 @@
  *   requested. This audience is on 4G inside a factory.
  * - Pausing when the hero scrolls out of view, so a looping decode does not
  *   run for the whole visit.
- * - A pause control. WCAG 2.2.2 requires a way to stop motion that starts
- *   automatically and runs more than five seconds; this one runs forever.
+ *
+ * WCAG 2.2.2 wants a way to stop motion that starts by itself and runs past
+ * five seconds. The control is the accessibility menu's "עצירת אנימציות",
+ * which pauses any `video[autoplay]` and marks it `data-autoplay-stopped` —
+ * hence the autoplay attribute on an element that is played from script. The
+ * observer below honours that mark so scrolling never overrides the choice.
  */
 
 const section = document.querySelector<HTMLElement>('[data-hero]');
 const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
-const toggle = document.querySelector<HTMLButtonElement>('[data-hero-toggle]');
 
 interface NetworkInfo {
   saveData?: boolean;
@@ -34,14 +37,7 @@ function wants(): boolean {
 }
 
 if (section && video) {
-  let paused = false;
-
-  const label = (playing: boolean): void => {
-    if (!toggle) return;
-    toggle.setAttribute('aria-pressed', playing ? 'false' : 'true');
-    toggle.setAttribute('aria-label', playing ? 'עצירת התנועה ברקע' : 'הפעלת התנועה ברקע');
-    toggle.dataset.playing = playing ? 'true' : 'false';
-  };
+  const stopped = (): boolean => video.hasAttribute('data-autoplay-stopped');
 
   if (wants()) {
     const src = video.dataset.src;
@@ -52,11 +48,9 @@ if (section && video) {
         'loadeddata',
         () => {
           section.setAttribute('data-loop-ready', '');
-          void video.play().catch(() => undefined);
-          toggle?.removeAttribute('hidden');
-          label(true);
+          if (!stopped()) void video.play().catch(() => undefined);
         },
-        { once: true }
+        { once: true },
       );
     }
 
@@ -64,22 +58,15 @@ if (section && video) {
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (paused) continue;
+          if (stopped()) continue;
           if (entry.isIntersecting) void video.play().catch(() => undefined);
           else video.pause();
         }
       },
-      { threshold: 0.05 }
+      { threshold: 0.05 },
     );
     io.observe(section);
   }
-
-  toggle?.addEventListener('click', () => {
-    paused = !paused;
-    if (paused) video.pause();
-    else void video.play().catch(() => undefined);
-    label(!paused);
-  });
 }
 
 export {};

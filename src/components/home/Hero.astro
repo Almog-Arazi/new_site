@@ -53,16 +53,13 @@ const {
       poster={poster}
       muted
       loop
+      autoplay
       playsinline
       preload="none"
       aria-hidden="true"
       tabindex="-1"></video>
   </div>
   <div class="hero__scrim" aria-hidden="true"></div>
-
-  <button type="button" class="hero__toggle" data-hero-toggle hidden aria-pressed="false">
-    <span class="hero__toggle-icon" aria-hidden="true"></span>
-  </button>
 
   <div class="container hero__grid">
     <div class="hero__main">
@@ -81,7 +78,6 @@ const {
           ))
         }
       </ul>
-
     </div>
 
     <div class="hero__aside" id="lead">
@@ -105,8 +101,8 @@ const {
     isolation: isolate;
     overflow: hidden;
     padding-block: var(--s-9) var(--s-10);
-    border-end-start-radius: var(--r-6);
-    border-end-end-radius: var(--r-6);
+    border-end-start-radius: var(--r-hero);
+    border-end-end-radius: var(--r-hero);
     background: var(--c-bg-dark);
   }
 
@@ -134,42 +130,6 @@ const {
     opacity: 1;
   }
 
-  /* WCAG 2.2.2 — motion that starts on its own and never ends needs a stop. */
-  .hero__toggle {
-    position: absolute;
-    inset-block-end: var(--s-5);
-    inset-inline-end: var(--s-5);
-    z-index: 1;
-    display: grid;
-    place-items: center;
-    inline-size: var(--tap);
-    block-size: var(--tap);
-    border-radius: var(--r-pill);
-    background: var(--c-on-dark-surface);
-    border: 1px solid var(--c-border-dark);
-    backdrop-filter: blur(6px);
-  }
-
-  .hero__toggle:hover {
-    background: var(--c-on-dark-surface-hover);
-  }
-
-  .hero__toggle:focus-visible {
-    outline: none;
-    box-shadow: var(--ring-on-dark);
-  }
-
-  .hero__toggle-icon {
-    inline-size: 12px;
-    block-size: 14px;
-    background: var(--c-white);
-    clip-path: polygon(0 0, 35% 0, 35% 100%, 0 100%, 0 0, 65% 0, 100% 0, 100% 100%, 65% 100%, 65% 0);
-  }
-
-  .hero__toggle[data-playing='false'] .hero__toggle-icon {
-    clip-path: polygon(0 0, 100% 50%, 0 100%);
-  }
-
   /* Contrast where the words are, clear glass everywhere else.
      The page is RTL-only, so these gradients are authored right-to-left on
      purpose: the headline column sits on the inline-start (right) edge and
@@ -178,12 +138,12 @@ const {
   .hero__scrim {
     background:
       linear-gradient(
-          to left,
-          var(--c-video-scrim-text) 0%,
-          var(--c-video-scrim-text) 22%,
-          var(--c-video-scrim-mid) 46%,
-          var(--c-video-scrim-open) 68%
-        ),
+        to left,
+        var(--c-video-scrim-text) 0%,
+        var(--c-video-scrim-text) 22%,
+        var(--c-video-scrim-mid) 46%,
+        var(--c-video-scrim-open) 68%
+      ),
       linear-gradient(to bottom, transparent 55%, var(--c-video-scrim-bottom)),
       radial-gradient(140% 100% at 92% 45%, transparent 30%, var(--c-video-vignette)),
       linear-gradient(var(--c-video-scrim-floor), var(--c-video-scrim-floor));
@@ -193,8 +153,11 @@ const {
     /* One column: the text sits over the whole frame, so the directional
        gradient has nothing to clear toward. */
     .hero__scrim {
-      background:
-        linear-gradient(to bottom, var(--c-video-scrim-text), var(--c-video-scrim-bottom));
+      background: linear-gradient(
+        to bottom,
+        var(--c-video-scrim-text),
+        var(--c-video-scrim-bottom)
+      );
     }
   }
 
@@ -224,7 +187,6 @@ const {
       gap: var(--s-4);
     }
   }
-
 
   .hero__main {
     display: grid;
@@ -275,10 +237,27 @@ const {
     font-weight: var(--fw-black);
   }
 
-
   .hero__aside {
     display: grid;
     gap: var(--s-4);
+    justify-items: start;
+  }
+
+  /* Monospace on footage read as a caption, not a promise. Display face on a
+     white pill instead: the orange is #C25309 on white, 4.63:1, so it holds
+     AA no matter what frame is behind it. */
+  .hero__aside :global(.t-eyebrow) {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--s-2) var(--s-5);
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-black);
+    letter-spacing: 0;
+    color: var(--c-action);
+    background: var(--c-white);
+    border-radius: var(--r-pill);
+    box-shadow: var(--e-1);
   }
 
   .hero__tel {

@@ -59,8 +59,6 @@ const describedBy = [hintId, errorId].filter(Boolean).join(' ');
     }
   </label>
 
-  {hint && <p class="field__hint" id={hintId}>{hint}</p>}
-
   <input
     class="field__control"
     id={id}
@@ -74,6 +72,8 @@ const describedBy = [hintId, errorId].filter(Boolean).join(' ');
     maxlength={maxlength}
     aria-describedby={describedBy}
   />
+
+  {hint && <p class="field__hint" id={hintId}>{hint}</p>}
 
   <p class="field__error" id={errorId} data-error-for={name} hidden>
     <span class="field__error-mark" aria-hidden="true">!</span>

@@ -256,9 +256,14 @@ const equipmentOptions = [
     }
   }
 
+  /* `align-content: start` matters: the fields sit in a two-column grid, and
+     a stretched row was making the equipment <select> grow to match the
+     phone field's extra hint line. The boxes are now the same size whatever
+     sits beside them. */
   .lead-form :global(.field) {
     display: grid;
     gap: var(--s-2);
+    align-content: start;
   }
 
   .lead-form :global(.field__label) {
@@ -292,6 +297,7 @@ const equipmentOptions = [
 
   .lead-form :global(.field__control) {
     inline-size: 100%;
+    block-size: var(--tap-lg);
     min-block-size: var(--tap);
     padding-inline: var(--s-4);
     padding-block: var(--s-3);
@@ -309,6 +315,7 @@ const equipmentOptions = [
   }
 
   .lead-form :global(.field__control--area) {
+    block-size: auto;
     min-block-size: 0;
     line-height: var(--lh-body);
     resize: vertical;

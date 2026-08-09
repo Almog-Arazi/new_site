@@ -82,6 +82,9 @@
   --r-5: clamp(22px, 3vw, 28px); /* floating CTA card, callouts */
   --r-6: clamp(26px, 4vw, 36px); /* section slabs, hero media, mobile bar */
   --r-pill: 999px;
+  /* The sweep under the hero — deliberately larger than --r-6 so the
+     backdrop reads as a shape, not a rectangle with soft corners. */
+  --r-hero: clamp(32px, 5vw, 72px);
 
   /* asymmetric photo-frame motif — LOGICAL corners only, never the shorthand */
   --r-frame-ss: var(--r-6);
