@@ -26,7 +26,9 @@ const tel = telHrefFor(site.phoneE164);
   >
     <Icon name="whatsapp" size={22} />
     <span>וואטסאפ</span>
-    <span class="vh">{site.whatsappMessage}</span>
+    {/* The prefill is a multi-line template; read aloud in full it is noise.
+        Screen-reader users get the promise, not the payload. */}
+    <span class="vh">הודעה מוכנה מראש</span>
   </a>
 </nav>
 

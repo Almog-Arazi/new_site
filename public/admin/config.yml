@@ -62,7 +62,13 @@ collections:
               widget: string,
               pattern: ['^\+\d{9,15}$', 'פורמט בינלאומי ללא רווחים'],
             }
-          - { name: whatsappMessage, label: הודעת וואטסאפ מוכנה מראש, widget: string }
+          # Multi-line: the prefill is a short form the sender completes.
+          - {
+              name: whatsappMessage,
+              label: הודעת וואטסאפ מוכנה מראש,
+              widget: text,
+              hint: מה שנפתח בוואטסאפ כשלוחצים על הכפתור. שורות ריקות בסוף = שדות שהפונה ממלא.,
+            }
           - { name: email, label: כתובת מייל, widget: string }
           - { name: hours, label: שעות פעילות לתצוגה, widget: string }
           - name: hoursSchema
