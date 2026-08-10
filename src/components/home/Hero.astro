@@ -305,7 +305,20 @@ const {
     }
 
     /* The frame keeps a minimum height of its own, so the footage is not
-       reduced to whatever the text happens to leave over. */
+       reduced to whatever the text happens to leave over.
+
+       It also sweeps at the bottom, the way the whole section does on a wide
+       screen. There the footage runs to the section's own rounded edge; here
+       the form sits below it, so the footage needs the curve itself or it
+       ends on a straight cut halfway down the page. overflow is what makes
+       the radius bite — the <video> inside would otherwise paint over it. */
+    .hero__bg,
+    .hero__scrim {
+      overflow: hidden;
+      border-end-start-radius: var(--r-hero);
+      border-end-end-radius: var(--r-hero);
+    }
+
     .hero__bg {
       min-block-size: 62svh;
     }
