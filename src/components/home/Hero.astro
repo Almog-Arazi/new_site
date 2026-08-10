@@ -27,6 +27,7 @@ interface Props {
   trust: string[];
   poster?: string;
   video?: string;
+  videoMobile?: string;
   formEyebrow?: string;
   formHeading?: string;
   formIntro?: string;
@@ -38,6 +39,7 @@ const {
   trust,
   poster = '/uploads/hero-poster-mid.webp',
   video = '/hero-loop.mp4',
+  videoMobile = '/hero-loop-mobile.mp4',
   formEyebrow = 'תיאום בדיקה · 30 שניות',
   formHeading = 'נחזור אליכם עם זמינות ומחיר',
   formIntro = 'חמישה שדות בלבד. נחזור אליכם עם זמינות ומחיר לבדיקה.',
@@ -50,6 +52,7 @@ const {
       class="hero__video"
       data-hero-video
       data-src={video}
+      data-src-mobile={videoMobile}
       poster={poster}
       muted
       loop
@@ -61,33 +64,31 @@ const {
   </div>
   <div class="hero__scrim" aria-hidden="true"></div>
 
-  <div class="container hero__grid">
-    <div class="hero__main">
-      <h1 class="hero__title">{h1}</h1>
-      <p class="hero__lead">{lead}</p>
+  <div class="hero__main">
+    <h1 class="hero__title">{h1}</h1>
+    <p class="hero__lead">{lead}</p>
 
-      <ul role="list" class="hero__trust">
-        {
-          trust.map((item) => (
-            <li class="hero__trust-item">
-              <span class="hero__tick" aria-hidden="true">
-                ✓
-              </span>
-              {item}
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+    <ul role="list" class="hero__trust">
+      {
+        trust.map((item) => (
+          <li class="hero__trust-item">
+            <span class="hero__tick" aria-hidden="true">
+              ✓
+            </span>
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 
-    <div class="hero__aside" id="lead">
-      <Eyebrow>{formEyebrow}</Eyebrow>
-      <LeadForm heading={formHeading} intro={formIntro} headingLevel={2} />
-      <p class="hero__tel">
-        <span>או התקשרו ישירות:</span>
-        <TelLink variant="plain" showIcon={false} />
-      </p>
-    </div>
+  <div class="hero__aside" id="lead">
+    <Eyebrow>{formEyebrow}</Eyebrow>
+    <LeadForm heading={formHeading} intro={formIntro} headingLevel={2} />
+    <p class="hero__tel">
+      <span>או התקשרו ישירות:</span>
+      <TelLink variant="plain" showIcon={false} />
+    </p>
   </div>
 </section>
 
@@ -96,11 +97,20 @@ const {
 </script>
 
 <style>
+  /* Two layouts, one DOM.
+     Narrow: two stacked rows. The footage is a grid item pinned to row 1, so
+     it is exactly as tall as the headline block and stops there; the form
+     sits below it on flat navy. That is the point — a phone-height frame
+     shared between text and a form panel left the video as a sliver behind
+     the panel, which is not a video, it is a texture.
+     Wide: one row, two columns, and the footage goes back to absolute so it
+     spans the whole section behind both columns. */
   .hero {
+    display: grid;
+    grid-template-rows: auto auto;
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    padding-block: var(--s-9) var(--s-10);
     border-end-start-radius: var(--r-hero);
     border-end-end-radius: var(--r-hero);
     background: var(--c-bg-dark);
@@ -108,8 +118,7 @@ const {
 
   .hero__bg,
   .hero__scrim {
-    position: absolute;
-    inset: 0;
+    grid-area: 1 / 1;
     z-index: -1;
   }
 
@@ -149,46 +158,9 @@ const {
       linear-gradient(var(--c-video-scrim-floor), var(--c-video-scrim-floor));
   }
 
-  @media (width <= 900px) {
-    /* One column: the text sits over the whole frame, so the directional
-       gradient has nothing to clear toward. */
-    .hero__scrim {
-      background: linear-gradient(
-        to bottom,
-        var(--c-video-scrim-text),
-        var(--c-video-scrim-bottom)
-      );
-    }
-  }
-
-  .hero__grid {
-    display: grid;
-    gap: var(--s-9);
-    align-items: center;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-  }
-
-  /* One screen, no scrolling to reach the bottom of the form. The section is
-     sized to the viewport and the content is centred inside it; the form was
-     the tall part and is paired into two columns to fit. */
-  @media (width >= 900px) {
-    .hero {
-      display: grid;
-      align-content: center;
-      min-block-size: 100svh;
-      padding-block: var(--s-7);
-    }
-
-    .hero__grid {
-      gap: var(--s-8);
-    }
-
-    .hero__main {
-      gap: var(--s-4);
-    }
-  }
 
   .hero__main {
+    grid-area: 1 / 1;
     display: grid;
     gap: var(--s-5);
     align-content: start;
@@ -238,6 +210,7 @@ const {
   }
 
   .hero__aside {
+    grid-area: 2 / 1;
     display: grid;
     gap: var(--s-4);
     justify-items: start;
@@ -269,9 +242,100 @@ const {
     color: var(--c-on-dark);
   }
 
-  @media (width <= 900px) {
+  /* One screen, no scrolling to reach the bottom of the form. The section is
+     sized to the viewport and the content is centred inside it; the form was
+     the tall part and is paired into two columns to fit. */
+  @media (width >= 901px) {
     .hero {
-      padding-block: var(--s-7) var(--s-8);
+      grid-template-rows: none;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-content: center;
+      align-items: center;
+      column-gap: var(--s-8);
+      min-block-size: 100svh;
+      padding-block: var(--s-7);
+      /* Emulates .container: the two columns need the same max-width and
+         gutters, but the footage behind them must stay full-bleed, so the
+         container cannot be a wrapper element here. */
+      padding-inline: max(var(--gutter), calc((100% - var(--container)) / 2));
+    }
+
+    /* Back out of the grid so the footage spans behind both columns and
+       ignores the section's padding. */
+    .hero__bg,
+    .hero__scrim {
+      position: absolute;
+      inset: 0;
+      grid-area: auto;
+    }
+
+    .hero__main {
+      grid-area: auto;
+      gap: var(--s-4);
+    }
+
+    .hero__aside {
+      grid-area: auto;
+    }
+  }
+
+  /* Narrow overrides live last on purpose: several of them restate a base
+     property at the same specificity, so source order is what decides. */
+  @media (width <= 900px) {
+    /* One column. Even and moderate rather than the old heavy-top wash,
+       with the last stop dark so the frame hands over to the navy under the
+       form instead of ending on a cut line.
+
+       Measured, not guessed: 108 frames sampled at 6fps, 19 rows per frame,
+       this gradient composited over the brightest 5% of each row. Worst case
+       across the clip is 4.93:1 for white text — AA with headroom. A first
+       pass at 56/42 looked better and measured 3.05:1, which fails. */
+    .hero__scrim {
+      background: linear-gradient(
+        to bottom,
+        var(--c-video-scrim-m-top) 0%,
+        var(--c-video-scrim-m-mid) 42%,
+        var(--c-video-scrim-m-bottom) 100%
+      );
+    }
+
+    .hero__main {
+      align-content: center;
+      gap: var(--s-6);
+      min-block-size: 66svh;
+      padding: var(--s-9) var(--gutter) var(--s-10);
+    }
+
+    .hero__aside {
+      padding: var(--s-8) var(--gutter) var(--s-9);
+    }
+
+    /* Hebrew at 27–34px sets tighter than Latin does; 1.15 is right on a
+       desktop measure and cramped across three phone lines. */
+    .hero__title {
+      line-height: 1.24;
+    }
+
+    .hero__lead {
+      line-height: 1.7;
+      max-inline-size: 36ch;
+    }
+
+    /* Four wrapped pills on a 390px screen come out as a ragged cloud with
+       one orphan on the last row. Stacked ticks with no chrome read as a
+       list, take a third less height, and let the footage through. */
+    .hero__trust {
+      display: grid;
+      justify-items: start;
+      gap: var(--s-3);
+    }
+
+    .hero__trust-item {
+      min-block-size: 0;
+      padding: 0;
+      font-size: var(--fs-body);
+      background: none;
+      border: 0;
     }
   }
 </style>

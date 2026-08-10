@@ -71,6 +71,14 @@
   --c-video-scrim-floor: rgb(18 20 26 / 10%);
   --c-video-scrim-bottom: rgb(18 20 26 / 46%);
   --c-video-vignette: rgb(18 20 26 / 26%);
+  /* Narrow screens run a separate, lighter wash. There the footage only has
+     to carry the headline block, not a form panel as well, so it can be
+     read as footage instead of as a dark texture. The bottom stop is the
+     heaviest: it hands the frame over to the navy under the form rather
+     than ending on a visible edge. */
+  --c-video-scrim-m-top: rgb(20 34 74 / 66%);
+  --c-video-scrim-m-mid: rgb(20 34 74 / 62%);
+  --c-video-scrim-m-bottom: rgb(14 24 52 / 88%);
   --c-danger: #b3261e;
   --c-success: #1e6b45;
 

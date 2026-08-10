@@ -9,9 +9,14 @@
  *
  * What the script does own:
  *
- * - Deciding whether the video is fetched at all. Reduced motion, a narrow
- *   screen, or Save-Data means the poster stands alone and the 3MB is never
- *   requested. This audience is on 4G inside a factory.
+ * - Which encode to fetch. Narrow screens get a 480×640 portrait crop at
+ *   ~0.65MB instead of the 1112×834 desktop clip at 2.8MB: `object-fit:cover`
+ *   in a phone-shaped frame throws most of a landscape source away, so the
+ *   wide version would be paying to download pixels nobody sees.
+ * - Whether to fetch at all. Reduced motion, Save-Data, or a 2G connection
+ *   means the poster stands alone. This audience is on 4G inside a factory.
+ * - When to fetch. On a phone the video waits for `load`, so it never competes
+ *   with the poster — which is the LCP element either way.
  * - Pausing when the hero scrolls out of view, so a looping decode does not
  *   run for the whole visit.
  *
@@ -27,32 +32,40 @@ const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
 
 interface NetworkInfo {
   saveData?: boolean;
+  effectiveType?: string;
 }
+
+const narrow = window.matchMedia('(width <= 900px)');
 
 function wants(): boolean {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
-  if (window.matchMedia('(width < 900px)').matches) return false;
   const conn = (navigator as Navigator & { connection?: NetworkInfo }).connection;
-  return !conn?.saveData;
+  if (conn?.saveData) return false;
+  /* 2G only. `effectiveType` is a rolling round-trip estimate, not the radio
+     type, and Chrome reports "3g" on connections that carry 0.65MB in a few
+     seconds — gating on it cost every such visitor the video for nothing.
+     Chrome-family only; absent elsewhere, and absence is not a reason to skip. */
+  if (conn?.effectiveType && /^(slow-)?2g$/.test(conn.effectiveType)) return false;
+  return true;
 }
 
 if (section && video) {
   const stopped = (): boolean => video.hasAttribute('data-autoplay-stopped');
 
-  if (wants()) {
-    const src = video.dataset.src;
-    if (src) {
-      video.src = src;
-      video.load();
-      video.addEventListener(
-        'loadeddata',
-        () => {
-          section.setAttribute('data-loop-ready', '');
-          if (!stopped()) void video.play().catch(() => undefined);
-        },
-        { once: true },
-      );
-    }
+  const start = (): void => {
+    const src = narrow.matches ? video.dataset.srcMobile : video.dataset.src;
+    if (!src) return;
+
+    video.src = src;
+    video.load();
+    video.addEventListener(
+      'loadeddata',
+      () => {
+        section.setAttribute('data-loop-ready', '');
+        if (!stopped()) void video.play().catch(() => undefined);
+      },
+      { once: true },
+    );
 
     /* A loop that keeps decoding behind ten screens of content is just heat. */
     const io = new IntersectionObserver(
@@ -66,6 +79,15 @@ if (section && video) {
       { threshold: 0.05 },
     );
     io.observe(section);
+  };
+
+  if (wants()) {
+    /* Desktop has the headroom to start immediately. A phone does not: hold
+       the request until the page has finished loading so the poster, the
+       fonts and the form all land first. */
+    if (!narrow.matches) start();
+    else if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start, { once: true });
   }
 }
 
