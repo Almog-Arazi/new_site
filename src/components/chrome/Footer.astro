@@ -1,5 +1,5 @@
 ---
-import site, { mailHref, waHref } from '../../site.config';
+import site, { waHref } from '../../site.config';
 import { footerNav } from '../../lib/nav';
 import Logo from '../media/Logo.astro';
 import Icon from '../ui/Icon.astro';
@@ -53,12 +53,6 @@ const tel = telHrefFor(site.phoneE164);
           <a href={waHref} data-track="whatsapp_click" target="_blank" rel="noopener">
             <Icon name="whatsapp" size={20} />
             <span>וואטסאפ</span>
-          </a>
-        </li>
-        <li>
-          <a href={mailHref} class="site-footer__mail">
-            <Icon name="mail" size={20} />
-            <bdi class="ltr">{site.email}</bdi>
           </a>
         </li>
       </ul>
@@ -153,10 +147,6 @@ const tel = telHrefFor(site.phoneE164);
 
   .site-footer__strong bdi {
     font-size: var(--fs-lead);
-  }
-
-  .site-footer__mail {
-    word-break: break-word;
   }
 
   .site-footer__legal {

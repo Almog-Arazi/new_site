@@ -18,7 +18,6 @@ const siteSchema = z.object({
   phoneE164: z.string().regex(/^\+\d{9,15}$/, 'phoneE164 must be bare E.164, no spaces or dashes'),
   whatsapp: z.string().regex(/^\+\d{9,15}$/),
   whatsappMessage: z.string(),
-  email: z.string().email(),
   hours: z.string(),
   hoursSchema: z.array(
     z.object({ days: z.array(z.string()), opens: z.string(), closes: z.string() })
@@ -51,14 +50,11 @@ export const waHref = `https://wa.me/${site.whatsapp.replace(/\D/g, '')}?text=${
   site.whatsappMessage
 )}`;
 
-export const mailHref = `mailto:${site.email}`;
-
 /** True once a real GA4 id replaces the placeholder. */
 export const hasAnalytics = /^G-[A-Z0-9]{6,}$/.test(site.ga4Id) && site.ga4Id !== 'G-XXXXXXXXXX';
 
 /** True once real contact details replace the placeholders — gates the launch checklist. */
-export const hasRealContact =
-  site.phoneE164 !== '+972500000000' && !site.email.endsWith('example.co.il');
+export const hasRealContact = site.phoneE164 !== '+972500000000';
 
 export const SITE = site;
 export default site;

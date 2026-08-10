@@ -14,7 +14,6 @@ is a Google penalty.
 | ~~Phone (display)~~ | `site.json` → `phone` | ✅ `050-591-2660` |
 | ~~Phone (dial)~~ | `site.json` → `phoneE164` | ✅ `+972505912660` |
 | ~~WhatsApp number~~ | `site.json` → `whatsapp` | ✅ `+972505912660` |
-| Email | `site.json` → `email` | `info@example.co.il` |
 | Production domain | `site.json` → `domain` **and** `astro.config.mjs` → `site` | `https://ardi-engineers.co.il` |
 | Sitemap URL | `public/robots.txt` | same domain |
 
@@ -58,7 +57,6 @@ Also connect Google Search Console and submit `/sitemap-index.xml`.
 - Deploy once, then **confirm the `lead` form appears in the Netlify dashboard**
   before trusting the AJAX path. Netlify's bot detects the form by parsing the
   built HTML; if it never sees it, submissions vanish silently.
-- Send a real test submission and confirm the notification email arrives.
 - Free tier caps at **100 submissions/month, spam included**. Watch it for the
   first 60 days.
 
@@ -114,7 +112,7 @@ Then, manually:
 - [ ] Lighthouse mobile on 4 representative routes — target 95+ performance
 - [ ] Tap the phone button on a real iPhone and a real Android; confirm it dials
 - [ ] Tap WhatsApp; confirm the pre-filled message appears
-- [ ] Submit the form from a phone; confirm the email arrives
+- [ ] Submit the form from a phone; confirm WhatsApp opens with every field filled in
 - [ ] Keyboard-only pass: skip link, nav, dropdowns, accordion, form
 - [ ] Check RTL on real iOS Safari — the chip row and the accordion marker are
       the two known Safari RTL trouble spots
@@ -144,7 +142,7 @@ What is already done:
 Still required before launch:
 
 - [ ] **Name a רכז נגישות (accessibility coordinator)** and put their name,
-      phone and email in `/accessibility`. The regulations require a named
+      phone in `/accessibility`. The regulations require a named
       contact; the page currently points at the general contact details.
 - [ ] Add the date of the last accessibility review to `/accessibility`
 - [ ] Decide whether to enable the menu's text-to-speech / speech-to-text.

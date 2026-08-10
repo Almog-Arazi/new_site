@@ -25,7 +25,6 @@ export function localBusiness() {
     description: site.tagline,
     url: site.domain,
     telephone: site.phoneE164,
-    email: site.email,
     image: absoluteUrl('/og/og-default.png'),
     logo: absoluteUrl('/logo/ardi-logo.svg'),
     priceRange: '$$',
@@ -60,7 +59,6 @@ export function organization() {
     url: site.domain,
     logo: absoluteUrl('/logo/ardi-logo.svg'),
     telephone: site.phoneE164,
-    email: site.email,
     foundingDate: String(new Date().getFullYear() - site.yearsExperience),
   };
 }

@@ -69,7 +69,6 @@ collections:
               widget: text,
               hint: מה שנפתח בוואטסאפ כשלוחצים על הכפתור. שורות ריקות בסוף = שדות שהפונה ממלא.,
             }
-          - { name: email, label: כתובת מייל, widget: string }
           - { name: hours, label: שעות פעילות לתצוגה, widget: string }
           - name: hoursSchema
             label: שעות פעילות (לגוגל)

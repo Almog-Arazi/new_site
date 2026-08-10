@@ -6,7 +6,7 @@ import Breadcrumb from '../components/chrome/Breadcrumb.astro';
 import LeadForm from '../components/form/LeadForm.astro';
 import PhotoFrame from '../components/media/PhotoFrame.astro';
 import Icon from '../components/ui/Icon.astro';
-import site, { mailHref, waHref } from '../site.config';
+import site, { waHref } from '../site.config';
 import { displayPhone, telHrefFor, hebrewList } from '../lib/format';
 import { contactPage, breadcrumb as breadcrumbSchema } from '../lib/schema';
 
@@ -82,17 +82,6 @@ const prep = [
             </a>
           </li>
 
-          <li>
-            <a href={mailHref} class="method">
-              <span class="method__icon method__icon--mail" aria-hidden="true">
-                <Icon name="mail" size={22} />
-              </span>
-              <span class="method__body">
-                <bdi class="ltr method__title method__title--mail">{site.email}</bdi>
-                <span class="method__note">לשליחת מסמכים ותסקירים קודמים</span>
-              </span>
-            </a>
-          </li>
         </ul>
 
         <div class="areas">
@@ -203,10 +192,6 @@ const prep = [
     background: var(--c-link);
   }
 
-  .method__icon--mail {
-    background: var(--c-bg-dark);
-  }
-
   .method__body {
     display: grid;
     gap: var(--s-1);
@@ -218,12 +203,6 @@ const prep = [
     font-size: var(--fs-h3);
     font-weight: var(--fw-black);
     color: var(--c-heading);
-  }
-
-  .method__title--mail {
-    font-size: var(--fs-body);
-    font-weight: var(--fw-bold);
-    word-break: break-word;
   }
 
   .method__note {
