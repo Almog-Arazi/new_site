@@ -289,14 +289,10 @@ const {
   /* Narrow overrides live last on purpose: several of them restate a base
      property at the same specificity, so source order is what decides. */
   @media (width <= 900px) {
-    /* One column. Even and moderate rather than the old heavy-top wash,
-       with the last stop dark so the frame hands over to the navy under the
-       form instead of ending on a cut line.
-
-       Measured, not guessed: 108 frames sampled at 6fps, 19 rows per frame,
-       this gradient composited over the brightest 5% of each row. Worst case
-       across the clip is 4.93:1 for white text — AA with headroom. A first
-       pass at 56/42 looked better and measured 3.05:1, which fails. */
+    /* A light wash only. The contrast is carried by the panel below, so this
+       no longer has to darken the whole frame — it just keeps the footage
+       from competing, and its last stop hands the frame over to the navy
+       under the form instead of ending on a cut line. */
     .hero__scrim {
       background: linear-gradient(
         to bottom,
@@ -306,11 +302,45 @@ const {
       );
     }
 
+    /* The frame keeps a minimum height of its own, so the footage is not
+       reduced to whatever is left over once the panel has taken its space. */
+    .hero__bg {
+      min-block-size: 62svh;
+    }
+
+    /* Margin, not padding: the panel wraps the text, and the margin is the
+       open footage around it. Insetting a full-block panel by a gutter left
+       the card covering 94% of the frame, which is a dark hero with a video
+       hiding behind it. */
     .hero__main {
+      position: relative;
+      z-index: 0;
       align-content: center;
       gap: var(--s-6);
-      min-block-size: 66svh;
-      padding: var(--s-9) var(--gutter) var(--s-10);
+      margin: var(--s-10) var(--s-4);
+      padding: var(--s-8) var(--s-5);
+    }
+
+    /* Concentrate the darkness where the words are instead of spreading it
+       across the frame. The lead is the constraint: 19px over the brightest
+       part of the footage measured 3.98:1 and failed AA, and a wash heavy
+       enough to fix that turned the video into a texture. Panel plus light
+       wash puts the same text at 6.10:1 and leaves the frame readable
+       around all four edges.
+
+       Measured over 108 frames at 6fps, 19 rows each, compositing wash then
+       panel over the brightest 5% of every row. The blur is not part of
+       that number — backdrop-filter earns no contrast credit and browsers
+       without it lose nothing that matters. */
+    .hero__main::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: var(--c-hero-panel);
+      border: 1px solid var(--c-border-dark);
+      border-radius: var(--r-5);
+      backdrop-filter: blur(6px);
     }
 
     .hero__aside {

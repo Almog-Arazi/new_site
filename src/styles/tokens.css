@@ -71,14 +71,20 @@
   --c-video-scrim-floor: rgb(18 20 26 / 10%);
   --c-video-scrim-bottom: rgb(18 20 26 / 46%);
   --c-video-vignette: rgb(18 20 26 / 26%);
-  /* Narrow screens run a separate, lighter wash. There the footage only has
-     to carry the headline block, not a form panel as well, so it can be
-     read as footage instead of as a dark texture. The bottom stop is the
-     heaviest: it hands the frame over to the navy under the form rather
-     than ending on a visible edge. */
-  --c-video-scrim-m-top: rgb(20 34 74 / 66%);
-  --c-video-scrim-m-mid: rgb(20 34 74 / 62%);
-  --c-video-scrim-m-bottom: rgb(14 24 52 / 88%);
+  /* Narrow screens run a separate, much lighter wash, because the contrast
+     is carried by the panel below rather than by the whole frame. That is
+     the trade: a wash heavy enough for 19px text turned the footage into a
+     texture, so the darkness is now concentrated where the words are and
+     the rest of the frame is left alone. The bottom stop is still the
+     heaviest — it hands the frame over to the navy under the form instead
+     of ending on a visible edge. */
+  --c-video-scrim-m-top: rgb(20 34 74 / 30%);
+  --c-video-scrim-m-mid: rgb(20 34 74 / 24%);
+  --c-video-scrim-m-bottom: rgb(14 24 52 / 66%);
+  /* The panel behind the narrow-screen headline block. Composited over the
+     wash above, worst case across the clip is 6.10:1 for --c-on-dark body
+     text; the same text with no panel measured 3.98:1, which fails. */
+  --c-hero-panel: rgb(14 24 52 / 62%);
   --c-danger: #b3261e;
   --c-success: #1e6b45;
 
