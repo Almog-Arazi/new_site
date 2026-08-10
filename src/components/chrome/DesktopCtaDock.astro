@@ -1,0 +1,192 @@
+---
+import site, { waHref } from '../../site.config';
+import { displayPhone, telHrefFor } from '../../lib/format';
+import Icon from '../ui/Icon.astro';
+
+/* Desktop persistent CTA — a corner dock, not a mid-edge card.
+   Three things drive this shape:
+
+   1. It appears only once every real CTA has left the screen. A floating
+      panel shouting "call us" while the hero form is right there adds noise
+      and takes the eye off the thing that actually converts. Any element
+      marked [data-cta-quiet] — the lead form, a CTA band, the footer —
+      suppresses it while visible. Scroll offsets were rejected: they guess
+      at viewport height and break on a 13" laptop.
+   2. It sits in a bottom corner. A vertically centred rail is the shape of
+      an ad unit and gets skipped; the bottom corner is where a decade of
+      chat widgets has taught people to look for "talk to a human".
+   3. It is a single row, so it costs ~56px of height instead of the ~300px
+      the old card occluded — which is why it can now run from 901px up,
+      where the old card needed 1800px to earn its space. Most desktops are
+      1440 or 1536 and never saw it.
+
+   The physical left corner belongs to the accessibility trigger, so this
+   takes inline-start (physical right in this RTL document). Below 901px the
+   fixed mobile bar does the job and this is display:none. */
+
+const phone = displayPhone(site.phoneE164);
+const tel = telHrefFor(site.phoneE164);
+---
+
+<aside class="cta-dock" data-cta-dock aria-label="יצירת קשר מהירה">
+  <a href={tel} class="cta-dock__phone" data-track="phone_click">
+    <span class="cta-dock__icon" aria-hidden="true">
+      <Icon name="phone" size={18} />
+    </span>
+    <span class="cta-dock__stack">
+      <span class="cta-dock__sub">שיחת טלפון</span>
+      <bdi class="ltr num cta-dock__num">{phone}</bdi>
+    </span>
+  </a>
+
+  <a
+    href={waHref}
+    class="cta-dock__wa"
+    data-track="whatsapp_click"
+    target="_blank"
+    rel="noopener"
+    aria-label="שליחת הודעת וואטסאפ"
+    title="וואטסאפ"
+  >
+    <Icon name="whatsapp" size={22} />
+  </a>
+
+  <a href="/contact" class="cta-dock__cta">תיאום בדיקה</a>
+</aside>
+
+<style>
+  .cta-dock {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    position: fixed;
+    inset-block-end: var(--s-6);
+    inset-inline-start: var(--s-6);
+    z-index: var(--z-rail);
+    padding: var(--s-2);
+    background: var(--c-surface);
+    border: var(--hairline);
+    border-radius: var(--r-pill);
+    box-shadow: var(--e-3);
+
+    /* Off by default; the script opts it in. `visibility` and not just
+       `opacity`, so while it is away it is out of the tab order and out of
+       the accessibility tree — an invisible control that still takes focus
+       is worse than no control. It is also the no-JS resting state, which
+       is the right one: the header and footer already carry the number. */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(var(--s-3));
+    transition:
+      opacity var(--dur-slow) var(--ease),
+      transform var(--dur-slow) var(--ease-soft-out),
+      visibility var(--dur-slow);
+  }
+
+  .cta-dock[data-shown] {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .cta-dock__phone {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-block-size: var(--tap);
+    padding-inline: var(--s-3) var(--s-4);
+    color: var(--c-heading);
+    text-decoration: none;
+    border-radius: var(--r-pill);
+    transition: background-color var(--dur) var(--ease);
+  }
+
+  .cta-dock__phone:hover {
+    background: var(--c-bg-tint);
+  }
+
+  .cta-dock__icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--s-7);
+    block-size: var(--s-7);
+    color: var(--c-on-action);
+    background: var(--c-action);
+    border-radius: var(--r-pill);
+  }
+
+  .cta-dock__stack {
+    display: grid;
+    gap: 1px;
+  }
+
+  .cta-dock__sub {
+    font-size: var(--fs-xs);
+    line-height: 1.2;
+    color: var(--c-text);
+  }
+
+  .cta-dock__num {
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-bold);
+    line-height: 1.2;
+    color: var(--c-heading);
+  }
+
+  .cta-dock__wa {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: var(--tap);
+    block-size: var(--tap);
+    color: var(--c-white);
+    background: var(--c-link);
+    border-radius: var(--r-pill);
+    transition: background-color var(--dur) var(--ease);
+  }
+
+  .cta-dock__wa:hover {
+    background: var(--c-link-hover);
+  }
+
+  .cta-dock__cta {
+    display: grid;
+    place-items: center;
+    min-block-size: var(--tap);
+    padding-inline: var(--s-5);
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-bold);
+    color: var(--c-on-action);
+    text-decoration: none;
+    background: var(--c-action);
+    border-radius: var(--r-pill);
+    box-shadow: var(--e-action);
+    transition:
+      background-color var(--dur) var(--ease),
+      transform var(--dur-fast) var(--ease);
+  }
+
+  .cta-dock__cta:hover {
+    background: var(--c-action-hover);
+    transform: translateY(var(--lift));
+  }
+
+  .cta-dock__cta:active {
+    transform: translateY(var(--press));
+  }
+
+  .cta-dock :is(a):focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+  }
+
+  /* The mobile bar owns this job below the same breakpoint it appears at. */
+  @media (width <= 900px) {
+    .cta-dock {
+      display: none;
+    }
+  }
+</style>
