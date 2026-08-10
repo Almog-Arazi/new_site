@@ -254,10 +254,17 @@ const {
       column-gap: var(--s-8);
       min-block-size: 100svh;
       padding-block: var(--s-7);
-      /* Emulates .container: the two columns need the same max-width and
-         gutters, but the footage behind them must stay full-bleed, so the
-         container cannot be a wrapper element here. */
-      padding-inline: max(var(--gutter), calc((100% - var(--container)) / 2));
+      /* Emulates .container: the two columns need the same measure as every
+         other section, but the footage behind them must stay full-bleed, so
+         the container cannot be a wrapper element here.
+         The `+ var(--gutter)` is load-bearing. `.container` is border-box, so
+         its 1160px includes its own 32px gutters and the content box is 1096.
+         Centring on 1160 alone hands each column 32px it never had, which is
+         enough to pull the h1 from three lines onto two. */
+      padding-inline: max(
+        var(--gutter),
+        calc((100% - var(--container)) / 2 + var(--gutter))
+      );
     }
 
     /* Back out of the grid so the footage spans behind both columns and
