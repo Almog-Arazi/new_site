@@ -289,10 +289,12 @@ const {
   /* Narrow overrides live last on purpose: several of them restate a base
      property at the same specificity, so source order is what decides. */
   @media (width <= 900px) {
-    /* A light wash only. The contrast is carried by the panel below, so this
-       no longer has to darken the whole frame — it just keeps the footage
-       from competing, and its last stop hands the frame over to the navy
-       under the form instead of ending on a cut line. */
+    /* Sized by the h1 and the ticks, which sit on it directly. Measured over
+       108 frames at 6fps: 3.36:1 for the 27px h1 in its band (needs 3.0) and
+       4.89:1 for the 16px ticks in theirs (needs 4.5). Lighter than this and
+       the ticks fail; at 45/38/74 they measure 4.00. The last stop is the
+       heaviest so the frame hands over to the navy under the form instead of
+       ending on a cut line. */
     .hero__scrim {
       background: linear-gradient(
         to bottom,
@@ -303,44 +305,16 @@ const {
     }
 
     /* The frame keeps a minimum height of its own, so the footage is not
-       reduced to whatever is left over once the panel has taken its space. */
+       reduced to whatever the text happens to leave over. */
     .hero__bg {
       min-block-size: 62svh;
     }
 
-    /* Margin, not padding: the panel wraps the text, and the margin is the
-       open footage around it. Insetting a full-block panel by a gutter left
-       the card covering 94% of the frame, which is a dark hero with a video
-       hiding behind it. */
     .hero__main {
-      position: relative;
-      z-index: 0;
       align-content: center;
       gap: var(--s-6);
-      margin: var(--s-10) var(--s-4);
-      padding: var(--s-8) var(--s-5);
-    }
-
-    /* Concentrate the darkness where the words are instead of spreading it
-       across the frame. The lead is the constraint: 19px over the brightest
-       part of the footage measured 3.98:1 and failed AA, and a wash heavy
-       enough to fix that turned the video into a texture. Panel plus light
-       wash puts the same text at 6.10:1 and leaves the frame readable
-       around all four edges.
-
-       Measured over 108 frames at 6fps, 19 rows each, compositing wash then
-       panel over the brightest 5% of every row. The blur is not part of
-       that number — backdrop-filter earns no contrast credit and browsers
-       without it lose nothing that matters. */
-    .hero__main::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      background: var(--c-hero-panel);
-      border: 1px solid var(--c-border-dark);
-      border-radius: var(--r-5);
-      backdrop-filter: blur(6px);
+      min-block-size: 66svh;
+      padding: var(--s-9) var(--gutter) var(--s-10);
     }
 
     .hero__aside {
@@ -353,9 +327,22 @@ const {
       line-height: 1.24;
     }
 
+    /* Only this paragraph gets glass. It is the smallest type in the block
+       and the only line that failed on the footage: 19px in --c-on-dark
+       measured 3.98:1 over the brightest frames, against the 4.5:1 it needs.
+       On the panel it measures 7.76:1. Darkening the whole wash instead
+       would have carried it too, and turned the video into a texture.
+
+       The blur is not in that number — backdrop-filter earns no contrast
+       credit, so a browser without it loses nothing that matters. */
     .hero__lead {
+      padding: var(--s-5);
       line-height: 1.7;
-      max-inline-size: 36ch;
+      max-inline-size: none;
+      background: var(--c-hero-panel);
+      border: 1px solid var(--c-border-dark);
+      border-radius: var(--r-4);
+      backdrop-filter: blur(6px);
     }
 
     /* Four wrapped pills on a 390px screen come out as a ragged cloud with

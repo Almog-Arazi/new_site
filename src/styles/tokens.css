@@ -78,12 +78,13 @@
      the rest of the frame is left alone. The bottom stop is still the
      heaviest — it hands the frame over to the navy under the form instead
      of ending on a visible edge. */
-  --c-video-scrim-m-top: rgb(20 34 74 / 30%);
-  --c-video-scrim-m-mid: rgb(20 34 74 / 24%);
-  --c-video-scrim-m-bottom: rgb(14 24 52 / 66%);
-  /* The panel behind the narrow-screen headline block. Composited over the
-     wash above, worst case across the clip is 6.10:1 for --c-on-dark body
-     text; the same text with no panel measured 3.98:1, which fails. */
+  --c-video-scrim-m-top: rgb(20 34 74 / 52%);
+  --c-video-scrim-m-mid: rgb(20 34 74 / 46%);
+  --c-video-scrim-m-bottom: rgb(14 24 52 / 80%);
+  /* The glass behind the narrow-screen lead paragraph, and only that
+     paragraph. It is the one line small enough to need it: 19px over the
+     footage measured 3.98:1. The h1 and the ticks ride on the wash alone,
+     which is what sets the wash's floor at 52/46/80. */
   --c-hero-panel: rgb(14 24 52 / 62%);
   --c-danger: #b3261e;
   --c-success: #1e6b45;
