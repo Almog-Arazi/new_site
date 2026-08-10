@@ -1,11 +1,16 @@
 ---
-import site from '../../site.config';
+import site, { waHref } from '../../site.config';
 import { displayPhone, telHrefFor } from '../../lib/format';
 import Icon from '../ui/Icon.astro';
 
-/* Inline success panel. form.ts hides the form, unhides this and moves
+/* Inline handoff panel. form.ts hides the form, unhides this and moves
    focus here, so a screen-reader user is told what happened without a
-   page change. role="status" covers the sighted-but-not-focused case. */
+   page change. role="status" covers the sighted-but-not-focused case.
+
+   It must not claim the lead arrived: nothing is sent until the visitor
+   presses send inside WhatsApp. The retry link carries the same composed
+   message, for the case where the tab never opened — a blocked popup, or
+   WhatsApp Desktop not installed. form.ts fills its href on submit. */
 
 const phone = displayPhone(site.phoneE164);
 const tel = telHrefFor(site.phoneE164);
@@ -15,9 +20,13 @@ const tel = telHrefFor(site.phoneE164);
   <span class="form-success__mark" aria-hidden="true">
     <Icon name="check" size={24} />
   </span>
-  <h3 class="form-success__title">תודה, קיבלנו את הפנייה</h3>
+  <h3 class="form-success__title">וואטסאפ נפתח עם הפרטים</h3>
   <p class="form-success__text">
-    נחזור אליכם עם זמינות ומחיר בשעות העבודה ({site.hours}). אם זה דחוף — אפשר פשוט להתקשר.
+    נשאר רק ללחוץ שליחה. נחזור אליכם עם זמינות ומחיר בשעות העבודה ({site.hours}).
+  </p>
+  <p class="form-success__text">
+    לא נפתח? <a href={waHref} data-form-retry target="_blank" rel="noopener">פתחו כאן</a>
+    או התקשרו:
   </p>
   <a href={tel} class="form-success__call" data-track="phone_click">
     <Icon name="phone" size={20} />
@@ -67,6 +76,17 @@ const tel = telHrefFor(site.phoneE164);
     font-size: var(--fs-body);
     line-height: var(--lh-body);
     color: var(--c-on-dark);
+  }
+
+  /* The default link blue is unreadable on navy; amber is 7.35:1 here. */
+  .form-success__text a {
+    color: var(--c-accent-dark);
+    text-underline-offset: 0.2em;
+  }
+
+  .form-success__text a:focus-visible {
+    outline: none;
+    box-shadow: var(--ring-on-dark);
   }
 
   .form-success__call {

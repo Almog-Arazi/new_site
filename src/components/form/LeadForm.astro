@@ -1,21 +1,22 @@
 ---
 import { getCollection } from 'astro:content';
-import site from '../../site.config';
+import site, { waHref } from '../../site.config';
+import { displayPhone, telHrefFor } from '../../lib/format';
 import Field from './Field.astro';
 import Select from './Select.astro';
 import Textarea from './Textarea.astro';
-import Honeypot from './Honeypot.astro';
 import FormSuccess from './FormSuccess.astro';
 import Button from '../ui/Button.astro';
 
 /* The short lead form — five fields, navy panel.
  *
- * Netlify Forms detection happens at deploy time by parsing the built HTML,
- * so this form must exist as static markup: no client-side rendering, no
- * conditional mount. The hidden `form-name` input is what makes the AJAX
- * POST in form.ts land in the same inbox as a native submit.
+ * Submitting composes the fields into a Hebrew message and opens WhatsApp
+ * with it prefilled; see form.ts. Nothing is posted anywhere, so the form
+ * carries no action and no hidden provider fields, and there is no honeypot
+ * — with no inbox behind it there is nothing for a bot to poison.
  *
- * Without JavaScript the form posts natively to /toda and still works.
+ * Without JavaScript there is no way to compose the message, so the noscript
+ * block hands over the two channels that need no scripting at all.
  */
 
 interface Props {
@@ -45,6 +46,9 @@ const {
 
 const Heading = `h${headingLevel}` as 'h2' | 'h3';
 
+const phone = displayPhone(site.phoneE164);
+const tel = telHrefFor(site.phoneE164);
+
 const equipment = (await getCollection('equipment')).sort(
   (a, b) => a.data.order - b.data.order
 );
@@ -68,16 +72,9 @@ const equipmentOptions = [
   <form
     class="lead-form__form"
     name={site.formName}
-    method="POST"
-    action="/toda"
-    data-netlify="true"
-    netlify-honeypot="company-website"
     data-lead-form
+    data-wa={site.whatsapp.replace(/\D/g, '')}
   >
-    {/* Netlify pairs the AJAX POST with the right form by this field. */}
-    <input type="hidden" name="form-name" value={site.formName} />
-    <Honeypot />
-
     <Field
       class="lead-form__half"
       id="lead-name"
@@ -131,16 +128,17 @@ const equipmentOptions = [
 
     <p class="lead-form__status" role="status" data-form-status></p>
 
-    <Button type="submit" variant="primary" size="lg" full>שליחת בקשה</Button>
+    <Button type="submit" variant="primary" size="lg" full>שליחה בוואטסאפ</Button>
 
     <p class="lead-form__consent">
-      בשליחת הפרטים אני מאשר קבלת מענה בטלפון ובוואטסאפ ·
+      הפרטים נפתחים כהודעת וואטסאפ מוכנה — נשאר רק ללחוץ שליחה ·
       <a href="/privacy">מדיניות פרטיות</a>
     </p>
 
     <noscript>
       <p class="lead-form__consent">
-        הטופס נשלח גם ללא JavaScript — לאחר השליחה תועברו לעמוד תודה.
+        הטופס דורש JavaScript. אפשר <a href={waHref}>לפתוח וואטסאפ ישירות</a> או
+        להתקשר ל<a href={tel}><bdi class="ltr num">{phone}</bdi></a>.
       </p>
     </noscript>
   </form>
