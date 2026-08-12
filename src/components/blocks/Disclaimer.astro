@@ -1,0 +1,76 @@
+---
+import site from '../../site.config';
+
+/* Legal disclaimer for the articles. It sits at the foot of every article
+   rather than being pasted into each one, so the wording can never drift
+   between them — and a change to the text is one edit, not seven.
+
+   It is deliberately quiet: a hairline panel in small muted type. This is a
+   liability notice, not a section of the article, and giving it the same
+   weight as the content would read as though the article were retracting
+   itself.
+
+   <aside role="note"> so a screen reader announces it as an aside rather
+   than as part of the argument. It is not <footer>, which would claim to be
+   the footer of the article element and collide with the page footer. */
+---
+
+<aside class="disclaimer" aria-labelledby="disclaimer-title" role="note">
+  <h2 class="disclaimer__title" id="disclaimer-title">הבהרה חשובה</h2>
+
+  <p>
+    המידע המופיע בעמוד זה נועד למטרות מידע כללי בלבד ואינו מהווה ייעוץ מקצועי, הנדסי,
+    בטיחותי או משפטי. התוכן אינו מחליף את הוראות הדין, התקנות, התקנים, הוראות היצרן או
+    חוות דעת של גורם מוסמך.
+  </p>
+
+  <p>
+    למרות שנעשה מאמץ לספק מידע מדויק ועדכני, ייתכנו טעויות, אי־דיוקים או שינויים בדין,
+    בתקנים ובהנחיות המקצועיות. על המשתמש מוטלת האחריות הבלעדית לאמת את המידע מול מקורות
+    רשמיים ועדכניים ולוודא את התאמתו לנסיבות המקרה הספציפי לפני קבלת החלטה או ביצוע
+    פעולה כלשהי.
+  </p>
+
+  <p>
+    השימוש במידע המופיע בעמוד זה הוא באחריותו הבלעדית של המשתמש. {site.businessName} לא
+    תישא באחריות לכל נזק, הפסד, הוצאה או תוצאה אחרת, ישירים או עקיפים, שייגרמו עקב
+    הסתמכות על המידע או שימוש בו.
+  </p>
+
+  <p>
+    <strong>שקיפות בנוגע לשימוש בבינה מלאכותית (AI):</strong> בכתיבת ובעריכת התכנים באתר
+    זה נעשה שימוש בכלי בינה מלאכותית (AI). אף שהתכנים נבדקים, ייתכנו אי־דיוקים, השמטות או
+    טעויות שמקורן בשימוש בכלים אלו. על המשתמש לקחת זאת בחשבון ולוודא כל מידע מול מקורות
+    רשמיים ומול גורם מוסמך לפני קבלת החלטה או ביצוע פעולה.
+  </p>
+</aside>
+
+<style>
+  .disclaimer {
+    display: grid;
+    gap: var(--s-3);
+    margin-block-start: var(--s-9);
+    padding: var(--card-pad);
+    background: var(--c-bg-soft);
+    border: var(--hairline);
+    border-radius: var(--r-4);
+  }
+
+  .disclaimer__title {
+    font-family: var(--ff-head);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-bold);
+    color: var(--c-heading);
+  }
+
+  .disclaimer p {
+    font-size: var(--fs-sm);
+    line-height: var(--lh-body);
+    color: var(--c-text);
+  }
+
+  .disclaimer strong {
+    color: var(--c-text-strong);
+    font-weight: var(--fw-bold);
+  }
+</style>

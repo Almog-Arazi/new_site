@@ -4,6 +4,7 @@ import BaseLayout from './BaseLayout.astro';
 import Breadcrumb from '../components/chrome/Breadcrumb.astro';
 import PhotoFrame from '../components/media/PhotoFrame.astro';
 import CtaBand from '../components/blocks/CtaBand.astro';
+import Disclaimer from '../components/blocks/Disclaimer.astro';
 import Prose from '../components/ui/Prose.astro';
 import { hebrewDate, isoDate } from '../lib/format';
 import { article as articleSchema, breadcrumb as breadcrumbSchema } from '../lib/schema';
@@ -98,6 +99,7 @@ const allSchemas = [
       <Prose>
         <slot />
       </Prose>
+      <Disclaimer />
     </div>
   </article>
 
