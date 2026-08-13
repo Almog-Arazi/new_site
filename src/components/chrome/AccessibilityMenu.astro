@@ -157,11 +157,163 @@
        where you are on the page. An orange ring keeps its edge defined
        against all three, and ties it to the action colour. */
     --_access-icon-border: 2px solid var(--c-action);
-    --_access-menu-item-button-active-background-color: var(--c-link);
-    --_access-menu-item-button-active-color: var(--c-white);
+    /* ── the panel ──
+       The widget ships a grey Material look that reads as a third-party
+       overlay dropped on the page. Every value below is one of the site's own
+       tokens, so the panel is navy-and-orange like everything else: navy
+       header, orange for the active state because active means "this setting
+       is on" and orange is the action colour everywhere else on the site,
+       blue for hover because it is the site's link colour. */
+    --_access-menu-background-color: var(--c-surface);
+    --_access-menu-color: var(--c-text);
+    --_access-menu-border: 1px solid var(--c-border-strong);
+    --_access-menu-border-radius: var(--r-4);
+    --_access-menu-box-shadow: var(--e-3);
+    --_access-menu-font-family: var(--ff-body);
+    --_access-menu-width: 320px;
+    --_access-menu-min-width: 300px;
+    --_access-menu-z-index: 60;
+
+    /* Header */
+    --_access-menu-header-color: var(--c-heading);
+    --_access-menu-header-font-size: var(--fs-h3);
+    --_access-menu-header-font-weight: var(--fw-black);
+    --_access-menu-header-text-align: start;
+    --_access-menu-header-margin: 0 0 12px;
+
+    /* Items */
+    --_access-menu-item-font-size: var(--fs-sm);
+    --_access-menu-item-color: var(--c-text-strong);
+    --_access-menu-item-icon-color: var(--c-link);
+    --_access-menu-item-hover-icon-color: var(--c-heading);
+    --_access-menu-item-active-icon-color: var(--c-on-action);
+    --_access-menu-item-button-background: var(--c-bg-soft);
+    --_access-menu-item-button-border: 1px solid var(--c-border-strong);
+    --_access-menu-item-button-border-radius: var(--r-2);
+    --_access-menu-item-button-padding: 12px 0;
     --_access-menu-item-button-hover-background-color: var(--c-bg-tint);
     --_access-menu-item-button-hover-color: var(--c-heading);
-    --_access-menu-item-button-border-radius: var(--r-2);
+    /* On = orange, the same signal the CTAs use. White on #C25309 is 4.63:1. */
+    --_access-menu-item-button-active-background-color: var(--c-action);
+    --_access-menu-item-button-active-color: var(--c-on-action);
+    --_access-menu-div-active-background-color: var(--c-action);
+    --_access-menu-div-active-color: var(--c-on-action);
+  }
+
+  /* The header strip and its two icon buttons are not exposed as variables,
+     so they are styled directly. Scoped to the widget's own class names. */
+  ._access-menu ._text-center {
+    padding: 16px 16px 0;
+    font-family: var(--ff-head);
+    border-block-end: 1px solid var(--c-border);
+  }
+
+  ._access-menu ._menu-reset-btn {
+    color: var(--c-link) !important;
+  }
+
+  ._access-menu ._menu-close-btn {
+    color: var(--c-action) !important;
+  }
+
+  ._access-menu ul {
+    padding-block: 12px;
+  }
+
+  ._access-menu ul li button {
+    font-family: var(--ff-body);
+    font-weight: var(--fw-med);
+  }
+
+  ._access-menu ul li button:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+  }
+
+  /* ── the item icons ──
+     The widget ships glossy emoji (🔼 🎆 🏃‍♂️). They clash with the site's
+     1.75px line set badly enough that the panel reads as somebody else's UI
+     no matter how the panel itself is coloured. The alternative the library
+     offers is the Material Icons webfont, which means a CDN request — ruled
+     out for the same reason the brand fonts are self-hosted.
+
+     So: blank the emoji through the variables it already exposes, then paint
+     our own into the 30px box it leaves behind. `mask-image` rather than
+     `background-image`, so each glyph inherits the button's colour and turns
+     white by itself when the item goes orange-active. */
+  ._access-menu ul li button::before {
+    content: '' !important;
+    inline-size: 22px !important;
+    block-size: 22px !important;
+    top: 12px !important;
+    /* The library rotates the spacing glyphs 90° because its emoji are
+       arrows it reuses in two directions. Ours are drawn the right way up,
+       and left rotated they came out identical to each other. */
+    transform: none !important;
+    background-color: currentcolor;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+  }
+
+  ._access-menu ul li button svg {
+    display: none;
+  }
+
+  ._access-menu ul li button[data-access-action='increaseText']::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 19 9 5l6 14M5.5 14h7'/%3E%3Cpath d='M17 12v8M13 16h8'/%3E%3C/svg%3E");
+  }
+
+  ._access-menu ul li button[data-access-action='decreaseText']::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 19 9 5l6 14M5.5 14h7'/%3E%3Cpath d='M13 16h8'/%3E%3C/svg%3E");
+  }
+
+  ._access-menu ul li button[data-access-action='increaseTextSpacing']::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 5v14M22 5v14'/%3E%3Cpath d='M7 12h10M7 12l3-3M7 12l3 3M17 12l-3-3M17 12l-3 3'/%3E%3C/svg%3E");
+  }
+
+  ._access-menu ul li button[data-access-action='decreaseTextSpacing']::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 5v14M17 5v14'/%3E%3Cpath d='M2 12h6M22 12h-6M5 9l3 3-3 3M19 9l-3 3 3 3'/%3E%3C/svg%3E");
+  }
+
+  ._access-menu ul li button[data-access-action='increaseLineHeight']::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 5h11M9 12h11M9 19h11'/%3E%3Cpath d='M4 8V4m0 0L2 6m2-2 2 2M4 16v4m0 0 2-2m-2 2-2-2'/%3E%3C/svg%3E");
+  }
+
+  ._access-menu ul li button[data-access-action='decreaseLineHeight']::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 5h11M9 12h11M9 19h11'/%3E%3Cpath d='M4 4v4m0 0 2-2m-2 2-2-2M4 20v-4m0 0 2 2m-2-2-2 2'/%3E%3C/svg%3E");
+  }
+
+  ._access-menu ul li button[data-access-action='invertColors']::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 3a9 9 0 0 0 0 18z' fill='%23000' stroke='none'/%3E%3C/svg%3E");
+  }
+
+  ._access-menu ul li button[data-access-action='grayHues']::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3.5 6.5 12A6.5 6.5 0 1 0 17.5 12z'/%3E%3C/svg%3E");
+  }
+
+  ._access-menu ul li button[data-access-action='bigCursor']::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 3.5 18.5 11l-6 1.6L9.5 19z'/%3E%3C/svg%3E");
+  }
+
+  ._access-menu ul li button[data-access-action='readingGuide']::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8h18M3 16h18'/%3E%3Cpath d='M3 12h18' stroke-dasharray='3 3'/%3E%3C/svg%3E");
+  }
+
+  ._access-menu ul li button[data-access-action='underlineLinks']::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1'/%3E%3Cpath d='M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1'/%3E%3Cpath d='M4 22h16'/%3E%3C/svg%3E");
+  }
+
+  ._access-menu ul li button[data-access-action='disableAnimations']::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M9 9h6v6H9z'/%3E%3C/svg%3E");
+  }
+
+  ._access-menu ul li button[data-access-action='textToSpeech']::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 5 6 9H3v6h3l5 4z'/%3E%3Cpath d='M16 9a4 4 0 0 1 0 6'/%3E%3C/svg%3E");
+  }
+
+  ._access-menu ul li button[data-access-action='speechToText']::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='3' width='6' height='11' rx='3'/%3E%3Cpath d='M5 11a7 7 0 0 0 14 0M12 18v3'/%3E%3C/svg%3E");
   }
 
   /* Above the mobile CTA bar's breakpoint there is no bar to clear. */

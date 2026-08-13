@@ -19,6 +19,14 @@ const siteSchema = z.object({
   whatsapp: z.string().regex(/^\+\d{9,15}$/),
   whatsappMessage: z.string(),
   hours: z.string(),
+  accessibility: z.object({
+    coordinatorName: z.string(),
+    coordinatorRole: z.string(),
+    coordinatorPhone: z.string().regex(/^\+\d{9,15}$/),
+    statementDate: z.string(),
+    /** Empty until a licensed surveyor has signed off. */
+    surveyorName: z.string(),
+  }),
   hoursSchema: z.array(
     z.object({ days: z.array(z.string()), opens: z.string(), closes: z.string() })
   ),
@@ -55,6 +63,10 @@ export const hasAnalytics = /^G-[A-Z0-9]{6,}$/.test(site.ga4Id) && site.ga4Id !=
 
 /** True once real contact details replace the placeholders — gates the launch checklist. */
 export const hasRealContact = site.phoneE164 !== '+972500000000';
+
+/** The accessibility regulations want a named coordinator, not a department. */
+export const hasAccessibilityCoordinator =
+  !site.accessibility.coordinatorName.includes('REPLACE-ME');
 
 export const SITE = site;
 export default site;

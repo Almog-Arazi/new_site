@@ -1,0 +1,181 @@
+---
+import site, { waHref, hasAccessibilityCoordinator } from '../../site.config';
+import { displayPhone, telHrefFor, hebrewDate } from '../../lib/format';
+import Section from '../ui/Section.astro';
+import Icon from '../ui/Icon.astro';
+
+/* The named coordinator, the declaration date, and how the statement was
+   arrived at.
+
+   These three are what the accessibility regulations name explicitly, and a
+   statement that points at a general contact page instead of a person is the
+   easiest possible thing for a claim to identify. So they come from
+   site.json — the client edits them in the CMS — and they render as their
+   own block rather than as prose someone has to notice.
+
+   The wording never claims a licensed survey. `surveyorName` is empty until
+   one has actually signed off; only then does the sentence name them. A
+   statement that overstates its own basis is worse than one that is modest
+   and true. */
+
+const a11y = site.accessibility;
+const phone = displayPhone(a11y.coordinatorPhone);
+const tel = telHrefFor(a11y.coordinatorPhone);
+const stated = hebrewDate(new Date(a11y.statementDate));
+---
+
+<Section width="narrow">
+  <div class="a11y-contact">
+    <h2 class="a11y-contact__title">פרטי רכז הנגישות</h2>
+
+    <p class="a11y-contact__text">
+      לכל פנייה בנושא נגישות האתר או נגישות השירות — לרבות דיווח על תקלה, בקשה
+      להתאמת נגישות או בקשה לקבלת מידע בפורמט נגיש — ניתן לפנות אל:
+    </p>
+
+    <dl class="a11y-contact__list">
+      <div>
+        <dt>שם</dt>
+        <dd>
+          {
+            hasAccessibilityCoordinator ? (
+              a11y.coordinatorName
+            ) : (
+              <mark class="a11y-contact__todo">{a11y.coordinatorName}</mark>
+            )
+          }
+        </dd>
+      </div>
+      <div>
+        <dt>תפקיד</dt>
+        <dd>{a11y.coordinatorRole}</dd>
+      </div>
+      <div>
+        <dt>טלפון</dt>
+        <dd>
+          <a href={tel} data-track="phone_click">
+            <Icon name="phone" size={18} />
+            <bdi class="ltr num">{phone}</bdi>
+          </a>
+        </dd>
+      </div>
+      <div>
+        <dt>וואטסאפ</dt>
+        <dd>
+          <a href={waHref} data-track="whatsapp_click" target="_blank" rel="noopener">
+            <Icon name="whatsapp" size={18} />
+            <span>שליחת הודעה</span>
+          </a>
+        </dd>
+      </div>
+    </dl>
+
+    <p class="a11y-contact__note">
+      אנו משתדלים להשיב לפניות בנושא נגישות בתוך שני ימי עסקים, ולטפל בליקוי
+      שדווח בהקדם האפשרי בהתאם לאופיו.
+    </p>
+
+    <p class="a11y-contact__meta">
+      {
+        a11y.surveyorName
+          ? `הצהרה זו נערכה בעקבות סקר נגישות שביצע ${a11y.surveyorName}, והיא מעודכנת ליום ${stated}.`
+          : `הצהרה זו מבוססת על בדיקות נגישות שבוצעו על ידינו באתר, והיא מעודכנת ליום ${stated}.`
+      }
+    </p>
+  </div>
+</Section>
+
+<style>
+  .a11y-contact {
+    display: grid;
+    gap: var(--s-4);
+    padding: var(--panel-pad);
+    background: var(--c-bg-tint);
+    border: var(--hairline);
+    border-radius: var(--r-4);
+  }
+
+  .a11y-contact__title {
+    font-size: var(--fs-h3);
+    color: var(--c-heading);
+  }
+
+  .a11y-contact__text {
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    color: var(--c-text);
+  }
+
+  .a11y-contact__list {
+    display: grid;
+    gap: var(--s-3);
+    margin: 0;
+  }
+
+  .a11y-contact__list > div {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: var(--s-3);
+    align-items: baseline;
+    padding-block-end: var(--s-3);
+    border-block-end: var(--hairline);
+  }
+
+  .a11y-contact__list > div:last-child {
+    padding-block-end: 0;
+    border-block-end: 0;
+  }
+
+  .a11y-contact__list dt {
+    font-family: var(--ff-head);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-bold);
+    color: var(--c-text);
+  }
+
+  .a11y-contact__list dd {
+    margin: 0;
+    font-size: var(--fs-body);
+    font-weight: var(--fw-med);
+    color: var(--c-heading);
+  }
+
+  .a11y-contact__list a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-block-size: var(--tap);
+    color: var(--c-link);
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+  }
+
+  .a11y-contact__list a:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+    border-radius: var(--r-1);
+  }
+
+  /* Loud on purpose. A statement that names no coordinator is the single
+     easiest deficiency to point at, so the placeholder must not be able to
+     ship quietly. */
+  .a11y-contact__todo {
+    padding-inline: var(--s-2);
+    color: var(--c-on-action);
+    background: var(--c-action);
+    border-radius: var(--r-1);
+  }
+
+  .a11y-contact__note,
+  .a11y-contact__meta {
+    font-size: var(--fs-sm);
+    line-height: var(--lh-body);
+    color: var(--c-text);
+  }
+
+  .a11y-contact__meta {
+    padding-block-start: var(--s-3);
+    border-block-start: var(--hairline);
+    color: var(--c-text-strong);
+  }
+</style>

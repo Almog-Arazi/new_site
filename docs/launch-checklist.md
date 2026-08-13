@@ -7,6 +7,8 @@ is a Google penalty.
 
 ---
 
+- [ ] Name a רכז נגישות in `site.json` → `accessibility.coordinatorName`
+
 ## 1. Blocking — the site is broken for its purpose without these
 
 | Item | Where | Current placeholder |
@@ -142,7 +144,7 @@ What is already done:
 Still required before launch:
 
 - [ ] **Name a רכז נגישות (accessibility coordinator)** and put their name,
-      phone in `/accessibility`. The regulations require a named
+      phone in `/accessibility` (now rendered from site.json by AccessibilityContact.astro). The regulations require a named
       contact; the page currently points at the general contact details.
 - [ ] Add the date of the last accessibility review to `/accessibility`
 - [ ] Decide whether to enable the menu's text-to-speech / speech-to-text.

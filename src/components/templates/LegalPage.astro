@@ -4,6 +4,7 @@ import PageHead from '../blocks/PageHead.astro';
 import Section from '../ui/Section.astro';
 import Prose from '../ui/Prose.astro';
 import Blocks from './Blocks.astro';
+import AccessibilityContact from '../blocks/AccessibilityContact.astro';
 import { breadcrumb as breadcrumbSchema, webPage } from '../../lib/schema';
 import type { TemplateProps } from './shared';
 
@@ -47,6 +48,11 @@ const schemas = [
 
   <div class="legal">
     <Blocks sections={data.sections} />
+
+    {/* The named coordinator and the declaration date come from site.json so
+        the client can maintain them, which no block in the frozen union can
+        express. Only this one page needs them. */}
+    {data.slug === 'accessibility' && <AccessibilityContact />}
 
     {
       hasBody && (

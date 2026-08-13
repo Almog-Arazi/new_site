@@ -70,6 +70,27 @@ collections:
               hint: מה שנפתח בוואטסאפ כשלוחצים על הכפתור. שורות ריקות בסוף = שדות שהפונה ממלא.,
             }
           - { name: hours, label: שעות פעילות לתצוגה, widget: string }
+          - name: accessibility
+            label: נגישות
+            widget: object
+            hint: 'התקנות דורשות רכז נגישות בשם מלא. עמוד הצהרת הנגישות מציג את מה שנכתב כאן.'
+            fields:
+              - { name: coordinatorName, label: שם רכז הנגישות, widget: string }
+              - { name: coordinatorRole, label: תפקיד, widget: string, default: רכז נגישות }
+              - {
+                  name: coordinatorPhone,
+                  label: טלפון רכז הנגישות,
+                  widget: string,
+                  pattern: ['^\+\d{9,15}$', 'פורמט בינלאומי ללא רווחים'],
+                }
+              - { name: statementDate, label: תאריך עדכון ההצהרה, widget: string, hint: 'בפורמט YYYY-MM-DD' }
+              - {
+                  name: surveyorName,
+                  label: שם מורשה הנגישות שביצע סקר,
+                  widget: string,
+                  required: false,
+                  hint: 'להשאיר ריק עד שבוצע סקר בפועל. כל עוד ריק, ההצהרה לא טוענת שנערך סקר.',
+                }
           - name: hoursSchema
             label: שעות פעילות (לגוגל)
             widget: list
