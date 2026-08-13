@@ -71,6 +71,26 @@ body {
   color: var(--c-accent-dark);
 }
 
+/* The slab sets `color` for its subtree, but every text utility declares its
+   own — and those are all tuned for ink on white. On a navy slab `.t-lead`
+   landed #4A5A7A on #14224A, which axe measures at 2.23:1 against the 4.5:1
+   it needs. Nothing had caught it because the dark blocks in use until now
+   happened to carry no intro text.
+   `--c-text-muted` deliberately maps to the brighter on-dark muted here: its
+   light-mode value is a 3.12:1 grey that exists for decorative use on white
+   and is unreadable on navy. */
+.section--dark :is(.t-lead, .t-body, .t-sm, .t-xs) {
+  color: var(--c-on-dark);
+}
+
+.section--dark .t-muted {
+  color: var(--c-on-dark-muted);
+}
+
+.section--dark .t-strong {
+  color: var(--c-white);
+}
+
 /* Slabs sit edge-to-edge on small screens — a 26px radius against a
    16px gutter reads as a mistake, not a decision. */
 @media (width <= 640px) {
