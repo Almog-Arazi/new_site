@@ -89,6 +89,16 @@ sections:
       מבצעים את הבדיקה בשעות שמתאימות למפעל.
     narrow: true
     tone: tint
+  - type: calloutBand
+    heading: 'עגורן זרוע? יש לו עמוד משלו'
+    text: >-
+      בסיס ועיגון, מנגנון סיבוב, כננת וגובלים — כל מה שנבדק בעגורן זרוע על עמוד
+      או צמוד קיר.
+    tone: tint
+    cta:
+      label: בדיקת עגורן זרוע
+      href: /jib-crane-inspection
+      style: secondary
   - type: faq
     heading: שאלות על בדיקת עגורנים
     groups:

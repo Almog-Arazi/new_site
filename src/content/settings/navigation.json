@@ -35,12 +35,20 @@
           "href": "/crane-inspection"
         },
         {
+          "label": "בדיקות עגורני זרוע",
+          "href": "/jib-crane-inspection"
+        },
+        {
           "label": "בדיקות במות הרמה",
           "href": "/lift-platform-inspection"
         },
         {
           "label": "ליפטים ומתקנים נוספים",
           "href": "/additional-lifting-equipment"
+        },
+        {
+          "label": "דפנות הרמה למשאיות",
+          "href": "/tail-lift-inspection"
         }
       ]
     },
@@ -89,6 +97,10 @@
         {
           "label": "בדיקות עגורנים",
           "href": "/crane-inspection"
+        },
+        {
+          "label": "עגורני זרוע",
+          "href": "/jib-crane-inspection"
         },
         {
           "label": "בדיקות במות הרמה",
