@@ -47,7 +47,6 @@ const featured = variant === 'featured';
   :global(.acard__media) {
     border-radius: 0;
     box-shadow: none;
-    block-size: 100%;
   }
 
   .acard__body {
@@ -89,6 +88,17 @@ const featured = variant === 'featured';
       display: grid;
       grid-template-columns: 0.9fr 1.1fr;
       align-items: stretch;
+    }
+
+    /* Only the two-column card needs the media to fill the row height. On the
+       stacked cards this was catastrophic: they are grid items under
+       `align-items: stretch`, so `block-size: 100%` resolved against a height
+       that is itself derived from the media — the circular case. The figure
+       painted at the full card height, the body overflowed the card's bottom
+       edge, and the next row's titles landed on top of the images above them.
+       That is the "text sitting on the pictures" the client reported. */
+    :global(.card.acard--featured .acard__media) {
+      block-size: 100%;
     }
 
     :global(.acard--featured) .acard__body {
