@@ -5,7 +5,11 @@ node_modules
 .superpowers
 /dist
 /docs
-/scripts
-# …except the image generator, which `npm run build` now runs in the cloud.
-# The other scripts are local verification and stay out of the deploy.
-!/scripts/gen-images.mjs
+
+# The verification scripts are local-only. Listed one by one rather than
+# ignoring /scripts wholesale, because `npm run build` now runs
+# scripts/gen-images.mjs in the cloud — and an ignored directory cannot be
+# re-included with a negation, which is how the first fix failed.
+/scripts/check-html.mjs
+/scripts/check-links.mjs
+/scripts/check-rtl.mjs
