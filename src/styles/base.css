@@ -57,6 +57,16 @@ body {
   padding-block-start: var(--section-y-adjacent);
 }
 
+/* The other half of the same seam. Collapsing only the leading side left a
+   plain section with 44px above and 80px below at 1440px — the two edges of
+   one rhythm unit disagreeing, which is what reads as "every area got its own
+   design". `:has(~ .section)` is "any section that is not the last on the
+   page", the mirror of the rule above; the same `~` reasoning applies, since
+   FaqSection and the analytics hooks emit a bare <script> between sections. */
+.section:not(.section--flush):not(:has(> .section__slab)):has(~ .section) {
+  padding-block-end: var(--section-y-adjacent);
+}
+
 .section__slab {
   inline-size: min(100%, var(--container-wide));
   margin-inline: auto;

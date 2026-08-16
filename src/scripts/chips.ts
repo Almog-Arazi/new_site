@@ -5,7 +5,7 @@
  *   document dispatches CustomEvent('equipment:change', { detail: { ids: string[] } })
  * Stream A's lead form listens for it and preselects the equipment field.
  *
- * Markup contract (components/home/EquipmentPicker.astro):
+ * Markup contract (components/home/HomeEquipment.astro):
  *   [data-equipment-picker]              the root
  *   [data-chip="<id>"][aria-pressed]     one per chip (ui/Chip.astro as="toggle")
  *   [data-picker-label][data-empty="…"]  the aria-live result line

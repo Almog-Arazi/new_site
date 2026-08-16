@@ -4,17 +4,36 @@ import Section from '../ui/Section.astro';
 import Card from '../ui/Card.astro';
 import PhotoFrame from '../media/PhotoFrame.astro';
 import Icon from '../ui/Icon.astro';
+import Chip from '../ui/Chip.astro';
+import Button from '../ui/Button.astro';
+import { telHrefFor } from '../../lib/format';
+
+/* The chip picker used to be its own <section> directly below this one —
+   two headings, two slabs, one subject, and the eleventh section on a page
+   the spec asked to hold ten. It is a row inside this section now.
+   src/scripts/chips.ts reads the markup below and dispatches the frozen
+   cross-stream contract:
+     document → CustomEvent('equipment:change', { detail: { ids } })
+   The lead form listens and preselects its equipment field. The markup hooks
+   are the contract: [data-equipment-picker], [data-chip] (supplied by Chip
+   as="toggle"), [data-picker-label][data-empty]. */
 
 interface Props {
   heading?: string;
   moreHref?: string;
   moreLabel?: string;
+  pickerHeading?: string;
+  emptyLabel?: string;
+  formHref?: string;
 }
 
 const {
   heading = 'ציוד שאנחנו בודקים',
   moreHref = '/equipment',
   moreLabel = 'לכל סוגי הציוד',
+  pickerHeading = 'בחרו את הציוד שלכם ונחזור אליכם',
+  emptyLabel = 'בחרו סוג ציוד אחד או יותר. הבחירה תיטען אוטומטית לטופס.',
+  formHref = '#lead',
 } = Astro.props;
 
 /* Same six records that feed the chip picker, the footer and the form's
@@ -51,6 +70,27 @@ const items = (await getCollection('equipment')).sort((a, b) => a.data.order - b
       ))
     }
   </div>
+
+  <div class="picker" data-equipment-picker id="equipment-picker">
+    <h3 class="picker__heading">{pickerHeading}</h3>
+
+    <div class="picker__chips">
+      {items.map((item) => <Chip as="toggle" value={item.data.id}>{item.data.label}</Chip>)}
+    </div>
+
+    <div class="picker__result">
+      <p class="picker__label" data-picker-label data-empty={emptyLabel} aria-live="polite">
+        {emptyLabel}
+      </p>
+      <div class="cluster picker__actions">
+        <Button href={telHrefFor()} variant="ghost" size="lg" track="phone_click">
+          <Icon name="phone" size={20} />
+          דברו איתנו עכשיו
+        </Button>
+        <Button href={formHref} variant="primary" size="lg">שליחת בקשה</Button>
+      </div>
+    </div>
+  </div>
 </Section>
 
 <style>
@@ -85,5 +125,51 @@ const items = (await getCollection('equipment')).sort((a, b) => a.data.order - b
     display: grid;
     gap: var(--s-2);
     padding: var(--card-pad);
+  }
+
+  /* ── the picker, now a row of this section rather than a section ──── */
+  .picker {
+    display: grid;
+    gap: var(--s-5);
+    margin-block-start: var(--s-8);
+    padding-block-start: var(--s-7);
+    border-block-start: var(--hairline);
+  }
+
+  .picker__heading {
+    font-size: var(--fs-h3);
+  }
+
+  .picker__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+  }
+
+  /* One quiet panel holding the live answer and the two next steps. */
+  .picker__result {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-5);
+    padding: var(--card-pad);
+    background: var(--c-bg-tint);
+    border: var(--hairline);
+    border-radius: var(--r-4);
+  }
+
+  .picker__label {
+    flex: 1 1 18rem;
+    min-inline-size: 0;
+    font-family: var(--ff-head);
+    font-size: var(--fs-lead);
+    font-weight: var(--fw-med);
+    line-height: var(--lh-h3);
+    color: var(--c-heading);
+  }
+
+  .picker__actions {
+    flex: 0 1 auto;
   }
 </style>
