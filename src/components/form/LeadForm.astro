@@ -7,6 +7,7 @@ import Select from './Select.astro';
 import Textarea from './Textarea.astro';
 import FormSuccess from './FormSuccess.astro';
 import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
 
 /* The short lead form — five fields, navy panel.
  *
@@ -128,10 +129,32 @@ const equipmentOptions = [
 
     <p class="lead-form__status" role="status" data-form-status></p>
 
-    <Button type="submit" variant="primary" size="lg" full>שליחה בוואטסאפ</Button>
+    <div class="lead-form__actions">
+      <Button
+        href={tel}
+        variant="on-dark"
+        size="lg"
+        track="phone_click"
+        class="lead-form__call"
+      >
+        <Icon name="phone" size={20} />
+        <span>התקשרו עכשיו</span>
+      </Button>
+
+      <Button type="submit" variant="primary" size="lg" class="lead-form__go">
+        שליחת הפרטים
+      </Button>
+    </div>
+
+    <p class="lead-form__alt">
+      <a href={waHref} data-track="whatsapp_click" target="_blank" rel="noopener">
+        <Icon name="whatsapp" size={18} />
+        <span>או שלחו הודעה בוואטסאפ</span>
+      </a>
+    </p>
 
     <p class="lead-form__consent">
-      הפרטים נפתחים כהודעת וואטסאפ מוכנה. נשאר רק ללחוץ שליחה ·
+      הפרטים ייפתחו כהודעה מוכנה לשליחה. אפשר גם פשוט להתקשר ·
       <a href="/privacy">מדיניות פרטיות</a>
     </p>
 
@@ -206,6 +229,51 @@ const equipmentOptions = [
   .lead-form__status {
     font-size: var(--fs-sm);
     color: var(--c-accent-dark);
+  }
+
+  /* ── the three actions ────────────────────────────────────────
+     Phone and submit are peers; WhatsApp is a text link under them. This
+     audience — maintenance managers, safety officers, procurement — picks up
+     the phone, and the form's only action used to be a full-width orange
+     "send on WhatsApp", which put the least likely channel first.
+     Phone sits first in source order, so under RTL it takes the start edge.
+     ──────────────────────────────────────────────────────────── */
+  .lead-form__actions {
+    display: grid;
+    gap: var(--s-3);
+  }
+
+  @media (width >= 560px) {
+    .lead-form__actions {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* WhatsApp demoted to a text link. Still one tap, no longer the default. */
+  .lead-form__alt {
+    display: flex;
+    justify-content: center;
+  }
+
+  .lead-form__alt a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-block-size: var(--tap);
+    font-size: var(--fs-sm);
+    color: var(--c-on-dark);
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+  }
+
+  .lead-form__alt a:hover {
+    color: var(--c-accent-dark);
+  }
+
+  .lead-form__alt a:focus-visible {
+    outline: none;
+    box-shadow: var(--ring-on-dark);
+    border-radius: var(--r-1);
   }
 
   .lead-form__consent {
