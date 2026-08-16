@@ -10,6 +10,7 @@ node_modules
 # ignoring /scripts wholesale, because `npm run build` now runs
 # scripts/gen-images.mjs in the cloud — and an ignored directory cannot be
 # re-included with a negation, which is how the first fix failed.
+/scripts/check-cycle.mjs
 /scripts/check-html.mjs
 /scripts/check-links.mjs
 /scripts/check-rtl.mjs

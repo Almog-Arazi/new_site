@@ -47,49 +47,52 @@ const LINKS = ['l12', 'l23', 'l34', 'l41'];
 <Section tone="soft">
   <SectionHeader heading={heading} intro={intro} align="center" />
 
-  <ol role="list" class:list={['cycle', isRing && 'cycle--ring']}>
-    {
-      steps.map((step, i) => (
-        <li
-          class:list={[
-            'cycle__step',
-            isRing && `cycle__step--${QUADRANT[i]}`,
-            i === steps.length - 1 && 'cycle__step--loop',
-          ]}
-        >
-          <span class="cycle__mark" aria-hidden="true">
-            <span class="cycle__num">{i + 1}</span>
-            <Icon name={STEP_ICON[step.data.id] ?? 'check'} size={20} class="cycle__glyph" />
-          </span>
-          <h3 class="cycle__title">{step.data.title}</h3>
-          <p class="t-body cycle__text">{step.data.text}</p>
-        </li>
-      ))
-    }
+  <div class:list={['cycle', isRing && 'cycle--ring']}>
+    <ol role="list" class="cycle__list">
+      {
+        steps.map((step, i) => (
+          <li
+            class:list={[
+              'cycle__step',
+              isRing && `cycle__step--${QUADRANT[i]}`,
+              i === steps.length - 1 && 'cycle__step--loop',
+            ]}
+          >
+            <span class="cycle__mark" aria-hidden="true">
+              <span class="cycle__num">{i + 1}</span>
+              <Icon name={STEP_ICON[step.data.id] ?? 'check'} size={20} class="cycle__glyph" />
+            </span>
+            <h3 class="cycle__title">{step.data.title}</h3>
+            <p class="t-body cycle__text">{step.data.text}</p>
+          </li>
+        ))
+      }
+    </ol>
 
-    {/* Connectors. They live inside the <ol> as aria-hidden items so the
-        list still contains nothing but <li>, and the accessibility tree
-        still reports exactly four steps — the recurrence they draw is
-        stated in words in the section intro above, which is where a
-        screen-reader user actually gets it. */}
+    {/* Decoration, and outside the list. aria-hidden keeps it out of the
+        accessibility tree; being a <div> keeps it out of the *visual* list
+        too. As <li> these were numbered 5–9 by any stylesheet that restores
+        list markers, which is what the client reported seeing. The recurrence
+        they draw is stated in words in the section intro above, which is
+        where a screen-reader user actually gets it. */}
     {
       isRing &&
         LINKS.map((link) => (
-          <li class:list={['cycle__link', `cycle__link--${link}`]} aria-hidden="true">
+          <div class:list={['cycle__link', `cycle__link--${link}`]} aria-hidden="true">
             <Icon name="arrow" size={22} />
-          </li>
+          </div>
         ))
     }
 
     {
       isRing && (
-        <li class="cycle__hub" aria-hidden="true">
+        <div class="cycle__hub" aria-hidden="true">
           <Icon name="refresh" size={26} />
           <span>מחזור מתמשך</span>
-        </li>
+        </div>
       )
     }
-  </ol>
+  </div>
 </Section>
 
 <style>
@@ -99,6 +102,14 @@ const LINKS = ['l12', 'l23', 'l34', 'l41'];
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--s-5);
+  }
+
+  /* The <ol> is not itself a grid item — its four <li> take part in .cycle's
+     grid directly, which is what lets the ring place them by area while the
+     list stays a list. `list-style: none` still belongs here rather than on
+     .cycle, since the <ol> is the element that would draw markers. */
+  .cycle__list {
+    display: contents;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -214,8 +225,10 @@ const LINKS = ['l12', 'l23', 'l34', 'l41'];
 
     /* A grid item defaults to min-inline-size:auto and refuses to shrink
        below its content — the one thing that can still widen this layout
-       past its container. */
-    .cycle--ring > * {
+       past its container. The <ol> is `display: contents`, so the reset has
+       to reach through it to the four <li> as well as to the decoration. */
+    .cycle--ring > *,
+    .cycle--ring > .cycle__list > * {
       min-inline-size: 0;
     }
 

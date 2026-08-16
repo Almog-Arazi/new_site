@@ -8,7 +8,7 @@
     "build": "node scripts/gen-images.mjs && astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "verify": "node scripts/check-rtl.mjs src && node scripts/check-html.mjs dist && node scripts/check-links.mjs dist",
+    "verify": "node scripts/check-rtl.mjs src && node scripts/check-html.mjs dist && node scripts/check-links.mjs dist && node scripts/check-cycle.mjs",
     "verify:all": "npm run build && npm run verify",
     "images": "node scripts/gen-images.mjs"
   },
