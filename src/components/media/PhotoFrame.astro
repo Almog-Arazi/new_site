@@ -1,6 +1,7 @@
 ---
 import PlaceholderArt from '../placeholders/PlaceholderArt.astro';
 import type { PlaceholderVariant } from '../placeholders/index';
+import manifest from '../../lib/image-manifest.json';
 
 interface Props {
   variant: PlaceholderVariant;
@@ -11,6 +12,12 @@ interface Props {
   ratio?: 'hero' | 'card' | 'wide' | 'portrait' | 'auto';
   tone?: 'tint' | 'dark';
   eager?: boolean;
+  /**
+   * How wide this frame renders, so the browser can pick a variant before
+   * layout. The default assumes the common case: full width on a phone,
+   * about half the measure once the grid splits.
+   */
+  sizes?: string;
   class?: string;
 }
 
@@ -22,8 +29,24 @@ const {
   ratio = 'card',
   tone = 'tint',
   eager = false,
+  sizes = '(min-width: 901px) 50vw, 100vw',
   class: className,
 } = Astro.props;
+
+/* scripts/gen-images.mjs writes the manifest before every build. An image
+   missing from it still renders — it just ships a single file, which is what
+   happened to every photo on the site until this existed. */
+type Entry = { width: number; height: number; widths: number[] };
+const meta: Entry | undefined = image
+  ? (manifest as Record<string, Entry>)[image]
+  : undefined;
+
+const srcset = meta?.widths.length
+  ? [
+      ...meta.widths.map((w) => `${image!.replace(/\.webp$/, `-${w}.webp`)} ${w}w`),
+      `${image} ${meta.width}w`,
+    ].join(', ')
+  : undefined;
 ---
 
 <figure class:list={['frame', `frame--${ratio}`, className]}>
@@ -31,6 +54,10 @@ const {
     image ? (
       <img
         src={image}
+        srcset={srcset}
+        sizes={srcset ? sizes : undefined}
+        width={meta?.width}
+        height={meta?.height}
         alt={alt}
         loading={eager ? 'eager' : 'lazy'}
         decoding="async"

@@ -5,11 +5,12 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/gen-images.mjs && astro build",
     "preview": "astro preview",
     "check": "astro check",
     "verify": "node scripts/check-rtl.mjs src && node scripts/check-html.mjs dist && node scripts/check-links.mjs dist",
-    "verify:all": "npm run build && npm run verify"
+    "verify:all": "npm run build && npm run verify",
+    "images": "node scripts/gen-images.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
