@@ -259,12 +259,12 @@ sections:
         placeholder: crane
         alt: עגורן גשר באולם ייצור
         image: /uploads/img-04-crane-hall.webp
-      - title: בדיקות אביזרי הרמה
-        text: רצועות, שרשראות, שאקלים וקורות הרמה — אחת ל־6 חודשים.
-        href: /lifting-accessories
-        placeholder: accessory
-        alt: רצועות ושרשראות הרמה
-        image: /uploads/img-16-accessories-flatlay.webp
+      - title: בדיקת שולחן הרמה
+        text: שולחנות מספריים, הידראוליים, חשמליים, ניידים וקבועים.
+        href: /lift-table-inspection
+        placeholder: platform
+        alt: שולחן הרמה הידראולי במחסן
+        image: /uploads/img-35-lift-table.webp
   - type: faq
     heading: שאלות נפוצות על בדיקת במות הרמה
     groups:

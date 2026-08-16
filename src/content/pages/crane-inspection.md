@@ -89,16 +89,31 @@ sections:
       מבצעים את הבדיקה בשעות שמתאימות למפעל.
     narrow: true
     tone: tint
-  - type: calloutBand
-    heading: 'עגורן זרוע? יש לו עמוד משלו'
-    text: >-
-      בסיס ועיגון, מנגנון סיבוב, כננת וגובלים — כל מה שנבדק בעגורן זרוע על עמוד
-      או צמוד קיר.
-    tone: tint
-    cta:
-      label: בדיקת עגורן זרוע
-      href: /jib-crane-inspection
-      style: secondary
+  - type: linkCards
+    heading: לכל סוג עגורן יש עמוד משלו
+    intro: >-
+      המבנה, מערכות התנועה ודגשי הבדיקה שונים בין הסוגים. בחרו את הסוג שלכם
+      לפירוט המלא.
+    columns: 3
+    cards:
+      - title: בדיקת עגורן גשר
+        text: עגורני גשר חד־קורה ודו־קורה, כולל המסילות ועגלת ההרמה.
+        href: /bridge-crane-inspection
+        placeholder: crane
+        alt: עגורן גשר באולם ייצור
+        image: /uploads/img-31-bridge-crane-hall.webp
+      - title: בדיקת עגורן שער
+        text: עגורני שער על גלגלים או על מסילות, חשמליים ובדחיפה ידנית.
+        href: /gantry-crane-inspection
+        placeholder: crane
+        alt: עגורן שער בחצר תפעול
+        image: /uploads/img-33-gantry-crane-yard.webp
+      - title: בדיקת עגורן זרוע
+        text: עגורני זרוע על עמוד או צמודי קיר, עם כננת ידנית או ממונעת.
+        href: /jib-crane-inspection
+        placeholder: crane
+        alt: עגורן זרוע בעמדת עבודה
+        image: /uploads/img-05-crane-low-angle.webp
   - type: faq
     heading: שאלות על בדיקת עגורנים
     groups:

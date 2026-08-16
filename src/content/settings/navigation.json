@@ -35,6 +35,14 @@
           "href": "/crane-inspection"
         },
         {
+          "label": "בדיקות עגורני גשר",
+          "href": "/bridge-crane-inspection"
+        },
+        {
+          "label": "בדיקות עגורני שער",
+          "href": "/gantry-crane-inspection"
+        },
+        {
           "label": "בדיקות עגורני זרוע",
           "href": "/jib-crane-inspection"
         },
@@ -43,8 +51,20 @@
           "href": "/lift-platform-inspection"
         },
         {
+          "label": "בדיקות שולחנות הרמה",
+          "href": "/lift-table-inspection"
+        },
+        {
           "label": "ליפטים ומתקנים נוספים",
           "href": "/additional-lifting-equipment"
+        },
+        {
+          "label": "מגבהים וליפטים לרכב",
+          "href": "/vehicle-lift-inspection"
+        },
+        {
+          "label": "בדיקת ג'ק לרכב",
+          "href": "/vehicle-jack-inspection"
         },
         {
           "label": "דפנות הרמה למשאיות",
