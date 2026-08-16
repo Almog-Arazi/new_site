@@ -1,7 +1,11 @@
 # CONVENTIONS — read this before writing a line
 
 Hebrew RTL lead-generation site for ארזי מיטב המהנדסים (certified lifting-equipment inspector).
-Astro 5 static, Sveltia CMS, Netlify. Phase 0 is complete and **frozen**.
+Astro 5 static, Sveltia CMS, deployed on **Vercel**. The initial build is complete; the site is
+live and in a review-and-refine phase.
+
+The lead form does **not** post anywhere. It composes the fields into a Hebrew WhatsApp message
+and opens wa.me; see `src/scripts/form.ts`. There is no inbox, no honeypot and no spam surface.
 
 ## The five rules
 
@@ -55,24 +59,27 @@ Astro 5 static, Sveltia CMS, Netlify. Phase 0 is complete and **frozen**.
 - Amber is small marks and checks on navy only.
 - One stroke-icon language: 24px grid, 1.75px strokes, from `IconSprite.astro`.
 
-## File ownership during the parallel phase
+## File ownership when running parallel agents
 
-Phase 0 files are **read-only**. You may *add* a file to a shared directory; you may not *edit*
-an existing one. If you need a change to a frozen file, say so in your report instead.
+The table below is the *current* split, rewritten after the first review round. The original
+build-phase streams (A–D by component directory) no longer exist.
 
-| Stream | Owns |
-|---|---|
-| **A** | `components/chrome/*`, `components/form/*`, `src/scripts/*`, `pages/contact.astro`, `pages/toda.astro`, `pages/404.astro` |
-| **B** | `pages/[...slug].astro`, `components/templates/*`, `components/blocks/*` (except `registry.ts`) |
-| **C** | `pages/index.astro`, `pages/blog/*`, `components/home/*`, `components/blog/*`, `styles/prose.css` |
-| **D** | all of `src/content/**`, all of `public/**`, `components/placeholders/*`, `docs/*` |
+When several agents run at once, give each a disjoint set and say so in the brief. What matters is
+that no two agents write the same file, not which letter they are called.
 
-**Frozen, nobody edits:** `src/content.config.ts`, `src/components/blocks/registry.ts`,
-`src/styles/tokens.css`, `src/site.config.ts`, `src/lib/*`, `src/layouts/*`, `src/components/ui/*`,
-`src/components/seo/*`, `src/components/media/*`, `astro.config.mjs`, `netlify.toml`.
+**Genuinely frozen — changing these breaks contracts elsewhere:**
+`src/content.config.ts` (the 12-block union — the CMS `config.yml` mirrors it field by field, and a
+mismatch saves cleanly in the CMS then fails the build, stranding the client),
+`src/components/blocks/registry.ts`, `astro.config.mjs`.
 
-Streams A, B and C inherit working Phase 0 stubs in their own directories — those are yours to
-replace. Only Phase 0 runs `npm install`. Build to `.tmp/dist-<stream>` so you do not race on `dist/`.
+**Change with care, and tell the other agents:** `src/styles/tokens.css` (one edit moves the whole
+site — that is the point of it), `src/components/ui/*`, `src/components/media/PhotoFrame.astro`,
+`src/lib/*`, `src/layouts/*`, `src/site.config.ts`.
+
+Nothing else is frozen. `netlify.toml` is a leftover from an abandoned host; `vercel.json` is live.
+
+Build to `dist/` — `npm run verify` hardcodes it. If two agents build at once, re-run
+`npm run verify:all` before trusting the result.
 
 ## Cross-stream contracts (frozen)
 
@@ -86,16 +93,31 @@ replace. Only Phase 0 runs `npm install`. Build to `.tmp/dist-<stream>` so you d
 ## Commands
 
 ```bash
-npm run dev            # localhost:4321
-npm run build
+npm run dev            # localhost:4399 (see .claude/launch.json)
+npm run images         # regenerate responsive variants + the image manifest
+npm run build          # runs `images` first, then astro build
 npm run verify         # check-rtl + check-html + check-links
 npm run verify:all     # build then verify
 ```
 
-`check-links` currently reports the 14 pages Stream D has not written yet. That is expected until
-D lands; it must be green before launch.
+All three verify scripts are green and must stay that way.
+
+`scripts/gen-images.mjs` writes 480/800/1200 variants into `public/uploads` and records each
+original's intrinsic size in `src/lib/image-manifest.json`. The variants are gitignored: they are
+derived from the originals beside them. `PhotoFrame` reads the manifest for `srcset`, `width` and
+`height` — an image missing from the manifest still renders, it just ships one file.
+
+For accessibility checks, `axe-core` is already a devDependency. Copy it into `public/` briefly,
+eval it in the page, run it, then **delete it** — do not leave `public/_axe.js` behind. The browser
+tab must be fronted or rendering is throttled and the measurements silently lie; wait ~600ms after
+navigating before running, or you will get phantom contrast violations.
 
 ## Known placeholders (see docs/launch-checklist.md)
 
-Phone, WhatsApp, email, GA4 measurement ID and the production domain are all placeholders in
-`src/content/settings/site.json`. The site must not go live with them.
+Still placeholders in `src/content/settings/site.json`: the GA4 measurement ID, the production
+domain, and `accessibility.coordinatorName` (which renders on an orange mark on `/accessibility`
+until it is filled — the regulations name a coordinator explicitly). Phone and WhatsApp are real.
+Email was removed from the site entirely at the client's request.
+
+`public/admin/config.yml` still holds `REPLACE-ME` for the GitHub repo and the auth worker. Until
+those are set the CMS cannot open, which also means the client cannot edit anything.
