@@ -98,7 +98,7 @@ cta:
   text: ספרו לנו מה יש באתר ואנחנו נחזור עם מועד קרוב ומחיר.
 related:
   - lifting-equipment-inspection
-  - forklift-inspection
   - lifting-inspection-sharon
+  - lifting-inspection-south
 updated: 2026-08-05
 ---

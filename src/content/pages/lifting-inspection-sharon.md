@@ -111,7 +111,7 @@ cta:
   text: נעבור איתכם על רשימת הציוד באתר ונוודא שלא נשכח כלום.
 related:
   - lifting-equipment-inspection
-  - lifeline-inspection
   - lifting-inspection-center
+  - lifting-inspection-south
 updated: 2026-08-05
 ---

@@ -106,7 +106,7 @@ cta:
   text: יש לכם כמה אתרים בנגב או בשפלה? נתאם אותם ברצף אחד.
 related:
   - lifting-equipment-inspection
-  - crane-inspection
   - lifting-inspection-center
+  - lifting-inspection-sharon
 updated: 2026-08-05
 ---

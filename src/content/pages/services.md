@@ -60,5 +60,9 @@ sections:
 cta:
   heading: צריכים לתאם בדיקה?
   text: צרו קשר לקבלת זמינות, מחיר ותיאום מועד.
+related:
+  - lifting-equipment-inspection
+  - lifting-accessories
+  - lifeline-inspection
 updated: 2026-08-05
 ---

@@ -24,10 +24,19 @@ export interface Meta {
 }
 
 /** Titles arrive complete from the CMS — the brand suffix is appended only
- *  when the author left it off, so no page ends up double-branded. */
+ *  when the author left it off, so no page ends up double-branded.
+ *
+ *  The guard has to match a *partial* brand too. One article ended its
+ *  seoTitle with "| ארזי מיטב" — the company name minus its last word — which
+ *  `includes(shortName)` reads as absent, so the full brand was appended on
+ *  top of it and the tag read "… | ארזי מיטב | ארזי מיטב המהנדסים" at 68
+ *  characters. Matching on the first two words catches every truncation an
+ *  author is likely to type. */
 export function buildMeta(input: MetaInput): Meta {
   const brand = site.shortName;
-  const title = input.title.includes(brand) ? input.title : `${input.title} | ${brand}`;
+  const brandStem = brand.split(' ').slice(0, 2).join(' ');
+  const alreadyBranded = input.title.includes(brand) || input.title.includes(`| ${brandStem}`);
+  const title = alreadyBranded ? input.title : `${input.title} | ${brand}`;
 
   return {
     title,

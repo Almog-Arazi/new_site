@@ -18,7 +18,7 @@ hero:
   image: /uploads/img-01-hero-inspector-factory.webp
   note: 'צילום: בודק ליד עגורן גשר באולם ייצור, ציוד מדידה ביד'
 seo:
-  title: בדיקות מתקני הרמה | בודק מוסמך למתקני הרמה | ארזי מיטב המהנדסים
+  title: בדיקות מתקני הרמה | בודק מוסמך | ארזי מיטב המהנדסים
   description: >-
     בדיקות מתקני הרמה על ידי בודק מוסמך: מלגזות, עגורנים, במות הרמה ומתקנים
     נוספים. תסקיר בדיקה מסודר. שירות למפעלים וחברות בכל הארץ.
@@ -83,6 +83,25 @@ sections:
         placeholder: generic
         alt: מתקן הרמה ייעודי בקו ייצור
         image: /uploads/img-22-jib-crane-line.webp
+  - type: linkCards
+    heading: ציוד נוסף שאנחנו בודקים
+    intro: >-
+      לכל אחד מהם עמוד ייעודי עם היקף הבדיקה, הליקויים השכיחים והתסקיר שמופק
+      בסיומה.
+    columns: 2
+    cards:
+      - title: שולחנות הרמה
+        text: שולחנות הרמה הידראוליים בקווי ייצור ובאזורי אריזה.
+        href: /lift-table-inspection
+      - title: מגבהים וליפטים לרכב
+        text: מתקני הרמה במוסכים ובמרכזי שירות לרכב.
+        href: /vehicle-lift-inspection
+      - title: ג'ק לרכב
+        text: מגבהי רכב ניידים ונייחים.
+        href: /vehicle-jack-inspection
+      - title: דפנות הרמה למשאיות
+        text: דפנות הרמה אחוריות על משאיות ורכבי חלוקה.
+        href: /tail-lift-inspection
   - type: processSteps
     heading: מה כולל תהליך הבדיקה?
     tone: dark
