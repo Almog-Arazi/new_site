@@ -1,7 +1,10 @@
 ---
 import LeadForm from '../form/LeadForm.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
-import TelLink from '../ui/TelLink.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import site from '../../site.config';
+import { telHrefFor } from '../../lib/format';
 
 /* Homepage hero (sketch P1). This is the one page whose <h1> does not come
    from PageHead — the homepage has no breadcrumb and pairs the heading with
@@ -44,6 +47,8 @@ const {
   formHeading = 'נחזור אליכם לתיאום ולמתן הצעת מחיר',
   formIntro = 'חמישה שדות בלבד. נחזור אליכם לתיאום הבדיקה ולמתן הצעת מחיר.',
 } = Astro.props;
+
+const tel = telHrefFor(site.phoneE164);
 ---
 
 <section class="hero" data-hero>
@@ -80,15 +85,29 @@ const {
         ))
       }
     </ul>
+
+    {/* Narrow screens only. On a phone the form panel sits a full screen
+        below this point, and the fixed bottom bar reads as browser chrome
+        rather than as the page's offer — so the hero has to carry its own
+        two actions. Hidden on wide screens, where the form is already
+        alongside the headline and the desktop CTA rail is on screen. */}
+    <div class="hero__cta">
+      <Button href="#lead" variant="primary" size="lg" track="form_start">
+        תיאום בדיקה
+      </Button>
+      <Button href={tel} variant="on-dark" size="lg" track="phone_click">
+        <Icon name="phone" size={20} />
+        דברו איתנו עכשיו
+      </Button>
+    </div>
   </div>
 
   <div class="hero__aside" id="lead">
     <Eyebrow>{formEyebrow}</Eyebrow>
+    {/* The "or call directly" line that used to sit here is gone: the form
+        panel now carries a phone button as a peer of submit, so the line
+        repeated the same number immediately below itself. */}
     <LeadForm heading={formHeading} intro={formIntro} headingLevel={2} />
-    <p class="hero__tel">
-      <span>או התקשרו ישירות:</span>
-      <TelLink variant="plain" showIcon={false} />
-    </p>
   </div>
 </section>
 
@@ -233,13 +252,14 @@ const {
     box-shadow: var(--e-1);
   }
 
-  .hero__tel {
+  .hero__cta {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: var(--s-2);
-    font-size: var(--fs-sm);
-    color: var(--c-on-dark);
+    gap: var(--s-3);
+  }
+
+  .hero__cta :global(.btn) {
+    flex: 1 1 14rem;
   }
 
   /* One screen, no scrolling to reach the bottom of the form. The section is
@@ -283,6 +303,12 @@ const {
 
     .hero__aside {
       grid-area: auto;
+    }
+
+    /* The form panel is beside the headline here and the desktop CTA rail is
+       on screen, so a third pair of buttons is noise. */
+    .hero__cta {
+      display: none;
     }
   }
 
@@ -373,6 +399,28 @@ const {
       font-size: var(--fs-body);
       background: none;
       border: 0;
+    }
+  }
+
+  /* On a phone the hero carries the headline, the lead, four ticks, two
+     buttons and a five-field form — the tallest block on the site by a wide
+     margin. The two blocks' own padding was 128px and 96px on top of that,
+     which is the "too much scrolling for too little content" note. Trimmed
+     here rather than in the >=901px layout, where the same padding is what
+     keeps the two columns off the section edge. */
+  @media (width <= 560px) {
+    .hero__main {
+      padding-block: var(--s-7) var(--s-8);
+    }
+
+    .hero__aside {
+      padding-block: var(--s-6) var(--s-7);
+    }
+
+    /* The buttons are full-width here; the flex basis would otherwise leave
+       one of them alone on a second row at an awkward width. */
+    .hero__cta :global(.btn) {
+      flex: 1 1 100%;
     }
   }
 </style>
