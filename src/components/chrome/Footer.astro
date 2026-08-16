@@ -33,6 +33,20 @@ const tel = telHrefFor(site.phoneE164);
             {group.links.map((link) => (
               <li>
                 <a href={link.href}>{link.label}</a>
+
+                {/* Same three-level shape as the menu. The footer used to
+                    carry five of the eleven equipment pages and no hierarchy
+                    at all, so the site advertised a different structure
+                    depending on where the visitor looked. */}
+                {link.children && (
+                  <ul role="list" class="site-footer__sub">
+                    {link.children.map((leaf) => (
+                      <li>
+                        <a href={leaf.href}>{leaf.label}</a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>
@@ -138,6 +152,17 @@ const tel = telHrefFor(site.phoneE164);
     color: var(--c-accent-dark);
     text-decoration: underline;
     text-underline-offset: 0.22em;
+  }
+
+  .site-footer__sub {
+    display: grid;
+    margin-inline-start: var(--s-3);
+    padding-inline-start: var(--s-3);
+    border-inline-start: 1px solid var(--c-border-dark);
+  }
+
+  .site-footer__sub a {
+    font-size: var(--fs-xs);
   }
 
   .site-footer__strong {

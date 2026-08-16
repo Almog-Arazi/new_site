@@ -47,6 +47,32 @@ const here = normalise(pathname);
                     >
                       {child.label}
                     </a>
+
+                    {/* The third level is an indented list inside the same
+                        panel, not a second hover layer: the crane pages
+                        belong under the crane hub, and a flyout off a flyout
+                        is a keyboard and touch trap for the sake of three
+                        links. DOM order is unchanged, so tabbing still walks
+                        the menu top to bottom. */}
+                    {child.children && (
+                      <ul role="list" class="site-nav__sub2" aria-label={child.label}>
+                        {child.children.map((leaf) => (
+                          <li>
+                            <a
+                              href={leaf.href}
+                              class:list={[
+                                'site-nav__sublink',
+                                'site-nav__sublink--leaf',
+                                normalise(leaf.href) === here && 'is-active',
+                              ]}
+                              aria-current={normalise(leaf.href) === here ? 'page' : undefined}
+                            >
+                              {leaf.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -178,6 +204,22 @@ const here = normalise(pathname);
     transition:
       background-color var(--dur) var(--ease),
       color var(--dur) var(--ease);
+  }
+
+  /* The third level. A rule on the inline-start edge does the grouping work
+     that indentation alone would not in a list this dense — it says "these
+     three belong to the line above" without a second flyout. */
+  .site-nav__sub2 {
+    display: grid;
+    margin-inline-start: var(--s-4);
+    padding-inline-start: var(--s-3);
+    border-inline-start: 1px solid var(--c-border);
+  }
+
+  .site-nav__sublink--leaf {
+    font-weight: var(--fw-reg);
+    font-size: var(--fs-xs);
+    color: var(--c-text);
   }
 
   .site-nav__sublink:hover,

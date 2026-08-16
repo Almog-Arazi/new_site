@@ -64,6 +64,26 @@ const tel = telHrefFor(site.phoneE164);
                     >
                       {child.label}
                     </a>
+
+                    {child.children && (
+                      <ul role="list" class="drawer__sub2">
+                        {child.children.map((leaf) => (
+                          <li>
+                            <a
+                              href={leaf.href}
+                              class:list={[
+                                'drawer__sublink',
+                                'drawer__sublink--leaf',
+                                normalise(leaf.href) === here && 'is-active',
+                              ]}
+                              aria-current={normalise(leaf.href) === here ? 'page' : undefined}
+                            >
+                              {leaf.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -206,6 +226,21 @@ const tel = telHrefFor(site.phoneE164);
     font-size: var(--fs-body);
     color: var(--c-text);
     text-decoration: none;
+  }
+
+  /* Third level. Targets stay at --tap; only the type steps down, so the
+     crane sub-pages read as belonging to עגורנים without becoming harder to
+     hit on a phone. */
+  .drawer__sub2 {
+    display: grid;
+    margin-inline-start: var(--s-4);
+    padding-inline-start: var(--s-3);
+    border-inline-start: 1px solid var(--c-border);
+  }
+
+  .drawer__sublink--leaf {
+    font-size: var(--fs-sm);
+    color: var(--c-text-strong);
   }
 
   .drawer__sublink.is-active,

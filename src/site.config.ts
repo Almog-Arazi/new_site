@@ -42,10 +42,21 @@ const siteSchema = z.object({
 
 const site = siteSchema.parse(raw);
 
+/* Three levels: top item → section → leaf. The crane pages are leaves under
+   the crane hub, not siblings of it.
+   Spelled out rather than made recursive with z.lazy, because the depth is a
+   deliberate limit — a fourth level would need a second flyout, and the menu
+   is not getting one. Note that zod strips unknown keys: while the sub level
+   was typed as a plain linkSchema, a `children` array on it parsed without
+   error and simply vanished, so the JSON and the rendered menu disagreed
+   with nothing to show for it. */
 const linkSchema = z.object({ label: z.string(), href: z.string() });
+const sectionSchema = linkSchema.extend({ children: z.array(linkSchema).optional() });
+const topSchema = linkSchema.extend({ children: z.array(sectionSchema).optional() });
+
 const navSchema = z.object({
-  header: z.array(linkSchema.extend({ children: z.array(linkSchema).optional() })),
-  footer: z.array(z.object({ title: z.string(), links: z.array(linkSchema) })),
+  header: z.array(topSchema),
+  footer: z.array(z.object({ title: z.string(), links: z.array(sectionSchema) })),
 });
 
 export const NAV = navSchema.parse(navRaw);
