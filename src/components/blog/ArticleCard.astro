@@ -74,9 +74,18 @@ const featured = variant === 'featured';
   }
 
   /* The lead card goes two-up on wide screens and collapses to the same
-     stacked shape as its siblings below it. */
+     stacked shape as its siblings below it.
+
+     `.card.acard--featured` and not `.acard--featured`: Card.astro sets
+     `.card { display: block }`, which is the same specificity as a lone
+     `.acard--featured` and loads after this file. The `display: grid` here
+     lost on source order while `grid-template-columns` — which Card.astro
+     never declares — still applied, so the card was a block box carrying two
+     column tracks it could not use. The media then took the full 1096px and
+     `block-size: 100%` on a `card`-ratio frame made it 1083px tall. Two
+     classes outrank one, whatever the order. */
   @media (width >= 860px) {
-    :global(.acard--featured) {
+    :global(.card.acard--featured) {
       display: grid;
       grid-template-columns: 0.9fr 1.1fr;
       align-items: stretch;
