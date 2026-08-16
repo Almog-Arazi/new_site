@@ -84,6 +84,23 @@ const Tag = href ? 'a' : 'div';
     color: var(--c-accent-dark);
   }
 
+  /* …but a photo frame is a window, not a surface of the card. Its own
+     palette (tinted ground, blue line art) stays intact, otherwise an
+     un-shot placeholder turns amber-on-blue the moment a card goes brand.
+     Written as a plain descendant rule rather than `svg:not(.frame svg)`
+     so it cannot be dropped by a parser without complex-`:not()` support —
+     failing open there would put blue icons back on navy. */
+  .card--brand :global(.pl--tint svg) {
+    color: var(--c-link);
+  }
+
+  /* The frame keeps its own ground so no navy ever shows behind a photo,
+     and its hairline switches to the on-dark one — the light-mode border is
+     navy-at-10%, i.e. invisible against the card it now sits on. */
+  .card--brand :global(.frame) {
+    box-shadow: inset 0 0 0 1px var(--c-border-dark);
+  }
+
   .card--brand:is(a):hover {
     background: var(--c-bg-dark-hover);
   }

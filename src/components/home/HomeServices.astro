@@ -25,7 +25,7 @@ interface Props {
 const DEFAULT_SERVICES: ServiceCard[] = [
   {
     title: 'בדיקות מתקני הרמה',
-    text: 'בדיקות למתקני הרמה במפעלים, חברות ומרכזים לוגיסטיים בהתאם לדרישות החוק — מלגזות, עגורנים, במות הרמה ומתקני הרמה נוספים.',
+    text: 'בדיקות למתקני הרמה במפעלים, חברות ומרכזים לוגיסטיים בהתאם לדרישות החוק: מלגזות, עגורנים, במות הרמה ומתקני הרמה נוספים.',
     href: '/lifting-equipment-inspection',
     placeholder: 'crane',
     alt: 'עגורן גשר באולם ייצור לפני בדיקת בודק מוסמך',
@@ -64,7 +64,7 @@ const {
   <div class="grid grid--3">
     {
       services.map((service) => (
-        <Card href={service.href} padded={false}>
+        <Card href={service.href} padded={false} tone="brand">
           <PhotoFrame
             variant={service.placeholder}
             alt={service.alt}
@@ -102,6 +102,10 @@ const {
     padding: var(--card-pad);
   }
 
+  /* Amber, not `--c-action-ink`: these cards are navy now, and the orange
+     ink token is tuned for light grounds — it measures 1.5:1 on the navy,
+     which is invisible. Amber on navy is 7.35:1 and is already the accent
+     Card.astro hands the arrow icon, so label and glyph match. */
   .svc__more {
     display: inline-flex;
     align-items: center;
@@ -110,6 +114,6 @@ const {
     font-family: var(--ff-head);
     font-weight: var(--fw-bold);
     font-size: var(--fs-sm);
-    color: var(--c-action-ink);
+    color: var(--c-accent-dark);
   }
 </style>

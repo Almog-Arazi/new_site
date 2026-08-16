@@ -4,8 +4,26 @@
     {
       "name": "ardi-site",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--", "--port", "4325"],
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "4325"
+      ],
       "port": 4325
+    },
+    {
+      "name": "ardi-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "4399"
+      ],
+      "port": 4399
     }
   ]
 }

@@ -137,8 +137,19 @@
   --container: 1160px;
   --container-narrow: 720px;
   --container-wide: 1320px;
-  --section-y: clamp(56px, 8vw, 104px);
-  --section-y-lg: clamp(72px, 11vw, 144px);
+  /* Section rhythm. The first pass read as "section → big gap → section": a
+     boundary between two sections costs the token twice (each pays its own
+     block padding), so 104px of token became 208px of white at 1440. Trimmed
+     ~23% here, and base.css collapses the doubled half at the boundary — the
+     air inside a section is untouched, only the air between them. */
+  --section-y: clamp(44px, 6.2vw, 80px);
+  --section-y-lg: clamp(56px, 8.4vw, 112px);
+  /* Leading space for a plain section that follows another section: the
+     previous one has already paid for the boundary. */
+  --section-y-adjacent: calc(var(--section-y) * 0.55);
+  /* Diameter of the hub at the centre of the process cycle. Fixed rather
+     than fluid-per-child so the four quadrants stay square around it. */
+  --cycle-hub: clamp(136px, 15vw, 172px);
   --card-pad: clamp(20px, 3.4vw, 32px);
   --panel-pad: clamp(24px, 4vw, 40px);
   --grid-gap: clamp(16px, 2.4vw, 28px);

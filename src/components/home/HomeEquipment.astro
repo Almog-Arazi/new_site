@@ -34,7 +34,7 @@ const items = (await getCollection('equipment')).sort((a, b) => a.data.order - b
   <div class="grid grid--3">
     {
       items.map((item) => (
-        <Card href={item.data.href} padded={false}>
+        <Card href={item.data.href} padded={false} tone="brand">
           <PhotoFrame
             variant={item.data.placeholder}
             alt={item.data.alt}

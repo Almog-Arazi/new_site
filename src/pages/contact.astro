@@ -16,7 +16,7 @@ import { contactPage, breadcrumb as breadcrumbSchema } from '../lib/schema';
 const path = '/contact';
 const title = `צור קשר | תיאום בדיקת ציוד הרמה | ${site.shortName}`;
 const description =
-  'תיאום בדיקת מתקני הרמה, אביזרי הרמה וקווי חיים — טלפון, וואטסאפ וטופס קצר. מענה אנושי ומהיר, שירות בכל הארץ.';
+  'תיאום בדיקת מתקני הרמה, אביזרי הרמה וקווי חיים: טלפון, וואטסאפ וטופס קצר. מענה אנושי ומהיר, שירות בכל הארץ.';
 
 const phone = displayPhone(site.phoneE164);
 const tel = telHrefFor(site.phoneE164);
@@ -26,7 +26,7 @@ const prep = [
   'סוג הציוד וכמה יחידות יש באתר',
   'מתי בוצעה הבדיקה האחרונה, אם ידוע',
   'מיקום האתר ושעות הפעילות',
-  'אם יש דחיפות — נשמח לדעת מראש',
+  'אם יש דחיפות, נשמח לדעת מראש',
 ];
 ---
 
@@ -47,7 +47,7 @@ const prep = [
         <Breadcrumb trail={trail} current="צור קשר" />
         <h1>צרו קשר לתיאום בדיקה</h1>
         <p class="t-lead">
-          הדרך המהירה ביותר היא טלפון — נבין מה הציוד שלכם ונחזור אליכם עם זמינות ומחיר.
+          הדרך המהירה ביותר היא טלפון. נבין מה הציוד שלכם ונחזור אליכם עם זמינות ומחיר.
           אפשר גם וואטסאפ או טופס קצר; אנו חוזרים לכל פנייה בשעות העבודה.
         </p>
 
@@ -77,7 +77,7 @@ const prep = [
               </span>
               <span class="method__body">
                 <span class="method__title">וואטסאפ</span>
-                <span class="method__note">הודעה מוכנה מראש — רק להשלים סוג ציוד ומיקום</span>
+                <span class="method__note">הודעה מוכנה מראש, רק להשלים סוג ציוד ומיקום</span>
               </span>
             </a>
           </li>
@@ -90,7 +90,7 @@ const prep = [
             <span>אזורי פעילות</span>
           </h2>
           <p class="areas__text">
-            {site.areaServedLabel} — {hebrewList(site.areasServed)}. בדיקות במפעלים, מחסנים,
+            {site.areaServedLabel}: {hebrewList(site.areasServed)}. בדיקות במפעלים, מחסנים,
             מרכזים לוגיסטיים ואתרי עבודה.
           </p>
         </div>

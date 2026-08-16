@@ -2,10 +2,16 @@
 import { getCollection } from 'astro:content';
 import Section from '../ui/Section.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
+import Icon from '../ui/Icon.astro';
 
-/* Homepage variant of the five steps (sketch P1: a connected rail, not the
-   card row that blocks/ProcessSteps.astro renders on inner pages). Same
-   `process` collection feeds both. */
+/* Homepage variant of the process. The rail this replaced drew the four
+   steps as one long line, which said "then it ends" — but the service does
+   not end: the follow-up call is what produces the next booking. So the
+   steps now sit in the four quadrants of a ring with the recurrence in the
+   middle, and the last step's chip is the amber one because that is where
+   the loop closes, not where it stops.
+   The same `process` collection still feeds blocks/ProcessSteps.astro on
+   inner pages, which renders it as a plain card row. */
 
 interface Props {
   heading?: string;
@@ -14,78 +20,109 @@ interface Props {
 
 const {
   heading = 'איך עובדים איתנו',
-  intro = 'חמישה שלבים מהפנייה הראשונה ועד התזכורת לבדיקה הבאה.',
+  intro =
+    'ארבעה שלבים שסוגרים מעגל: מהפנייה הראשונה ועד התזכורת לבדיקה הבאה, ומשם חוזרים לתיאום המועד הבא.',
 } = Astro.props;
 
 const steps = (await getCollection('process')).sort((a, b) => a.data.order - b.data.order);
+
+/* The `process` schema is frozen and carries no icon field, so the glyph is
+   mapped here by id. An unmapped step simply gets the check mark rather
+   than breaking the row. */
+const STEP_ICON: Record<string, string> = {
+  contact: 'phone',
+  inspect: 'shield',
+  report: 'doc',
+  followup: 'calendar',
+};
+
+/* The ring is a four-quadrant layout; anything other than four steps falls
+   back to the plain stacked column, so editing the JSON can never leave a
+   connector pointing at a quadrant that has no step in it. */
+const isRing = steps.length === 4;
+const QUADRANT = ['q1', 'q2', 'q3', 'q4'];
+const LINKS = ['l12', 'l23', 'l34', 'l41'];
 ---
 
 <Section tone="soft">
   <SectionHeader heading={heading} intro={intro} align="center" />
-  <ol role="list" class="flow">
+
+  <ol role="list" class:list={['cycle', isRing && 'cycle--ring']}>
     {
       steps.map((step, i) => (
-        <li class="flow__step">
-          <span class="flow__rail" aria-hidden="true" />
-          <span
-            class:list={['flow__num', i === steps.length - 1 && 'flow__num--last']}
-            aria-hidden="true"
-          >
-            {i + 1}
+        <li
+          class:list={[
+            'cycle__step',
+            isRing && `cycle__step--${QUADRANT[i]}`,
+            i === steps.length - 1 && 'cycle__step--loop',
+          ]}
+        >
+          <span class="cycle__mark" aria-hidden="true">
+            <span class="cycle__num">{i + 1}</span>
+            <Icon name={STEP_ICON[step.data.id] ?? 'check'} size={20} class="cycle__glyph" />
           </span>
-          <h3 class="flow__title">{step.data.title}</h3>
-          <p class="t-body flow__text">{step.data.text}</p>
+          <h3 class="cycle__title">{step.data.title}</h3>
+          <p class="t-body cycle__text">{step.data.text}</p>
         </li>
       ))
+    }
+
+    {/* Connectors. They live inside the <ol> as aria-hidden items so the
+        list still contains nothing but <li>, and the accessibility tree
+        still reports exactly four steps — the recurrence they draw is
+        stated in words in the section intro above, which is where a
+        screen-reader user actually gets it. */}
+    {
+      isRing &&
+        LINKS.map((link) => (
+          <li class:list={['cycle__link', `cycle__link--${link}`]} aria-hidden="true">
+            <Icon name="arrow" size={22} />
+          </li>
+        ))
+    }
+
+    {
+      isRing && (
+        <li class="cycle__hub" aria-hidden="true">
+          <Icon name="refresh" size={26} />
+          <span>מחזור מתמשך</span>
+        </li>
+      )
     }
   </ol>
 </Section>
 
 <style>
-  .flow {
+  /* ── stacked column: the mobile layout, and the fallback for any step
+        count the ring cannot hold ─────────────────────────────────────── */
+  .cycle {
     display: grid;
-    gap: var(--s-7) var(--grid-gap);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
     margin: 0;
     padding: 0;
+    list-style: none;
   }
 
-  /* One row for every step, whatever the step count — so no rail is ever left
-     reaching for a step that wrapped to the next line. */
-  @media (width >= 901px) {
-    .flow {
-      grid-auto-flow: column;
-      grid-auto-columns: 1fr;
-      grid-template-columns: none;
-    }
-  }
-
-  .flow__step {
+  .cycle__step {
     position: relative;
     display: grid;
-    gap: var(--s-2);
+    gap: var(--s-3);
     align-content: start;
-    justify-items: center;
-    text-align: center;
+    padding: var(--card-pad);
+    border-radius: var(--r-4);
+    border: var(--hairline);
+    background: var(--c-surface);
   }
 
-  /* Hairline connector between the numbers; the last step has none, and it
-     disappears whenever the row wraps to a single column. */
-  .flow__rail {
-    display: none;
-    position: absolute;
-    inset-block-start: calc(var(--tap) / 2);
-    inset-inline: 50% -50%;
-    block-size: 1px;
-    background: var(--c-border-strong);
+  .cycle__mark {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-4);
   }
 
-  .flow__step:last-child .flow__rail {
-    display: none;
-  }
-
-  .flow__num {
-    position: relative;
+  .cycle__num {
     display: inline-grid;
     place-items: center;
     inline-size: var(--tap);
@@ -98,26 +135,161 @@ const steps = (await getCollection('process')).sort((a, b) => a.data.order - b.d
     font-size: var(--fs-lead);
   }
 
-  .flow__num--last {
+  /* Where the loop closes. Amber marks the hand-off back to step one, the
+     same way it marks the recurrence in the hub. */
+  .cycle__step--loop .cycle__num {
     background: var(--c-action);
     color: var(--c-on-action);
   }
 
-  .flow__title {
-    margin-block-start: var(--s-2);
+  /* A class handed to a child component lands on that component's root,
+     which never carries this file's scope id — hence :global here only. */
+  :global(.cycle__glyph) {
+    color: var(--c-link);
   }
 
-  .flow__text {
-    max-inline-size: 32ch;
+  .cycle__text {
+    color: var(--c-text);
   }
 
+  /* Connectors are the ring's own vocabulary — in the column they would be
+     four arrows stranded at the bottom, since they follow all four steps in
+     source order. */
+  .cycle__link {
+    display: none;
+  }
+
+  .cycle__hub {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s-3);
+    padding: var(--s-4) var(--s-5);
+    border-radius: var(--r-pill);
+    background: var(--c-bg-dark);
+    color: var(--c-on-dark);
+    font-family: var(--ff-head);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-sm);
+    text-align: center;
+  }
+
+  .cycle__hub :global(svg) {
+    color: var(--c-accent-dark);
+  }
+
+  /* A hairline dropping from one card to the next, so the column reads as a
+     sequence rather than four unrelated boxes. It starts at the centre of
+     the number chip: gutter + half a chip. */
+  @media (width <= 900px) {
+    .cycle__step + .cycle__step::before {
+      content: '';
+      position: absolute;
+      inset-block-start: calc(var(--s-5) * -1);
+      inset-inline-start: calc(var(--card-pad) + var(--tap) / 2);
+      inline-size: 1px;
+      block-size: var(--s-5);
+      background: var(--c-border-strong);
+    }
+  }
+
+  /* ── the ring ─────────────────────────────────────────────────────────
+     Named areas rather than placement by line number, so the whole diagram
+     mirrors with the document: under dir="rtl" column one is the right-hand
+     one, which puts step 1 top-right where the reader starts. Every element
+     sits in a cell of its own — nothing is absolutely positioned and no
+     inset is negative, which is what let the old `.flow__rail` (inset-inline:
+     50% -50%) push 27px of horizontal scroll onto the page.
+     ─────────────────────────────────────────────────────────────────── */
   @media (width >= 901px) {
-    .flow__rail {
-      display: block;
+    .cycle--ring {
+      grid-template-columns: 1fr var(--cycle-hub) 1fr;
+      grid-template-rows: auto var(--cycle-hub) auto;
+      grid-template-areas:
+        'q1  l12 q2'
+        'l41 hub l23'
+        'q4  l34 q3';
+      gap: var(--grid-gap);
     }
 
-    .flow__step:last-child .flow__rail {
-      display: none;
+    /* A grid item defaults to min-inline-size:auto and refuses to shrink
+       below its content — the one thing that can still widen this layout
+       past its container. */
+    .cycle--ring > * {
+      min-inline-size: 0;
+    }
+
+    .cycle__step--q1 {
+      grid-area: q1;
+    }
+
+    .cycle__step--q2 {
+      grid-area: q2;
+    }
+
+    .cycle__step--q3 {
+      grid-area: q3;
+    }
+
+    .cycle__step--q4 {
+      grid-area: q4;
+    }
+
+    /* Not `--c-text-muted`: these arrows are the only thing stating the
+       direction of travel, so they are a meaningful graphic and owe 3:1
+       under WCAG 1.4.11. Muted measured 2.94:1 on the soft slab — under the
+       line by a hair. `--c-text` is 6.6:1 there and still reads quieter than
+       the numbered chips, which is the hierarchy this needs. */
+    .cycle__link {
+      display: grid;
+      place-items: center;
+      color: var(--c-text);
+    }
+
+    /* The sprite's arrow points along the reading direction — leftward, the
+       way it already does inside every "לעמוד השירות" link — so the top
+       connector needs no transform and the rest are quarter turns off it.
+       These are visual rotations of a glyph, not layout, so they are angles
+       rather than logical properties. The rotation is put on the 22px icon
+       and not on the cell: turning a 330×172 cell a quarter turn would push
+       a scrollable overflow region out of the section for nothing. */
+    .cycle__link--l12 {
+      grid-area: l12;
+    }
+
+    .cycle__link--l23 {
+      grid-area: l23;
+    }
+
+    .cycle__link--l23 :global(svg) {
+      rotate: -90deg;
+    }
+
+    .cycle__link--l34 {
+      grid-area: l34;
+    }
+
+    .cycle__link--l34 :global(svg) {
+      rotate: 180deg;
+    }
+
+    .cycle__link--l41 {
+      grid-area: l41;
+    }
+
+    .cycle__link--l41 :global(svg) {
+      rotate: 90deg;
+    }
+
+    .cycle__hub {
+      grid-area: hub;
+      flex-direction: column;
+      gap: var(--s-2);
+      inline-size: var(--cycle-hub);
+      block-size: var(--cycle-hub);
+      padding: var(--s-4);
+      align-self: center;
+      justify-self: center;
     }
   }
 </style>

@@ -11,9 +11,8 @@ import { allFaqGroupIds, relatedLinks, type TemplateProps } from './shared';
    FAQ — /faq.
 
    The one page where the FAQ is the page, so it is rendered grouped: an
-   <h2> per topic, every question an <h3>, and a topic rail that sticks
-   beside the groups on desktop and collapses to a flat row of jump links
-   on mobile.
+   <h2> per topic and every question an <h3>. Nothing beside the groups —
+   the topic list is the page.
 
    No schema is built here. FaqSection is handed the same group list it
    renders and emits the FAQPage itself — the single-source rule holds even
@@ -65,7 +64,7 @@ const related = await relatedLinks(data.related);
 >
   <Blocks sections={before} exclude={['faq']} />
 
-  <FaqSection type="faq" groups={groups} variant="grouped" sidebar heading="" intro={intro} />
+  <FaqSection type="faq" groups={groups} variant="grouped" heading="" intro={intro} />
 
   {
     hasBody && (

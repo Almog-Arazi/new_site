@@ -42,6 +42,21 @@ body {
   padding-block-start: 0;
 }
 
+/* One boundary, one rhythm unit — not two. A section that follows another
+   section inherits a gap the previous one has already paid for, so its own
+   leading space is cut back. Scoped to plain (non-slab) sections on purpose:
+   a slab sets its own outer padding in Section.astro, and the `:not(:has())`
+   here outranks it so the two rules can never fight. `--section-y-adjacent`
+   is a token, so this stays one number to tune, not a per-component fix.
+   The combinator is `~` and not `+` on purpose: FaqSection and the analytics
+   hooks emit a bare <script> between two sections, and an adjacent-sibling
+   selector silently stops matching across it — which is exactly how the
+   homepage ended up with one 160px seam among 84px ones. `~` reads as "any
+   section that is not the first on the page", which is the rule as intended. */
+.section ~ .section:not(.section--flush):not(:has(> .section__slab)) {
+  padding-block-start: var(--section-y-adjacent);
+}
+
 .section__slab {
   inline-size: min(100%, var(--container-wide));
   margin-inline: auto;
