@@ -6,3 +6,6 @@ node_modules
 /dist
 /docs
 /scripts
+# …except the image generator, which `npm run build` now runs in the cloud.
+# The other scripts are local verification and stay out of the deploy.
+!/scripts/gen-images.mjs
