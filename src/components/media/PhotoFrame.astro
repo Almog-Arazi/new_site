@@ -48,9 +48,18 @@ const {
 <style>
   /* The signature motif: asymmetric corners built from LOGICAL properties.
      The border-radius shorthand is physical and mirrors wrong under dir=rtl. */
+  /* A grid or flex item defaults to `min-inline-size: auto`, which means it
+     refuses to shrink below the intrinsic width of its contents. Dropped into
+     a column narrower than that, this frame kept its own width and painted
+     straight over the neighbouring column: measured 709px inside a 410px
+     column at a 1024px viewport, and it pushed the whole page into horizontal
+     scroll at 860px. The two lines below are the fix, and they belong here
+     rather than at each of the nine call sites. */
   .frame {
     position: relative;
     margin: 0;
+    min-inline-size: 0;
+    max-inline-size: 100%;
     overflow: hidden;
     background: var(--c-bg-tint);
     border-start-start-radius: var(--r-frame-ss);

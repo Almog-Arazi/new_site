@@ -35,6 +35,7 @@
   --c-bg-tint: var(--p-blue-100);
   --c-bg-tint-strong: var(--p-blue-200);
   --c-bg-dark: var(--p-navy);
+  --c-bg-dark-hover: var(--p-navy-700);
   --c-bg-dark-deep: var(--p-navy-900);
   --c-surface: #fff;
   --c-border: rgb(20 34 74 / 10%);

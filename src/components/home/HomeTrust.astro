@@ -23,7 +23,7 @@ const items = (await getCollection('credentials')).sort((a, b) => a.data.order -
   <div class="grid grid--4">
     {
       items.map((item, i) => (
-        <Card tone={i === items.length - 1 ? 'tint' : 'surface'}>
+        <Card tone="brand">
           <span class="trust__badge" aria-hidden="true">
             <Icon name={item.data.icon} size={22} />
           </span>

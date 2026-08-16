@@ -1,8 +1,9 @@
 ---
 interface Props {
   href?: string;
-  /** `tint` for the one emphasised card in a row; `dark` inside dark slabs. */
-  tone?: 'surface' | 'tint' | 'dark';
+  /** `tint` for the one emphasised card in a row; `dark` inside dark slabs;
+   *  `brand` is a navy card on a white section — the site's default card. */
+  tone?: 'surface' | 'tint' | 'dark' | 'brand';
   /** Adds the top accent rule used by the value-prop cards. */
   accent?: 'none' | 'blue' | 'orange';
   padded?: boolean;
@@ -58,6 +59,33 @@ const Tag = href ? 'a' : 'div';
   .card--tint {
     background: var(--c-bg-tint);
     border-color: transparent;
+  }
+
+  /* Navy card on a white section. Rows of white-on-white cards read as flat
+     and unbranded; this is what carries the engineering colour through the
+     page without tinting whole sections. Everything inside inherits on-dark
+     values, so a card can be switched over without touching its contents. */
+  .card--brand {
+    background: var(--c-bg-dark);
+    border-color: transparent;
+    color: var(--c-on-dark);
+  }
+
+  .card--brand :global(:is(h2, h3, h4)) {
+    color: var(--c-white);
+  }
+
+  .card--brand :global(:is(.t-body, .t-sm, .t-lead)) {
+    color: var(--c-on-dark);
+  }
+
+  /* Blue icon chips vanish on navy; amber is the sanctioned accent there. */
+  .card--brand :global(svg) {
+    color: var(--c-accent-dark);
+  }
+
+  .card--brand:is(a):hover {
+    background: var(--c-bg-dark-hover);
   }
 
   .card--dark {

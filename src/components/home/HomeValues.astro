@@ -28,7 +28,7 @@ const {
   <div class="grid grid--3">
     {
       values.map((value, i) => (
-        <Card accent={i === values.length - 1 ? 'orange' : 'blue'}>
+        <Card tone="brand" accent={i === values.length - 1 ? 'orange' : 'blue'}>
           <h3 class="values__title">{value.title}</h3>
           <p class="t-body">{value.text}</p>
         </Card>
