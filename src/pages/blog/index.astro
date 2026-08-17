@@ -5,13 +5,16 @@ import PageHead from '../../components/blocks/PageHead.astro';
 import Section from '../../components/ui/Section.astro';
 import CtaBand from '../../components/blocks/CtaBand.astro';
 import ArticleCard from '../../components/blog/ArticleCard.astro';
-import ArticleGrid from '../../components/blog/ArticleGrid.astro';
 import { blog, breadcrumb, itemList } from '../../lib/schema';
 import { articlePath } from '../../lib/routes';
 import site from '../../site.config';
 
-/* Sketch P12: one featured card, then the rest in a grid. Robust with a
-   single article (the grid renders nothing) and with seven. */
+/* One lead article, then a labelled index of the rest as headline rows.
+   Sketch P12 put the remainder in a card grid, which meant seven tiles of the
+   same shape and seven photographs of the same size — it scanned as a gallery
+   rather than as a publication. ArticleGrid is still used by HomeArticles,
+   where three cards in a row is the right shape.
+   Robust with a single article (the index does not render) and with seven. */
 
 const path = '/blog';
 const h1 = 'מידע מקצועי בתחום בדיקות ציוד הרמה';
@@ -19,12 +22,14 @@ const description =
   'מאמרים מקצועיים על בדיקות מתקני הרמה, בדיקת מלגזה, אביזרי הרמה וקווי חיים. מידע למנהלי אחזקה וממוני בטיחות.';
 
 const articles = (await getCollection('articles', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
 );
 
 /* An explicit `featured` flag wins; otherwise the newest article leads. */
 const featured = articles.find((a) => a.data.featured) ?? articles[0];
 const rest = articles.filter((a) => a.id !== featured?.id);
+
+const categories = [...new Set(articles.map((a) => a.data.category))];
 
 const trail = [{ label: 'ראשי', href: '/' }];
 ---
@@ -55,10 +60,27 @@ const trail = [{ label: 'ראשי', href: '/' }];
   <Section>
     {
       featured ? (
-        <div class="blog__list">
+        <>
+          <p class="blog__kicker">המאמר האחרון</p>
           <ArticleCard article={featured} variant="featured" level={2} />
-          <ArticleGrid articles={rest} columns={3} level={2} />
-        </div>
+
+          {rest.length > 0 && (
+            <div class="blog__index">
+              <div class="blog__head">
+                <h2 class="blog__heading">כל המאמרים</h2>
+                <p class="blog__count">
+                  {articles.length} מאמרים · {categories.length} נושאים
+                </p>
+              </div>
+
+              <div class="blog__rows">
+                {rest.map((article) => (
+                  <ArticleCard article={article} variant="row" level={3} />
+                ))}
+              </div>
+            </div>
+          )}
+        </>
       ) : (
         <p class="t-lead">מאמרים חדשים יפורסמו כאן בקרוב.</p>
       )
@@ -75,8 +97,45 @@ const trail = [{ label: 'ראשי', href: '/' }];
 </BaseLayout>
 
 <style>
-  .blog__list {
+  /* The page reads top to bottom as a publication: one lead article, then a
+     labelled index of the rest. The previous layout was a lead card followed
+     by six more cards of the same shape, which scanned as a photo gallery —
+     the client's note was that it did not look like articles. */
+  .blog__kicker {
+    font-family: var(--ff-mono);
+    font-size: var(--fs-xs);
+    color: var(--c-text);
+    margin-block-end: var(--s-4);
+  }
+
+  .blog__index {
+    margin-block-start: var(--s-9);
+  }
+
+  .blog__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--s-3);
+    padding-block-end: var(--s-5);
+    /* The heavier rule under the heading is what tells the eye that a list
+       starts here, rather than another card. */
+    border-block-end: 2px solid var(--c-bg-dark);
+  }
+
+  .blog__heading {
+    font-size: var(--fs-h2);
+    line-height: var(--lh-h2);
+  }
+
+  .blog__count {
+    font-family: var(--ff-mono);
+    font-size: var(--fs-xs);
+    color: var(--c-text);
+  }
+
+  .blog__rows {
     display: grid;
-    gap: var(--grid-gap);
   }
 </style>

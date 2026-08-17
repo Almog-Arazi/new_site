@@ -8,8 +8,13 @@ import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   article: CollectionEntry<'articles'>;
-  /** `featured` is the wide lead card at the top of /blog. */
-  variant?: 'default' | 'featured';
+  /**
+   * `featured` is the wide lead card at the top of /blog.
+   * `row` is the editorial index line under it: small thumbnail, text
+   * dominant, hairline between rows. Seven identical photo-tiles read as a
+   * gallery — a list of headlines reads as a publication.
+   */
+  variant?: 'default' | 'featured' | 'row';
   /** Headings are h3 inside a section, h2 when the card is the section itself. */
   level?: 2 | 3;
 }
@@ -18,15 +23,20 @@ const { article, variant = 'default', level = 3 } = Astro.props;
 const d = article.data;
 const Heading = `h${level}` as 'h2' | 'h3';
 const featured = variant === 'featured';
+const row = variant === 'row';
 ---
 
-<Card href={articlePath(d.slug)} padded={false} class={featured ? 'acard acard--featured' : 'acard'}>
+<Card
+  href={articlePath(d.slug)}
+  padded={false}
+  class:list={['acard', featured && 'acard--featured', row && 'acard--row']}
+>
   <PhotoFrame
     variant={d.hero.placeholder}
     alt={d.hero.alt}
-    note={d.hero.note}
+    note={row ? undefined : d.hero.note}
     image={d.hero.image}
-    ratio={featured ? 'card' : 'wide'}
+    ratio={featured ? 'card' : row ? 'card' : 'wide'}
     class="acard__media"
   />
   <div class="acard__body">
@@ -72,8 +82,9 @@ const featured = variant === 'featured';
     color: var(--c-action-ink);
   }
 
-  /* The lead card goes two-up on wide screens and collapses to the same
-     stacked shape as its siblings below it.
+  /* ── the lead card ────────────────────────────────────────────────────
+     Goes two-up on wide screens and collapses to the same stacked shape as
+     its siblings below it.
 
      `.card.acard--featured` and not `.acard--featured`: Card.astro sets
      `.card { display: block }`, which is the same specificity as a lone
@@ -115,6 +126,83 @@ const featured = variant === 'featured';
     :global(.acard--featured) .acard__text {
       font-size: var(--fs-lead);
       line-height: var(--lh-lead);
+    }
+  }
+
+  /* ── the index row ────────────────────────────────────────────────────
+     A list of headlines, not a wall of pictures. The photograph drops to a
+     thumbnail and the words take the column: meta line, headline, standfirst.
+     No card chrome — the hairline between rows is what groups them, the way a
+     contents page works. Two classes on the selector for the same reason as
+     the lead card above: Card.astro's `.card` rules load later and win a tie. */
+  :global(.card.acard--row) {
+    display: grid;
+    grid-template-columns: clamp(84px, 22vw, 168px) 1fr;
+    gap: var(--s-5);
+    align-items: start;
+    padding-block: var(--s-6);
+    background: none;
+    border: 0;
+    border-radius: 0;
+    border-block-start: var(--hairline);
+    overflow: visible;
+  }
+
+  /* The first row sits directly under the section head, which already draws
+     the boundary. */
+  :global(.card.acard--row:first-child) {
+    border-block-start: 0;
+    padding-block-start: 0;
+  }
+
+  :global(.card.acard--row .acard__media) {
+    border-radius: var(--r-3);
+    overflow: hidden;
+  }
+
+  :global(.acard--row) .acard__body {
+    padding: 0;
+    gap: var(--s-2);
+  }
+
+  :global(.acard--row) .acard__title {
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-black);
+  }
+
+  /* The whole row is the link, so the hover cue goes on the headline rather
+     than on a border and a shadow the row no longer has. */
+  :global(.card.acard--row):hover {
+    box-shadow: none;
+    transform: none;
+  }
+
+  :global(.card.acard--row):hover .acard__title {
+    color: var(--c-action-ink);
+  }
+
+  :global(.card.acard--row):hover .acard__more {
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+  }
+
+  @media (width >= 700px) {
+    :global(.card.acard--row) {
+      gap: var(--s-6);
+    }
+
+    :global(.acard--row) .acard__title {
+      font-size: var(--fs-h2);
+      line-height: var(--lh-h2);
+    }
+  }
+
+  /* Under 480px the standfirst costs more height than it earns beside a
+     thumbnail — the headline and the meta line already say what the article
+     is. The thumbnail stays; dropping it would break the scan rhythm. */
+  @media (width <= 480px) {
+    :global(.acard--row) .acard__text {
+      display: none;
     }
   }
 </style>
